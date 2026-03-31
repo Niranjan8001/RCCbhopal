@@ -37,11 +37,8 @@ export default function AboutUs() {
               we have spent over three decades transforming urban landscapes 
               with iconic structures that blend visionary design with enduring structural integrity.
             </p>
-            <div className="grid grid-cols-3 gap-6">
-              <div>
-                <h4 className="text-3xl font-black text-white mb-2">2</h4>
-                <p className="text-sm font-medium text-muted uppercase tracking-wider">Visionary Owners</p>
-              </div>
+            <div className="grid grid-cols-2 gap-6">
+
               <div>
                 <h4 className="text-3xl font-black text-white mb-2">150+</h4>
                 <p className="text-sm font-medium text-muted uppercase tracking-wider">Projects</p>
@@ -130,7 +127,7 @@ export default function AboutUs() {
           <div className="glass-card rounded-[2rem] p-8 md:p-12 relative overflow-hidden group border border-white/10 bg-white/[0.02]">
             <div className="absolute inset-0 bg-gradient-to-br from-accent-yellow/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-8 text-center md:text-left relative z-10">
+            <div className="flex flex-col md:flex-row items-center md:items-center gap-8 text-center md:text-left relative z-10">
               <div className="w-32 h-32 rounded-full shrink-0 shadow-[0_0_30px_rgba(255,214,10,0.2)] border-2 border-accent-yellow/50 relative overflow-hidden">
                 <Image src="/developer.png" alt="Niranjan Saxena" fill className="object-cover" />
               </div>

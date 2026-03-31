@@ -111,10 +111,10 @@ export default function HeroSection() {
 
         <h1
           ref={headingRef}
-          className="flex flex-col items-center justify-center text-5xl sm:text-7xl lg:text-[80px] font-black leading-[1.1] tracking-[-0.02em] mb-8 opacity-0"
+          className="flex flex-col items-center justify-center text-4xl sm:text-6xl lg:text-[70px] font-black leading-[1.1] tracking-[-0.02em] mb-8 opacity-0 text-center"
         >
-          <span>Build Beyond</span>
-          <span className="text-accent-yellow text-glow-yellow mt-2">Imagination</span>
+          <span>Reliable Construction</span>
+          <span className="text-accent-yellow text-glow-yellow mt-2">&amp; Consultancy</span>
         </h1>
 
         <p

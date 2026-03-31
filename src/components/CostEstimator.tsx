@@ -8,9 +8,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const tiers = [
-  { label: 'Basic', rate: 1200, color: '#888888' },
-  { label: 'Standard', rate: 2200, color: '#0A84FF' },
-  { label: 'Premium', rate: 3800, color: '#FFD60A' },
+  { label: 'Silver', rate: 1500, color: '#C0C0C0' },
+  { label: 'Gold', rate: 1800, color: '#FFD60A' },
+];
+
+const buildTypes = [
+  { label: 'Singlex', multiplier: 1, desc: '1 Floor' },
+  { label: 'Duplex', multiplier: 2, desc: '2 Floors' },
+  { label: 'Triplex', multiplier: 3, desc: '3 Floors' },
 ];
 
 function AnimatedNumber({ value }: { value: number }) {
@@ -38,11 +43,12 @@ function AnimatedNumber({ value }: { value: number }) {
 
 export default function CostEstimator() {
   const [area, setArea] = useState(1500);
-  const [tierIndex, setTierIndex] = useState(1);
+  const [tierIndex, setTierIndex] = useState(0);
+  const [buildIndex, setBuildIndex] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const cost = area * tiers[tierIndex].rate;
+  const cost = area * tiers[tierIndex].rate * buildTypes[buildIndex].multiplier;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -148,6 +154,34 @@ export default function CostEstimator() {
                     {tier.label}
                     <span className="block text-xs font-normal mt-1 opacity-70">
                       ₹{tier.rate.toLocaleString()}/sqft
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Build Type Toggle */}
+            <div className="mb-10 relative z-10">
+              <label className="text-sm font-medium text-muted mb-4 block">Build Type</label>
+              <div className="flex gap-3">
+                {buildTypes.map((bt, i) => (
+                  <button
+                    key={bt.label}
+                    onClick={() => setBuildIndex(i)}
+                    className={`flex-1 py-3.5 px-4 rounded-2xl text-sm font-semibold transition-all duration-400 cursor-pointer ${
+                      buildIndex === i
+                        ? 'text-background scale-[1.02]'
+                        : 'text-muted border border-white/10 hover:border-white/20 bg-transparent'
+                    }`}
+                    style={
+                      buildIndex === i
+                        ? { background: '#22C55E', boxShadow: '0 0 30px #22C55E30' }
+                        : {}
+                    }
+                  >
+                    {bt.label}
+                    <span className="block text-xs font-normal mt-1 opacity-70">
+                      {bt.desc}
                     </span>
                   </button>
                 ))}

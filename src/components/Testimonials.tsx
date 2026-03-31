@@ -9,27 +9,27 @@ gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
-    name: 'Rajesh Mehta',
-    role: 'CEO, Mehta Industries',
-    quote: 'RCC transformed our corporate headquarters into an architectural landmark. The attention to detail and commitment to quality was unlike anything we\'ve experienced.',
+    name: 'Renu Sahahi',
+    role: 'Home Owner',
+    quote: 'Our house looks completely transformed thanks to Reliable Construction & Consultancy. The renovation was done with great care and professionalism. The team was polite, responsive, and committed to quality. Every detail was executed perfectly. We are truly satisfied and grateful for such outstanding work.',
     rating: 5,
   },
   {
-    name: 'Priya Sharma',
-    role: 'Homeowner',
-    quote: 'Our dream villa was built to perfection. From the initial design consultation to the final handover, every step was handled with professionalism and care.',
+    name: 'Amitesh Tiwari',
+    role: 'Home Owner',
+    quote: 'Reliable construction is really a reliable vendor when it comes to construction and building. They are really good in terms of services and they also use the best material as per the budget. Most importantly, they are really professional and polite in nature. I recommend everyone to rely on reliable construction and take their services for building new homes, offices or their buildings.',
     rating: 5,
   },
   {
-    name: 'Amit Patel',
-    role: 'Director, Skyline Developments',
-    quote: 'Working with RCC on our commercial complex was a game-changer. They delivered ahead of schedule while maintaining the highest construction standards.',
+    name: 'Rushil Bhatia',
+    role: 'Home Owner',
+    quote: 'Reliable Construction & Consultancy truly lived up to their name! From start to finish, their team was professional, efficient, and delivered exceptional results. Their attention to detail and commitment to quality were impressive. Highly reliable and trustworthy, they\'re the go-to experts for any building needs.',
     rating: 5,
   },
   {
-    name: 'Sneha Kapoor',
-    role: 'Architect & Designer',
-    quote: 'As a fellow architect, I\'m truly impressed by RCC\'s execution capabilities. They bring blueprints to life with remarkable precision and artistry.',
+    name: 'Ajay Panvar',
+    role: 'Home Owner',
+    quote: 'Reliable Construction is a highly recommended, registered firm in Bhopal, known for its expertise in both construction and consultancy services. They are a professional and trustworthy team with a keen eye for detail, deep knowledge of building planning, and practical construction works. I strongly suggest Reliable Construction to anyone in need of construction or consultancy services.',
     rating: 5,
   },
 ];

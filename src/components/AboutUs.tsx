@@ -29,11 +29,12 @@ export default function AboutUs() {
               Our Vision
             </h2>
             <h3 className="text-4xl md:text-5xl font-black mb-6 leading-tight">
-              Engineering <span className="text-muted text-glow-white">Excellence</span> Since 2010.
+              Engineering <span className="text-muted text-glow-white">Excellence</span> Since 1991.
             </h3>
             <p className="text-lg text-muted leading-relaxed mb-8">
               Reliable Construction & Consultancy (RCC) is built on a foundation of trust, precision, 
-              and uncompromising quality. Founded by two visionary owners, we have spent over a decade transforming urban landscapes 
+              and uncompromising quality. Dominating the construction landscape since 1991 and formally established in 2024, 
+              we have spent over three decades transforming urban landscapes 
               with iconic structures that blend visionary design with enduring structural integrity.
             </p>
             <div className="grid grid-cols-3 gap-6">
@@ -46,7 +47,7 @@ export default function AboutUs() {
                 <p className="text-sm font-medium text-muted uppercase tracking-wider">Projects</p>
               </div>
               <div>
-                <h4 className="text-3xl font-black text-white mb-2">14<span className="text-accent-yellow text-xl">yrs</span></h4>
+                <h4 className="text-3xl font-black text-white mb-2">34+<span className="text-accent-yellow text-xl">yrs</span></h4>
                 <p className="text-sm font-medium text-muted uppercase tracking-wider">Excellence</p>
               </div>
             </div>
@@ -143,7 +144,7 @@ export default function AboutUs() {
                 <h3 className="text-3xl font-black mb-3 text-white">Niranjan Saxena</h3>
                 
                 <p className="text-lg text-muted leading-relaxed mb-6 font-medium">
-                  1st year college student based in Bhopal, Madhya Pradesh. Passionate about engineering high-performance, cinematic web experiences and pushing the boundaries of modern frontend development.
+                  I'm Niranjan Saxena, a Full Stack Web Developer from Bhopal, Madhya Pradesh, focused on delivering high-quality, conversion-driven websites. I design and develop digital experiences that combine aesthetics with performance, helping businesses grow online with precision and reliability. From business websites to custom solutions, I ensure every project reflects professionalism, speed, and scalability.
                 </p>
                 
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-6">

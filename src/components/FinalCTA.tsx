@@ -60,7 +60,7 @@ export default function FinalCTA() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 cursor-pointer">
-            <a href="mailto:contact@rcc.com" className="btn-primary pulse-glow text-lg !px-10 !py-5">
+            <a href="https://wa.me/918109618368" target="_blank" rel="noopener noreferrer" className="btn-primary pulse-glow text-lg !px-10 !py-5">
               Contact Us Today
             </a>
           </div>

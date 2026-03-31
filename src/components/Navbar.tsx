@@ -65,7 +65,9 @@ export default function Navbar() {
           {/* CTA + Mobile Toggle */}
           <div className="flex items-center gap-4 z-10">
             <a
-              href="#contact"
+              href="https://wa.me/918109618368"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hidden md:inline-flex btn-primary !py-3 !px-7 !text-sm"
             >
               Get a Quote
@@ -116,7 +118,9 @@ export default function Navbar() {
                 </motion.a>
               ))}
               <motion.a
-                href="#contact"
+                href="https://wa.me/918109618368"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-primary mt-4"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}

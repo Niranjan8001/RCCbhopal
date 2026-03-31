@@ -106,7 +106,7 @@ export default function HeroSection() {
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm mb-8"
         >
           <span className="w-2 h-2 rounded-full bg-accent-green animate-pulse" />
-          <span className="text-sm text-muted font-medium">Crafting Iconic Structures Since 2010</span>
+          <span className="text-sm text-muted font-medium">Crafting Iconic Structures Since 1991</span>
         </motion.div>
 
         <h1

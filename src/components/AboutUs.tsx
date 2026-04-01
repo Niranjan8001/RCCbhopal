@@ -50,7 +50,7 @@ export default function AboutUs() {
                 <Image src="/sanjay.png" alt="Founder 1" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
                   <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 text-center px-4">
-                    <p className="text-white font-bold text-lg tracking-wide">text 1</p>
+                    <p className="text-white font-bold text-lg tracking-wide">Sanjay Saxena</p>
                   </div>
                 </div>
               </div>
@@ -63,7 +63,7 @@ export default function AboutUs() {
                 <Image src="/roshan.png" alt="Founder 2" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
                   <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 text-center px-4">
-                    <p className="text-white font-bold text-lg tracking-wide">text 2</p>
+                    <p className="text-white font-bold text-lg tracking-wide">Roshan Saxena</p>
                   </div>
                 </div>
               </div>
@@ -87,8 +87,10 @@ export default function AboutUs() {
               "We didn't just want to build structures; we wanted to engineer legacies. Every project we undertake is a testament to our commitment to pushing the boundaries of what's possible in modern architecture."
             </p>
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-yellow to-accent-red flex items-center justify-center font-bold text-lg text-background pb-0.5">
-                S
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-yellow to-accent-red p-[2px] flex-shrink-0">
+                <div className="w-full h-full rounded-full relative overflow-hidden border border-background">
+                  <Image src="/sanjay.png" alt="Sanjay Saxena" fill className="object-cover" />
+                </div>
               </div>
               <div>
                 <h4 className="font-bold text-white text-lg">Sanjay Saxena</h4>
@@ -111,8 +113,10 @@ export default function AboutUs() {
               "True luxury lies in the details. From the foundation to the final finishes, our philosophy is rooted in uncompromising quality and a relentless pursuit of perfection for our clients."
             </p>
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-blue to-accent-green flex items-center justify-center font-bold text-lg text-background pb-0.5">
-                R
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-blue to-accent-green p-[2px] flex-shrink-0">
+                <div className="w-full h-full rounded-full relative overflow-hidden border border-background">
+                  <Image src="/roshan.png" alt="Roshan Saxena" fill className="object-cover" />
+                </div>
               </div>
               <div>
                 <h4 className="font-bold text-white text-lg">Roshan Saxena</h4>

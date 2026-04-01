@@ -41,14 +41,31 @@ export default function AboutUs() {
 
           <motion.div
             style={{ y: y1 }}
-            className="hidden lg:block h-[500px] rounded-2xl bg-white/5 border border-white/10 relative overflow-hidden group"
+            className="hidden lg:flex flex-row items-center justify-center gap-12 h-[500px] rounded-2xl bg-white/5 border border-white/10 relative px-8"
           >
-            <div className="absolute inset-0 bg-gradient-to-tr from-accent-yellow/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10" />
-            <div className="absolute inset-0 bg-[url('/founders.png')] bg-cover bg-center grayscale-0 opacity-80 group-hover:opacity-100 transition-all duration-700" />
-            <div className="absolute bottom-6 left-6 right-6 z-20">
-              <div className="backdrop-blur-md bg-black/40 border border-white/10 p-4 rounded-xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                <p className="text-white font-bold tracking-wide">The Founders</p>
-                <p className="text-sm text-accent-yellow font-medium">Leading RCC to New Heights</p>
+            {/* Avatar 1 */}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-yellow to-accent-red rounded-full blur-[20px] opacity-20 group-hover:opacity-60 transition-all duration-700 pointer-events-none" />
+              <div className="relative w-56 h-56 rounded-full overflow-hidden border-2 border-white/20 shadow-[0_0_30px_rgba(255,214,10,0.1)] transition-all duration-700 group-hover:scale-105 group-hover:border-accent-yellow/50">
+                <Image src="/sanjay.png" alt="Founder 1" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
+                  <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 text-center px-4">
+                    <p className="text-white font-bold text-lg tracking-wide">text 1</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Avatar 2 */}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-blue to-accent-green rounded-full blur-[20px] opacity-20 group-hover:opacity-60 transition-all duration-700 pointer-events-none" />
+              <div className="relative w-56 h-56 rounded-full overflow-hidden border-2 border-white/20 shadow-[0_0_30px_rgba(0,194,255,0.1)] transition-all duration-700 group-hover:scale-105 group-hover:border-accent-blue/50">
+                <Image src="/roshan.png" alt="Founder 2" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
+                  <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 text-center px-4">
+                    <p className="text-white font-bold text-lg tracking-wide">text 2</p>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>

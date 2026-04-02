@@ -81,11 +81,11 @@ export default function ProjectShowcase() {
         );
       }
 
-      // Horizontal scroll
+      // Horizontal scroll and 3D Books
       if (containerRef.current && sectionRef.current) {
         const totalWidth = containerRef.current.scrollWidth - window.innerWidth;
 
-        gsap.to(containerRef.current, {
+        let horizontalTween = gsap.to(containerRef.current, {
           x: -totalWidth,
           ease: 'none',
           scrollTrigger: {
@@ -101,6 +101,72 @@ export default function ProjectShowcase() {
             },
             anticipatePin: 1,
           },
+        });
+
+        // 3D Scroll-Driven Book Opening logic
+        const wrappers = document.querySelectorAll('.book-wrapper');
+        
+        wrappers.forEach((wrapper) => {
+          const cover = wrapper.querySelector('.book-cover');
+          const inner = wrapper.querySelector('.parallax-inner');
+          const front = wrapper.querySelector('.parallax-front');
+
+          if (cover) {
+            gsap.fromTo(
+              cover,
+              { rotateY: 0 },
+              {
+                rotateY: -160,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: wrapper,
+                  containerAnimation: horizontalTween,
+                  start: 'left center', // starts opening when card's left hits center
+                  end: 'right center', // fully open when passing
+                  scrub: true,
+                },
+              }
+            );
+          }
+
+          // Inner parallax effect (text slides in)
+          if (inner) {
+            gsap.fromTo(
+              inner,
+              { opacity: 0, x: -30 },
+              {
+                opacity: 1,
+                x: 0,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: wrapper,
+                  containerAnimation: horizontalTween,
+                  start: 'left center',
+                  end: 'center center',
+                  scrub: true,
+                },
+              }
+            );
+          }
+
+          // Front cover depth parallax
+          if (front) {
+            gsap.fromTo(
+              front,
+              { z: 0 },
+              {
+                z: 40,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: wrapper,
+                  containerAnimation: horizontalTween,
+                  start: 'left 80%',
+                  end: 'right 20%',
+                  scrub: true,
+                },
+              }
+            );
+          }
         });
       }
     }, sectionRef);
@@ -128,87 +194,125 @@ export default function ProjectShowcase() {
       <div className="h-screen flex items-center">
         <div
           ref={containerRef}
-          className="horizontal-scroll-container pl-6 md:pl-12 lg:pl-20 pr-20"
+          className="horizontal-scroll-container pl-6 md:pl-12 lg:pl-20 pr-20 flex gap-8 md:gap-16 lg:gap-32"
         >
           {projects.map((project, i) => (
-            <motion.div
+            <div
               key={i}
-              className="flex-shrink-0 w-[85vw] sm:w-[70vw] md:w-[50vw] lg:w-[40vw] h-[65vh] relative group cursor-pointer"
-              whileHover={{ scale: 1.02, y: -8 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="book-wrapper flex-shrink-0 w-[85vw] sm:w-[70vw] md:w-[50vw] lg:w-[40vw] h-[65vh] relative cursor-pointer"
+              style={{ perspective: '2000px', transformStyle: 'preserve-3d' }}
             >
-              <div className="glass-card-strong h-full p-8 sm:p-10 flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute inset-0 bg-black/60 z-0 transition-opacity duration-700 group-hover:bg-black/40" />
+              {/* === INSIDE BASE (Right Page) === */}
+              <div 
+                className="absolute inset-0 glass-card-strong p-8 sm:p-10 flex flex-col justify-end overflow-hidden rounded-2xl border border-white/10"
+                style={{ transform: 'translateZ(-10px)' }}
+              >
+                <div className="absolute inset-0 bg-neutral-950/90 z-0" />
                 <div 
-                  className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-30 group-hover:opacity-60 transition-opacity duration-700 z-0"
-                  style={{ backgroundImage: `url(${project.image})` }}
-                />
-                {/* Glow accent */}
-                <div
-                  className="absolute top-0 right-0 w-48 h-48 rounded-full blur-[80px] opacity-30 group-hover:opacity-50 transition-opacity duration-700 z-10 pointer-events-none"
-                  style={{ background: project.color }}
+                  className="absolute inset-0 bg-[url('/grid.svg')] bg-repeat opacity-[0.05] z-0 pointer-events-none" 
+                  style={{ backgroundSize: '30px' }}
                 />
 
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-6">
-                    <span
-                      className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider"
-                      style={{
-                        background: project.color + '18',
-                        color: project.color,
-                        border: `1px solid ${project.color}30`,
-                      }}
-                    >
-                      {project.category}
-                    </span>
-                    <span className="text-sm text-muted">{project.year}</span>
+                <div className="parallax-inner relative z-10 flex flex-col h-full justify-between">
+                  <div>
+                    <h4 className="text-sm font-bold uppercase tracking-widest text-accent-yellow mb-2">Project Insight</h4>
+                    <h3 className="text-3xl font-bold tracking-tight mb-4 text-white/95">
+                      {project.title}
+                    </h3>
+                    <p className="text-muted text-sm md:text-base leading-relaxed max-w-sm mb-6">
+                      {project.description}
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="text-sm text-muted flex items-center gap-2">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                          <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        {project.location}
+                      </span>
+                    </div>
+
+                    <a href="#quote" className="btn-secondary w-full text-center inline-block">
+                      View Details
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* === THE COVER (Origin Left) === */}
+              <div 
+                className="book-cover absolute inset-0 rounded-2xl transition-shadow duration-300 shadow-2xl hover:shadow-[0_0_40px_rgba(255,255,255,0.1)]"
+                style={{ 
+                  transformStyle: 'preserve-3d', 
+                  transformOrigin: 'left center',
+                }}
+              >
+                {/* 1. FRONT FACE (Outer Cover) */}
+                <div 
+                  className="absolute inset-0 glass-card-strong p-8 sm:p-10 flex flex-col justify-between overflow-hidden shadow-2xl rounded-2xl"
+                  style={{ backfaceVisibility: 'hidden', transform: 'translateZ(2px)' }}
+                >
+                  <div className="absolute inset-0 bg-black/50 z-0 transition-opacity duration-700 hover:bg-black/30" />
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-60 z-0"
+                    style={{ backgroundImage: `url(${project.image})` }}
+                  />
+                  {/* Glow accent */}
+                  <div
+                    className="absolute top-0 right-0 w-48 h-48 rounded-full blur-[80px] opacity-40 z-10 pointer-events-none"
+                    style={{ background: project.color }}
+                  />
+
+                  <div className="parallax-front relative z-10 flex flex-col justify-between h-full" style={{ transformStyle: 'preserve-3d' }}>
+                    <div className="flex items-center gap-3">
+                      <span
+                        className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-black/20 backdrop-blur-md"
+                        style={{
+                          color: project.color,
+                          border: `1px solid ${project.color}50`,
+                        }}
+                      >
+                        {project.category}
+                      </span>
+                      <span className="text-sm font-bold tracking-wider" style={{ color: project.color }}>{project.year}</span>
+                    </div>
+                    
+                    <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight drop-shadow-xl" style={{ textShadow: '0px 10px 30px rgba(0,0,0,0.8)' }}>
+                      {project.title}
+                    </h3>
                   </div>
 
-                  <h3 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3 group-hover:text-accent-yellow transition-colors duration-300">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-muted text-sm leading-relaxed max-w-sm">
-                    {project.description}
-                  </p>
-                </div>
-
-                <div className="relative z-10 flex items-center justify-between">
-                  <span className="text-sm text-muted flex items-center gap-2">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                    {project.location}
-                  </span>
-
-                  <motion.div
-                    className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent-yellow group-hover:border-accent-yellow transition-all duration-300"
-                    whileHover={{ scale: 1.1 }}
+                  <span
+                    className="absolute -bottom-4 -right-1 text-[130px] font-black leading-none opacity-[0.05] select-none z-0"
+                    style={{ color: project.color }}
                   >
-                    <svg
-                      width="16"
-                      height="16"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      className="group-hover:text-background transition-colors duration-300"
-                    >
-                      <path d="M7 17L17 7M17 7H7M17 7v10" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </motion.div>
+                    0{i + 1}
+                  </span>
                 </div>
 
-                {/* Large project number */}
-                <span
-                  className="absolute -bottom-6 -right-2 text-[120px] font-black leading-none opacity-[0.03] select-none"
-                  style={{ color: project.color }}
+                {/* 2. BACK FACE (Inside the physical cover) */}
+                <div 
+                  className="absolute inset-0 bg-neutral-900 border border-white/5 rounded-2xl shadow-inner flex flex-col justify-center overflow-hidden pointer-events-none"
+                  style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg) translateZ(1px)' }}
                 >
-                  0{i + 1}
-                </span>
+                  {/* Spine inner gradient effect */}
+                  <div className="absolute top-0 right-0 bottom-0 w-16 bg-gradient-to-l from-black/80 to-transparent z-10" />
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center opacity-10 grayscale blur-[2px]" 
+                    style={{ backgroundImage: `url(${project.image})` }} 
+                  />
+                  <div className="absolute inset-0 bg-black/60" />
+                  
+                  {/* Texture to look like book inside */}
+                  <div className="relative z-10 h-full w-full opacity-5"
+                    style={{ backgroundImage: 'repeating-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), repeating-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff)', backgroundSize: '10px 10px', backgroundPosition: '0 0, 5px 5px' }}
+                  />
+                </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
-    name: 'Renu Sahahi',
+    name: 'Renu Sahai',
     role: 'Home Owner',
     quote: 'Our house looks completely transformed thanks to Reliable Construction & Consultancy. The renovation was done with great care and professionalism. The team was polite, responsive, and committed to quality. Every detail was executed perfectly. We are truly satisfied and grateful for such outstanding work.',
     rating: 5,

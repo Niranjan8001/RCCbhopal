@@ -218,16 +218,9 @@ export default function ProjectShowcase() {
 
                           {/* Cover Content */}
                           <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
-                            <div className="w-16 h-16 sm:w-24 sm:h-24 relative mb-6 sm:mb-10 opacity-70 mix-blend-overlay drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
+                            <div className="w-32 h-32 sm:w-48 sm:h-48 relative opacity-70 mix-blend-overlay drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
                               <Image src="/logo.png" alt="RCC" fill className="object-contain" />
                             </div>
-                            <h2 
-                              className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-widest text-[#d4af37] text-center drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
-                              style={{ fontFamily: 'var(--font-serif)' }}
-                            >
-                              Our Projects
-                            </h2>
-                            <div className="w-12 sm:w-20 h-[2px] bg-[#d4af37] mt-8 opacity-40 shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
                           </div>
 
                           {/* Call to action arrow */}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
@@ -54,26 +54,48 @@ const projects = [
 
 export default function ProjectShowcase() {
   const [currentPage, setCurrentPage] = useState(0);
+  const [isClosing, setIsClosing] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const NUM_PROJECTS = projects.length;
+  const isLastPage = currentPage === NUM_PROJECTS;
+
+  const closeBookAndScroll = useCallback(() => {
+    if (isClosing) return;
+    setIsClosing(true);
+    setCurrentPage(0);
+    // Wait for close animation (1.2s) + 400ms breathing room, then scroll
+    setTimeout(() => {
+      document.body.style.overflow = '';
+      const estimator = document.getElementById('estimator');
+      if (estimator) {
+        estimator.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      setIsClosing(false);
+    }, 1600);
+  }, [isClosing]);
 
   useEffect(() => {
     // Lock scroll when book is fully open inside bounds
     if (currentPage > 0 && currentPage <= NUM_PROJECTS) {
       document.body.style.overflow = 'hidden';
-    } else {
+    } else if (!isClosing) {
       document.body.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
     };
-  }, [currentPage, NUM_PROJECTS]);
+  }, [currentPage, NUM_PROJECTS, isClosing]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isClosing) return;
       if (currentPage > 0 && currentPage <= NUM_PROJECTS) {
         if (e.key === 'ArrowRight') {
-          setCurrentPage((p) => Math.min(p + 1, NUM_PROJECTS));
+          if (isLastPage) {
+            closeBookAndScroll();
+          } else {
+            setCurrentPage((p) => Math.min(p + 1, NUM_PROJECTS));
+          }
         } else if (e.key === 'ArrowLeft') {
           setCurrentPage((p) => Math.max(p - 1, 0));
         } else if (e.key === 'Escape') {
@@ -83,7 +105,7 @@ export default function ProjectShowcase() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentPage, NUM_PROJECTS]);
+  }, [currentPage, NUM_PROJECTS, isLastPage, isClosing, closeBookAndScroll]);
 
   return (
     <section 
@@ -123,15 +145,31 @@ export default function ProjectShowcase() {
               Close Book
             </button>
             
-            <button
-              onClick={() => setCurrentPage((p) => Math.min(p + 1, NUM_PROJECTS))}
-              className={`btn-secondary !px-4 !py-3 md:!px-6 pointer-events-auto backdrop-blur-xl bg-white/5 border-white/10 ${
-                currentPage === NUM_PROJECTS ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              <span className="hidden sm:inline">Next Project →</span>
-              <span className="sm:hidden">→</span>
-            </button>
+            {isLastPage ? (
+              <motion.button
+                onClick={closeBookAndScroll}
+                className="btn-secondary !px-4 !py-3 md:!px-6 pointer-events-auto backdrop-blur-xl border-accent-yellow/40 text-accent-yellow"
+                animate={{
+                  boxShadow: [
+                    '0 0 8px rgba(255,214,10,0.15), 0 0 20px rgba(255,214,10,0.05)',
+                    '0 0 16px rgba(255,214,10,0.35), 0 0 40px rgba(255,214,10,0.12)',
+                    '0 0 8px rgba(255,214,10,0.15), 0 0 20px rgba(255,214,10,0.05)',
+                  ],
+                }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <span className="hidden sm:inline">Close Book ✦</span>
+                <span className="sm:hidden">✦</span>
+              </motion.button>
+            ) : (
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, NUM_PROJECTS))}
+                className="btn-secondary !px-4 !py-3 md:!px-6 pointer-events-auto backdrop-blur-xl bg-white/5 border-white/10"
+              >
+                <span className="hidden sm:inline">Next Project →</span>
+                <span className="sm:hidden">→</span>
+              </button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

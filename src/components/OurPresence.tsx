@@ -179,7 +179,7 @@ export default function OurPresence() {
 
                   {/* Get Directions */}
                   <a
-                    href="https://www.google.com/maps?q=23.2599,77.4126"
+                    href="https://www.google.com/maps?q=5G93%2BJF+Bhopal"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl bg-accent-blue/10 border border-accent-blue/20 text-accent-blue text-sm font-bold transition-all duration-300 hover:bg-accent-blue hover:text-white hover:shadow-[0_0_25px_rgba(10,132,255,0.3)] hover:scale-[1.02] active:scale-[0.98]"
@@ -208,10 +208,10 @@ export default function OurPresence() {
                         navigator.share({
                           title: 'RCC Bhopal',
                           text: 'Reliable Construction & Consultancy, Katara Hills, Bhopal',
-                          url: 'https://www.google.com/maps?q=23.2599,77.4126',
+                          url: 'https://www.google.com/maps?q=5G93%2BJF+Bhopal',
                         });
                       } else {
-                        navigator.clipboard.writeText('https://www.google.com/maps?q=23.2599,77.4126');
+                        navigator.clipboard.writeText('https://www.google.com/maps?q=5G93%2BJF+Bhopal');
                       }
                     }}
                     className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-muted text-sm font-bold transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-white/20 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
@@ -256,7 +256,7 @@ export default function OurPresence() {
                 {/* Google Maps Embed — exact coordinates, zoom 16 */}
                 <div className="w-full flex-1 min-h-[350px] md:min-h-[450px] relative overflow-hidden">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1832.5!2d77.4126!3d23.2599!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDE1JzM1LjYiTiA3N8KwMjQnNDUuNCJF!5e0!3m2!1sen!2sin!4v1712345678901!5m2!1sen!2sin"
+                    src="https://maps.google.com/maps?q=5G93%2BJF+Bhopal,+Madhya+Pradesh&t=&z=17&ie=UTF8&iwloc=&output=embed"
                     width="100%"
                     height="100%"
                     style={{
@@ -278,7 +278,7 @@ export default function OurPresence() {
                 <div className="px-6 py-3 flex items-center justify-between border-t border-white/5 bg-white/[0.02]">
                   <span className="text-xs text-muted">Reliable Construction &amp; Consultancy</span>
                   <a
-                    href="https://www.google.com/maps?q=23.2599,77.4126"
+                    href="https://www.google.com/maps?q=5G93%2BJF+Bhopal"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-xs text-accent-blue font-semibold hover:underline transition-colors"

@@ -345,7 +345,7 @@ export default function OurPresence() {
                 <div className="px-6 py-3 flex items-center justify-between border-t border-white/5 bg-white/[0.02]">
                   <span className="text-xs text-muted">Reliable Construction & Consultancy</span>
                   <a
-                    href="https://maps.google.com/?q=Bhopal,Madhya+Pradesh"
+                    href="https://share.google/alDl8H2wOJ1I4E36X"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-xs text-accent-blue font-semibold hover:underline transition-colors"

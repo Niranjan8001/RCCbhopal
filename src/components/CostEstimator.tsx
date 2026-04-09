@@ -230,8 +230,9 @@ export default function CostEstimator() {
                 >
                   <AnimatedNumber value={cost} />
                 </motion.span>
+                <span className="text-muted text-2xl ml-1">*</span>
               </div>
-              <p className="text-xs text-muted mt-4 leading-relaxed mb-8">
+              <p className="text-sm text-muted mt-4 leading-relaxed mb-8">
                 * This is an approximate estimate. Final cost may vary based on materials and specifications.
               </p>
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
 const navLinks = [
@@ -14,10 +14,21 @@ const navLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
   const bgOpacity = useTransform(scrollY, [0, 100], [0, 0.92]);
   const borderOpacity = useTransform(scrollY, [0, 100], [0, 0.1]);
   const blurAmount = useTransform(scrollY, [0, 100], [10, 40]);
+
+  // Hide on scroll down, show on scroll up
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 80) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
 
   useEffect(() => {
     if (isOpen) {
@@ -33,8 +44,8 @@ export default function Navbar() {
       <motion.nav
         className="fixed top-0 left-0 right-0 z-50 px-6 md:px-12"
         initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        animate={{ y: hidden && !isOpen ? -100 : 0 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       >
         <motion.div
           className="absolute inset-0"

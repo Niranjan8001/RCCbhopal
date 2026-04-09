@@ -5,6 +5,7 @@ import CostEstimator from '@/components/CostEstimator';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import Testimonials from '@/components/Testimonials';
 import AboutUs from '@/components/AboutUs';
+import OurPresence from '@/components/OurPresence';
 import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
 import CursorGlow from '@/components/CursorGlow';
@@ -21,6 +22,7 @@ export default function Home() {
       <CostEstimator />
       <ProcessTimeline />
       <Testimonials />
+      <OurPresence />
       <AboutUs />
       <FinalCTA />
       <Footer />

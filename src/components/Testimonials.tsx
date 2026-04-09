@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -60,6 +60,8 @@ export default function Testimonials() {
   const [loading, setLoading] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Simulated Mock Fetch exactly as you would implement the real API call
   useEffect(() => {
@@ -106,6 +108,31 @@ export default function Testimonials() {
     return () => ctx.revert();
   }, []);
 
+  // Auto-scroll carousel
+  const startAutoScroll = useCallback(() => {
+    if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current);
+    scrollIntervalRef.current = setInterval(() => {
+      if (carouselRef.current && !isPaused) {
+        const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+        const maxScroll = scrollWidth - clientWidth;
+        if (scrollLeft >= maxScroll - 10) {
+          carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          carouselRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+        }
+      }
+    }, 4000);
+  }, [isPaused]);
+
+  useEffect(() => {
+    if (!loading && reviews.length > 0) {
+      startAutoScroll();
+    }
+    return () => {
+      if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current);
+    };
+  }, [loading, reviews, startAutoScroll]);
+
   return (
     <section ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden" id="testimonials">
       
@@ -122,15 +149,18 @@ export default function Testimonials() {
           <span className="text-accent-red text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
             Google Reviews
           </span>
-          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-10">
+          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-4">
             What Clients
             <br />
             <span className="text-muted">Say</span>
           </h2>
+          <p className="text-muted max-w-md mx-auto text-sm md:text-base mb-10">
+            Real feedback from real homeowners and builders who trusted us.
+          </p>
           
           {/* Top Center Statistics */}
           <div className="flex flex-col items-center justify-center gap-4">
-            <div className="flex items-center gap-3 bg-white/5 backdrop-blur-md px-6 py-3 rounded-full border border-white/10 shadow-xl shadow-black/20">
+            <div className="flex items-center gap-3 glass-card-premium px-6 py-3 !rounded-full">
               <span className="text-3xl font-black text-white">4.8</span>
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map((s) => (
@@ -158,7 +188,7 @@ export default function Testimonials() {
 
         {/* Carousel Container */}
         <div className="relative w-full pb-8">
-          {/* Left/Right Fade Gradents for smooth masking */}
+          {/* Left/Right Fade Gradients for smooth masking */}
           <div className="absolute left-0 top-0 bottom-0 w-8 md:w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-8 md:w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
@@ -176,9 +206,11 @@ export default function Testimonials() {
               style={{
                 scrollBehavior: 'smooth',
                 WebkitOverflowScrolling: 'touch',
-                scrollbarWidth: 'none', // Firefox
-                msOverflowStyle: 'none',  // IE/Edge
               }}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+              onTouchStart={() => setIsPaused(true)}
+              onTouchEnd={() => setIsPaused(false)}
             >
               {reviews.map((review, idx) => (
                 <motion.div
@@ -189,7 +221,7 @@ export default function Testimonials() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: Math.min(idx * 0.1, 0.4), ease: "easeOut" }}
                 >
-                  <div className="glass-card-strong h-full p-8 md:p-10 rounded-[2rem] flex flex-col justify-between group transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-20px_rgba(255,214,10,0.2)] hover:border-accent-yellow/20 relative overflow-hidden">
+                  <div className="glass-card-strong h-full p-8 md:p-10 rounded-[2rem] flex flex-col justify-between group transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-20px_rgba(255,214,10,0.15)] hover:border-accent-yellow/20 relative overflow-hidden">
                     
                     {/* Inner glowing corner effect on hover */}
                     <div className="absolute -top-10 -right-10 w-24 h-24 bg-accent-yellow/20 rounded-full blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -215,7 +247,7 @@ export default function Testimonials() {
 
                       {/* Review Text */}
                       <p className="text-white/80 leading-relaxed mb-8 line-clamp-4 text-sm md:text-base selection:bg-accent-yellow/30 relative z-10">
-                        "{review.text}"
+                        &quot;{review.text}&quot;
                       </p>
                     </div>
 
@@ -246,13 +278,6 @@ export default function Testimonials() {
           )}
         </div>
       </div>
-
-      {/* Hide scrollbar utility styling internal to this component just to be safe */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `}} />
     </section>
   );
 }

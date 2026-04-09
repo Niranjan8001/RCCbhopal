@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -24,7 +24,8 @@ const PROJECT_LOCATIONS: ProjectLocation[] = [
 /* ── Stat items shown alongside trust text ── */
 const TRUST_STATS = [
   {
-    value: '50+',
+    value: 50,
+    suffix: '+',
     label: 'RCC Projects Completed',
     icon: (
       <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -33,7 +34,8 @@ const TRUST_STATS = [
     ),
   },
   {
-    value: '10+',
+    value: 10,
+    suffix: '+',
     label: 'Active Sites Across the City',
     icon: (
       <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -43,7 +45,8 @@ const TRUST_STATS = [
     ),
   },
   {
-    value: '100%',
+    value: 100,
+    suffix: '%',
     label: 'Trusted by Homeowners & Builders',
     icon: (
       <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -59,6 +62,51 @@ const STATUS_COLORS: Record<ProjectLocation['status'], string> = {
   active: '#FFD60A',
   upcoming: '#0A84FF',
 };
+
+/* ── Animated Counter Hook ── */
+function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const duration = 2000;
+          const startTime = performance.now();
+          
+          const animate = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.round(eased * value));
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [value]);
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {count}{suffix}
+    </span>
+  );
+}
 
 export default function OurPresence() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -185,14 +233,14 @@ export default function OurPresence() {
           {/* ─── Left: Trust Content ─── */}
           <div ref={leftRef} className="opacity-0">
             {/* Trust paragraph */}
-            <div className="glass-card p-8 md:p-10 mb-8 relative overflow-hidden group transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_-20px_rgba(10,132,255,0.15)]">
+            <div className="glass-card-premium p-8 md:p-10 mb-8 relative overflow-hidden group">
               {/* Subtle inner glow */}
               <div className="absolute -top-12 -right-12 w-32 h-32 bg-accent-blue/15 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
               <div className="relative z-10">
                 <h3 className="text-xl md:text-2xl font-bold mb-4 tracking-tight">
                   A Legacy of
-                  <span className="text-accent-blue"> Reliable Construction</span>
+                  <span className="text-accent-yellow"> Reliable Construction</span>
                 </h3>
                 <p className="text-muted text-sm md:text-base leading-relaxed mb-8">
                   With years of hands-on experience in RCC construction, we&apos;ve established a strong footprint
@@ -200,7 +248,7 @@ export default function OurPresence() {
                   and unwavering commitment to quality — from foundation to finish.
                 </p>
 
-                {/* ─── Trust Stats ─── */}
+                {/* ─── Trust Stats with Animated Counters ─── */}
                 <div className="space-y-5">
                   {TRUST_STATS.map((stat, i) => (
                     <div
@@ -218,7 +266,7 @@ export default function OurPresence() {
                       </div>
                       <div>
                         <span className="text-xl md:text-2xl font-black text-white tracking-tight">
-                          {stat.value}
+                          <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                         </span>
                         <span className="text-muted text-sm ml-2">
                           {stat.label}
@@ -255,10 +303,10 @@ export default function OurPresence() {
           <div ref={rightRef} className="opacity-0">
             <div className="relative group">
               {/* Animated glowing border */}
-              <div className="absolute -inset-[2px] rounded-[2rem] bg-gradient-to-br from-accent-blue/50 via-accent-yellow/30 to-accent-blue/50 opacity-40 group-hover:opacity-70 blur-[2px] transition-opacity duration-700 pointer-events-none" />
+              <div className="absolute -inset-[2px] rounded-[2rem] bg-gradient-to-br from-accent-yellow/40 via-accent-blue/30 to-accent-yellow/40 opacity-30 group-hover:opacity-60 blur-[2px] transition-opacity duration-700 pointer-events-none" />
 
               {/* Map container */}
-              <div className="relative glass-card-strong rounded-[2rem] overflow-hidden shadow-2xl shadow-black/40 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_30px_60px_-15px_rgba(10,132,255,0.2)]">
+              <div className="relative glass-card-strong rounded-[2rem] overflow-hidden shadow-2xl shadow-black/40 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_30px_60px_-15px_rgba(10,132,255,0.15)]">
                 {/* Map header bar */}
                 <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
                   <div className="flex items-center gap-3">
@@ -285,7 +333,7 @@ export default function OurPresence() {
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117063.53449498255!2d77.34525474132489!3d23.259329762207876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c428f8fd68fbd%3A0x2155716d572d4f8!2sBhopal%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1712345678901!5m2!1sen!2sin"
                     width="100%"
                     height="100%"
-                    style={{ border: 0, filter: 'invert(0.9) hue-rotate(180deg) saturate(0.3) brightness(0.7)' }}
+                    style={{ border: 0, filter: 'invert(0.92) hue-rotate(180deg) saturate(0.25) brightness(0.65) contrast(1.1)' }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
@@ -332,7 +380,7 @@ export default function OurPresence() {
                 <span className="text-[10px] text-muted uppercase tracking-wider font-medium">{loc.type}</span>
               </div>
 
-              <h4 className="text-sm font-bold text-white mb-1 tracking-tight group-hover/loc:text-accent-blue transition-colors duration-300">
+              <h4 className="text-sm font-bold text-white mb-1 tracking-tight group-hover/loc:text-accent-yellow transition-colors duration-300">
                 {loc.name}
               </h4>
               <p className="text-xs text-muted flex items-center gap-1.5">

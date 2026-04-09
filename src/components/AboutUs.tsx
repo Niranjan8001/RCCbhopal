@@ -11,10 +11,17 @@ export default function AboutUs() {
     offset: ['start end', 'end start'],
   });
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const y1 = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
     <section ref={sectionRef} className="py-32 px-6 relative overflow-hidden" id="about">
+      {/* Background ambience */}
+      <div className="absolute inset-0 pointer-events-none -z-10">
+        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-accent-yellow/5 rounded-full blur-[140px]" />
+        <div className="absolute bottom-1/3 left-1/4 w-[400px] h-[400px] bg-accent-blue/5 rounded-full blur-[120px]" />
+      </div>
+
       <div className="max-w-7xl mx-auto">
         
         {/* About RCC Content */}
@@ -25,24 +32,42 @@ export default function AboutUs() {
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.8 }}
           >
+            {/* Accent line */}
+            <div className="w-12 h-1 bg-accent-yellow rounded-full mb-6" />
+            
             <h2 className="text-sm font-bold tracking-[0.2em] text-accent-yellow uppercase mb-4">
               Our Vision
             </h2>
             <h3 className="text-4xl md:text-5xl font-black mb-6 leading-tight">
               Engineering <span className="text-muted text-glow-white">Excellence</span> Since 1991.
             </h3>
-            <p className="text-lg text-muted leading-relaxed">
+            <p className="text-lg text-muted leading-relaxed mb-8">
               Reliable Construction & Consultancy (RCC) is built on a foundation of trust, precision, 
               and uncompromising quality. Dominating the construction landscape since 1991 and formally established in 2024, 
               we have spent over three decades transforming urban landscapes 
               with iconic structures that blend visionary design with enduring structural integrity.
             </p>
+
+            {/* Years badge */}
+            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl glass-card-premium !rounded-full">
+              <span className="text-3xl font-black text-accent-yellow tabular-nums">30+</span>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold text-white">Years of Excellence</span>
+                <span className="text-xs text-muted">Building Trust Since 1991</span>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
             style={{ y: y1 }}
-            className="hidden lg:flex flex-row items-center justify-center gap-12 h-[500px] rounded-2xl bg-white/5 border border-white/10 relative px-8"
+            className="hidden lg:flex flex-row items-center justify-center gap-12 h-[500px] rounded-[2rem] bg-white/[0.03] border border-white/10 relative px-8"
           >
+            {/* Subtle background glow */}
+            <div className="absolute inset-0 rounded-[2rem] overflow-hidden">
+              <div className="absolute top-0 left-1/4 w-48 h-48 bg-accent-yellow/5 rounded-full blur-[80px]" />
+              <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-accent-blue/5 rounded-full blur-[80px]" />
+            </div>
+
             {/* Avatar 1 */}
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-yellow to-accent-red rounded-full blur-[20px] opacity-20 group-hover:opacity-60 transition-all duration-700 pointer-events-none" />
@@ -51,23 +76,25 @@ export default function AboutUs() {
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
                   <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 text-center px-4">
                     <p className="text-white font-bold text-lg tracking-wide">Sanjay Saxena</p>
+                    <p className="text-accent-yellow text-sm font-medium mt-1">Founder & CEO</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Avatar 2 */}
-            <div className="relative group">
+            <motion.div className="relative group" style={{ y: y2 }}>
               <div className="absolute inset-0 bg-gradient-to-br from-accent-blue to-accent-green rounded-full blur-[20px] opacity-20 group-hover:opacity-60 transition-all duration-700 pointer-events-none" />
               <div className="relative w-56 h-56 rounded-full overflow-hidden border-2 border-white/20 shadow-[0_0_30px_rgba(0,194,255,0.1)] transition-all duration-700 group-hover:scale-105 group-hover:border-accent-blue/50">
                 <Image src="/roshan.png" alt="Founder 2" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
                   <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 text-center px-4">
                     <p className="text-white font-bold text-lg tracking-wide">Roshan Saxena</p>
+                    <p className="text-accent-blue text-sm font-medium mt-1">Managing Director</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
 
@@ -78,13 +105,13 @@ export default function AboutUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6 }}
-            className="glass-card p-10 rounded-[2rem] relative group border border-white/5"
+            className="glass-card-premium p-10 rounded-[2rem] relative group border border-white/5"
           >
             <div className="absolute top-10 right-10 opacity-10 group-hover:opacity-30 transition-opacity">
               <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" className="text-accent-yellow"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
             </div>
             <p className="text-lg text-foreground font-medium mb-8 leading-relaxed relative z-10 italic">
-              "We didn't just want to build structures; we wanted to engineer legacies. Every project we undertake is a testament to our commitment to pushing the boundaries of what's possible in modern architecture."
+              &quot;We didn&apos;t just want to build structures; we wanted to engineer legacies. Every project we undertake is a testament to our commitment to pushing the boundaries of what&apos;s possible in modern architecture.&quot;
             </p>
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-yellow to-accent-red p-[2px] flex-shrink-0">
@@ -104,13 +131,13 @@ export default function AboutUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card p-10 rounded-[2rem] relative group border border-white/5"
+            className="glass-card-premium p-10 rounded-[2rem] relative group border border-white/5"
           >
             <div className="absolute top-10 right-10 opacity-10 group-hover:opacity-30 transition-opacity">
               <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" className="text-accent-yellow"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
             </div>
             <p className="text-lg text-foreground font-medium mb-8 leading-relaxed relative z-10 italic">
-              "True luxury lies in the details. From the foundation to the final finishes, our philosophy is rooted in uncompromising quality and a relentless pursuit of perfection for our clients."
+              &quot;True luxury lies in the details. From the foundation to the final finishes, our philosophy is rooted in uncompromising quality and a relentless pursuit of perfection for our clients.&quot;
             </p>
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-blue to-accent-green p-[2px] flex-shrink-0">
@@ -134,7 +161,7 @@ export default function AboutUs() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="glass-card rounded-[2rem] p-8 md:p-12 relative overflow-hidden group border border-white/10 bg-white/[0.02]">
+          <div className="glass-card-premium rounded-[2rem] p-8 md:p-12 relative overflow-hidden group border border-white/10 bg-white/[0.02]">
             <div className="absolute inset-0 bg-gradient-to-br from-accent-yellow/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             
             <div className="flex flex-col md:flex-row items-center md:items-center gap-8 text-center md:text-left relative z-10">
@@ -151,7 +178,7 @@ export default function AboutUs() {
                 <h3 className="text-3xl font-black mb-3 text-white">Niranjan Saxena</h3>
                 
                 <p className="text-lg text-muted leading-relaxed mb-6 font-medium">
-                  I'm Niranjan Saxena, a Full Stack Web Developer from Bhopal, Madhya Pradesh, focused on delivering high-quality, conversion-driven websites. I design and develop digital experiences that combine aesthetics with performance, helping businesses grow online with precision and reliability. From business websites to custom solutions, I ensure every project reflects professionalism, speed, and scalability.
+                  I&apos;m Niranjan Saxena, a Full Stack Web Developer from Bhopal, Madhya Pradesh, focused on delivering high-quality, conversion-driven websites. I design and develop digital experiences that combine aesthetics with performance, helping businesses grow online with precision and reliability. From business websites to custom solutions, I ensure every project reflects professionalism, speed, and scalability.
                 </p>
                 
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-6">

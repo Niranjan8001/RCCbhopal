@@ -1,15 +1,33 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
+import Image from 'next/image';
+
+const heroStats = [
+  { value: '30+', label: 'Years Experience' },
+  { value: '50+', label: 'Projects Delivered' },
+  { value: '100%', label: 'Client Trust' },
+];
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+
+  // Parallax: background moves slower than foreground
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 0.5], [0, -60]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -33,6 +51,15 @@ export default function HeroSection() {
           ctaRef.current.children,
           { y: 30, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.15, delay: 1 }
+        );
+      }
+
+      // Stats bar
+      if (statsRef.current) {
+        gsap.fromTo(
+          statsRef.current,
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 1.4 }
         );
       }
     }, sectionRef);
@@ -79,8 +106,26 @@ export default function HeroSection() {
       className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
       id="hero"
     >
-      {/* Animated gradient background */}
-      <div className="gradient-bg" />
+      {/* Background image with parallax */}
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={{ y: bgY }}
+      >
+        <Image
+          src="/hero-bg.png"
+          alt="Premium RCC construction"
+          fill
+          className="object-cover"
+          priority
+          quality={90}
+        />
+        {/* Dark overlay gradient - heavier at bottom for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/40" />
+      </motion.div>
+
+      {/* Animated gradient background (existing, now layered on top of image) */}
+      <div className="gradient-bg" style={{ opacity: 0.5 }} />
 
       {/* Radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-yellow/[0.03] rounded-full blur-[120px] pointer-events-none" />
@@ -90,7 +135,7 @@ export default function HeroSection() {
 
       {/* Grid overlay */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none opacity-[0.02]"
         style={{
           backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
@@ -98,7 +143,10 @@ export default function HeroSection() {
       />
 
       {/* Content */}
-      <div className="relative z-10 text-center max-w-5xl mx-auto px-6">
+      <motion.div
+        className="relative z-10 text-center max-w-5xl mx-auto px-6"
+        style={{ opacity: contentOpacity, y: contentY }}
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -136,7 +184,27 @@ export default function HeroSection() {
             View Our Work
           </a>
         </div>
-      </div>
+
+        {/* Floating Stats Bar */}
+        <div
+          ref={statsRef}
+          className="mt-16 opacity-0"
+        >
+          <div className="glass-card-premium inline-flex flex-wrap items-center justify-center gap-6 sm:gap-0 px-6 sm:px-0 py-5 sm:py-0 rounded-2xl sm:rounded-full">
+            {heroStats.map((stat, i) => (
+              <div
+                key={i}
+                className={`flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 ${
+                  i < heroStats.length - 1 ? 'sm:border-r sm:border-white/10' : ''
+                }`}
+              >
+                <span className="text-2xl sm:text-3xl font-black text-accent-yellow tabular-nums">{stat.value}</span>
+                <span className="text-xs sm:text-sm text-muted font-medium whitespace-nowrap">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div

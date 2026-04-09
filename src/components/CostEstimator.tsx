@@ -52,6 +52,23 @@ export default function CostEstimator() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Heading
+      gsap.fromTo(
+        '.estimator-heading',
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.estimator-heading',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+
       if (cardRef.current) {
         gsap.fromTo(
           cardRef.current,
@@ -82,22 +99,31 @@ export default function CostEstimator() {
 
   return (
     <section ref={sectionRef} className="section-padding relative" id="estimator">
+      {/* Background ambience */}
+      <div className="absolute inset-0 pointer-events-none -z-10">
+        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-accent-blue/5 rounded-full blur-[140px]" />
+        <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] bg-accent-yellow/5 rounded-full blur-[120px]" />
+      </div>
+
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 estimator-heading">
           <span className="text-accent-blue text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
             Estimator
           </span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-4">
             Instant Cost
             <br />
             <span className="text-muted">Calculator</span>
           </h2>
+          <p className="text-muted max-w-md mx-auto text-sm md:text-base">
+            Get an approximate project cost in seconds. Adjust area, tier, and build type.
+          </p>
         </div>
 
         {/* Estimator card */}
         <div ref={cardRef} className="max-w-2xl mx-auto opacity-0">
-          <div className="glass-card-strong p-8 sm:p-12 relative overflow-hidden">
+          <div className="glass-card-premium p-8 sm:p-12 relative overflow-hidden">
             {/* Background glow */}
             <div
               className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] opacity-10 transition-colors duration-500"
@@ -107,7 +133,12 @@ export default function CostEstimator() {
             {/* Area Slider */}
             <div className="mb-10 relative z-10">
               <div className="flex justify-between items-center mb-4">
-                <label className="text-sm font-medium text-muted">Project Area</label>
+                <label className="text-sm font-medium text-muted flex items-center gap-2">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="opacity-60">
+                    <path d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  Project Area
+                </label>
                 <span className="text-2xl font-bold">
                   <AnimatedNumber value={area} /> <span className="text-sm text-muted font-normal">sq ft</span>
                 </span>
@@ -191,7 +222,7 @@ export default function CostEstimator() {
             {/* Cost Display */}
             <div className="relative z-10 text-center pt-8 border-t border-white/10">
               <span className="text-sm text-muted block mb-2">Estimated Cost</span>
-              <div className="text-5xl sm:text-6xl font-black tracking-tight">
+              <div className="text-5xl sm:text-6xl font-black tracking-tight cost-glow">
                 <span className="text-muted text-3xl mr-1">₹</span>
                 <motion.span
                   style={{ color: tiers[tierIndex].color }}
@@ -200,9 +231,22 @@ export default function CostEstimator() {
                   <AnimatedNumber value={cost} />
                 </motion.span>
               </div>
-              <p className="text-xs text-muted mt-4 leading-relaxed">
+              <p className="text-xs text-muted mt-4 leading-relaxed mb-8">
                 * This is an approximate estimate. Final cost may vary based on materials and specifications.
               </p>
+
+              {/* CTA Button */}
+              <a
+                href="https://wa.me/917987900965?text=Hi%2C%20I%20need%20a%20cost%20estimate%20for%20my%20project"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary !px-8 !py-4 !text-base"
+              >
+                <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Get Detailed Quote
+              </a>
             </div>
           </div>
         </div>

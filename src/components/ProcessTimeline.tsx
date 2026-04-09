@@ -119,17 +119,26 @@ export default function ProcessTimeline() {
 
   return (
     <section ref={sectionRef} className="section-padding relative" id="process">
+      {/* Background ambience */}
+      <div className="absolute inset-0 pointer-events-none -z-10">
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent-green/5 rounded-full blur-[140px]" />
+        <div className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] bg-accent-yellow/5 rounded-full blur-[120px]" />
+      </div>
+
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-20 process-heading">
           <span className="text-accent-green text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
             Our Process
           </span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-4">
             From Vision
             <br />
             <span className="text-muted">To Reality</span>
           </h2>
+          <p className="text-muted max-w-md mx-auto text-sm md:text-base">
+            A proven 4-step approach that turns your dream into a landmark.
+          </p>
         </div>
 
         {/* Timeline */}
@@ -140,9 +149,8 @@ export default function ProcessTimeline() {
             preserveAspectRatio="none"
           >
             <path
-              ref={lineRef}
               d={`M 0.5 0 L 0.5 ${steps.length * 300}`}
-              stroke="rgba(255,255,255,0.15)"
+              stroke="rgba(255,255,255,0.08)"
               strokeWidth="1"
               fill="none"
             />
@@ -164,6 +172,9 @@ export default function ProcessTimeline() {
             </defs>
           </svg>
 
+          {/* Mobile connecting dots */}
+          <div className="md:hidden absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-accent-yellow via-accent-blue via-accent-green to-accent-red opacity-20" />
+
           {/* Steps */}
           <div className="space-y-20 md:space-y-32">
             {steps.map((step, i) => (
@@ -176,7 +187,18 @@ export default function ProcessTimeline() {
               >
                 {/* Content card */}
                 <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                  <div className="glass-card p-8 relative overflow-hidden">
+                  <div className="glass-card p-8 md:p-10 relative overflow-hidden group transition-all duration-500 hover:-translate-y-1"
+                    style={{
+                      boxShadow: 'none',
+                      transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 50px -20px ${step.color}20`;
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                    }}
+                  >
                     <div
                       className="absolute inset-0 opacity-5"
                       style={{ background: `radial-gradient(circle at ${i % 2 === 0 ? 'right' : 'left'} center, ${step.color}, transparent 70%)` }}
@@ -196,7 +218,7 @@ export default function ProcessTimeline() {
 
                 {/* Center icon */}
                 <div
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 relative z-10"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-500 hover:scale-110"
                   style={{
                     background: `${step.color}15`,
                     border: `1px solid ${step.color}30`,

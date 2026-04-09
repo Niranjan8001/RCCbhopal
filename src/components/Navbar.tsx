@@ -9,13 +9,15 @@ const navLinks = [
   { label: 'Estimator', href: '#estimator' },
   { label: 'Process', href: '#process' },
   { label: 'Testimonials', href: '#testimonials' },
+  { label: 'About', href: '#about' },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { scrollY } = useScroll();
-  const bgOpacity = useTransform(scrollY, [0, 100], [0, 0.85]);
+  const bgOpacity = useTransform(scrollY, [0, 100], [0, 0.92]);
   const borderOpacity = useTransform(scrollY, [0, 100], [0, 0.1]);
+  const blurAmount = useTransform(scrollY, [0, 100], [10, 40]);
 
   useEffect(() => {
     if (isOpen) {
@@ -35,10 +37,12 @@ export default function Navbar() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <motion.div
-          className="absolute inset-0 backdrop-blur-2xl"
+          className="absolute inset-0"
           style={{
             backgroundColor: `rgba(10, 10, 10, ${bgOpacity})`,
             borderBottom: `1px solid rgba(255, 255, 255, ${borderOpacity})`,
+            backdropFilter: `blur(${blurAmount}px)`,
+            WebkitBackdropFilter: `blur(${blurAmount}px)`,
           }}
         />
         <div className="relative max-w-7xl mx-auto flex items-center justify-between h-20">
@@ -125,7 +129,7 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 30 }}
-                transition={{ delay: 0.35, duration: 0.4 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
                 onClick={() => setIsOpen(false)}
               >
                 Get a Quote

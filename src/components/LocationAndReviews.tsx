@@ -1,10 +1,12 @@
+
+
+'use client';
+
 declare global {
   interface Window {
     google: any;
   }
 }
-
-'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';

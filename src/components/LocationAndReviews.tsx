@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
@@ -102,7 +108,7 @@ export default function LocationAndReviews() {
     // Declare the initialize function to run once script is loaded
     const initGoogleApis = () => {
       if (!window.google) return;
-      
+
       try {
         // 1. Initialize Map
         const map = new window.google.maps.Map(mapElementRef.current!, {
@@ -111,7 +117,7 @@ export default function LocationAndReviews() {
           styles: darkMapStyles,
           disableDefaultUI: true, // Disable all default controls
           zoomControl: true, // Re-enable just zoom
-          mapId: 'rcc_premium_map_style', 
+          mapId: 'rcc_premium_map_style',
         });
 
         // 2. Add Custom Marker
@@ -128,7 +134,7 @@ export default function LocationAndReviews() {
         const placeId = process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID;
         if (placeId) {
           const service = new window.google.maps.places.PlacesService(map);
-          
+
           service.getDetails({
             placeId: placeId,
             fields: ['name', 'rating', 'user_ratings_total', 'reviews']
@@ -137,7 +143,7 @@ export default function LocationAndReviews() {
               // Ensure we sort by highest rated reviews or simply use as is (API returns top)
               // Only taking reviews with text
               const validReviews = place.reviews?.filter((r: any) => r.text && r.text.length > 5) || [];
-              
+
               setPlaceData({
                 name: place.name || 'RCC',
                 rating: place.rating || 0,
@@ -160,7 +166,7 @@ export default function LocationAndReviews() {
         console.warn("Google Maps API key missing.");
         return;
       }
-      
+
       const script = document.createElement('script');
       script.id = 'google-maps-script';
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&loading=async`;
@@ -171,7 +177,7 @@ export default function LocationAndReviews() {
     } else if (window.google) {
       initGoogleApis();
     }
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -217,9 +223,9 @@ export default function LocationAndReviews() {
           <div ref={mapContainerRef} className="lg:col-span-7 h-[500px] lg:h-auto min-h-[500px] opacity-0 flex flex-col relative group">
             {/* Ambient Background Glow */}
             <div className="absolute -inset-1 bg-gradient-to-br from-accent-yellow/20 via-transparent to-accent-blue/20 rounded-[2rem] blur opacity-40 group-hover:opacity-70 transition duration-1000"></div>
-            
+
             <div className="relative glass-card-premium w-full h-full flex flex-col overflow-hidden !rounded-[2rem]">
-              
+
               {/* Card Header */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/40 backdrop-blur-md relative z-10">
                 <div className="flex items-center gap-3">
@@ -283,18 +289,18 @@ export default function LocationAndReviews() {
                 </div>
               ) : placeData ? (
                 <div className="flex flex-col h-full z-10 relative">
-                  
+
                   {/* Google Business Header Info */}
                   <div className="flex flex-col items-center text-center pb-8 border-b border-white/5 mb-8 shrink-0">
                     <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4 border border-white/10 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
                       {/* Google G Logo icon */}
                       <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-                        <path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z"/>
+                        <path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z" />
                       </svg>
                     </div>
-                    
+
                     <h3 className="text-xl font-bold text-white mb-2">{placeData.name}</h3>
-                    
+
                     <div className="flex items-center gap-3">
                       <span className="text-4xl font-black text-white">{placeData.rating.toFixed(1)}</span>
                       <div className="flex flex-col text-left gap-1">
@@ -311,7 +317,7 @@ export default function LocationAndReviews() {
                   </div>
 
                   {/* Reviews Presenter Carousel */}
-                  <div 
+                  <div
                     className="flex-grow flex flex-col relative"
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => setIsPaused(false)}
@@ -320,7 +326,7 @@ export default function LocationAndReviews() {
                   >
                     {/* Quotation Marks Background */}
                     <span className="absolute -top-4 -left-2 text-6xl text-white/[0.03] font-serif leading-none select-none pointer-events-none">"</span>
-                    
+
                     <div className="relative h-[250px] w-full mt-4">
                       <AnimatePresence mode="wait">
                         {placeData.reviews.length > 0 && (
@@ -335,12 +341,12 @@ export default function LocationAndReviews() {
                             <p className="text-white/90 text-sm md:text-base leading-relaxed line-clamp-6 italic">
                               "{placeData.reviews[activeReviewIndex].text}"
                             </p>
-                            
+
                             <div className="mt-auto flex items-center gap-4 pt-4">
-                               <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 ring-2 ring-white/5">
+                              <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 ring-2 ring-white/5">
                                 {/* NextJS image unoptimized export requires direct <img> for dynamic external urls */}
-                                <img 
-                                  src={placeData.reviews[activeReviewIndex].profile_photo_url} 
+                                <img
+                                  src={placeData.reviews[activeReviewIndex].profile_photo_url}
                                   alt={placeData.reviews[activeReviewIndex].author_name}
                                   className="w-full h-full object-cover"
                                 />
@@ -387,7 +393,7 @@ export default function LocationAndReviews() {
                 </div>
               ) : (
                 <div className="flex-grow flex items-center justify-center text-muted text-sm text-center">
-                  Error loading places data.<br/>Verify API key restrictions.
+                  Error loading places data.<br />Verify API key restrictions.
                 </div>
               )}
             </div>

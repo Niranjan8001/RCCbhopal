@@ -3,6 +3,7 @@
 declare global {
   interface Window {
     google: any;
+    gm_authFailure: () => void;
   }
 }
 
@@ -58,7 +59,7 @@ export default function LocationAndReviews() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapElementRef = useRef<HTMLDivElement>(null);
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null); // To prevent multiple instantiations
+  const mapInstanceRef = useRef<any>(null);
 
   // Robust State Management
   const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false);
@@ -72,7 +73,18 @@ export default function LocationAndReviews() {
 
   const coordinates = { lat: 23.2599, lng: 77.4126 }; 
 
-  // --- 1. GSAP Layout Animations ---
+  // --- 1. Global Auth Failure Handling (CRITICAL FOR MAP ERRORS) ---
+  useEffect(() => {
+    // If billing is disabled, keys are invalid, or domain is restricted, Google calls this global function silently.
+    window.gm_authFailure = () => {
+      console.error("Google Maps Authentication Failure: Check API Key, Billing, and Referrer Restrictions.");
+      setApiError(true);
+      setLoadingConfig({ map: false, reviews: false });
+      setPlaceData(FALLBACK_DATA);
+    };
+  }, []);
+
+  // --- 2. GSAP Layout Animations ---
   useEffect(() => {
     const ctx = gsap.context(() => {
       if (headingRef.current) {
@@ -97,7 +109,7 @@ export default function LocationAndReviews() {
     return () => ctx.revert();
   }, []);
 
-  // --- 2. Google Maps Dark Theme ---
+  // --- 3. Google Maps Dark Theme ---
   const darkMapStyles = [
     { elementType: "geometry", stylers: [{ color: "#212121" }] },
     { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
@@ -112,7 +124,7 @@ export default function LocationAndReviews() {
     { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#3d3d3d" }] }
   ];
 
-  // --- 3. Places API Fetching ---
+  // --- 4. Places API Fetching ---
   const fetchReviews = useCallback((map: any) => {
     const placeId = process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID;
     if (!placeId || !window.google?.maps?.places) {
@@ -128,6 +140,9 @@ export default function LocationAndReviews() {
         placeId: placeId,
         fields: ['name', 'rating', 'user_ratings_total', 'reviews']
       }, (place: any, status: any) => {
+        // Double check we haven't hit auth failures in the background
+        if (apiError) return; 
+
         if (status === window.google.maps.places.PlacesServiceStatus.OK && place) {
           const validReviews = place.reviews?.filter((r: any) => r.text && r.text.trim().length > 5) || [];
           if (validReviews.length > 0) {
@@ -141,7 +156,7 @@ export default function LocationAndReviews() {
             setPlaceData(FALLBACK_DATA);
           }
         } else {
-          setPlaceData(FALLBACK_DATA); // API hit but failed/no data
+          setPlaceData(FALLBACK_DATA);
         }
         setLoadingConfig(prev => ({ ...prev, reviews: false }));
       });
@@ -150,18 +165,18 @@ export default function LocationAndReviews() {
       setPlaceData(FALLBACK_DATA);
       setLoadingConfig(prev => ({ ...prev, reviews: false }));
     }
-  }, []);
+  }, [apiError]);
 
-  // --- 4. Safe Map Initialization ---
+  // --- 5. Safe Map Initialization ---
   const initMap = useCallback(() => {
-    if (!window.google || !mapElementRef.current || mapInstanceRef.current) return;
+    if (!window.google || !mapElementRef.current || mapInstanceRef.current || apiError) return;
 
     try {
       const map = new window.google.maps.Map(mapElementRef.current, {
         center: coordinates,
         zoom: 16,
         styles: darkMapStyles,
-        disableDefaultUI: true, // Disable clutter
+        disableDefaultUI: true, // Disable clutter but keep watermark
         zoomControl: true, // Allow user zooming
         mapId: 'rcc_premium_map_style', 
       });
@@ -183,30 +198,29 @@ export default function LocationAndReviews() {
       console.error("Failed to initialize map:", error);
       setApiError(true);
       setLoadingConfig(prev => ({ ...prev, map: false }));
-      setPlaceData(FALLBACK_DATA); // Serve offline reviews if map completely fails
+      setPlaceData(FALLBACK_DATA); 
       setLoadingConfig(prev => ({ ...prev, reviews: false }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchReviews]);
+  }, [fetchReviews, apiError]);
 
-  // Wait for Google API to declare loaded state before running initialization
+  // Wait for Google API to declare loaded state
   useEffect(() => {
-    if (isGoogleApiLoaded) {
-      // Small timeout to ensure DOM is fully ready for map injection
+    if (isGoogleApiLoaded && !apiError) {
       const t = setTimeout(() => { initMap(); }, 100);
       return () => clearTimeout(t);
     }
-  }, [isGoogleApiLoaded, initMap]);
+  }, [isGoogleApiLoaded, initMap, apiError]);
 
-  // Fallback trigger if API loads but throws silent network error
+  // Fallback trigger if API loads but throws script tag network error
   useEffect(() => {
     if (apiError) {
-      setLoadingConfig(prev => ({ ...prev, map: false, reviews: false }));
+      setLoadingConfig({ map: false, reviews: false });
       setPlaceData(FALLBACK_DATA);
     }
   }, [apiError]);
 
-  // --- 5. Review Carousel Auto-Advance ---
+  // --- 6. Review Carousel Auto-Advance ---
   useEffect(() => {
     if (!placeData?.reviews?.length || isPaused) return;
 
@@ -219,15 +233,14 @@ export default function LocationAndReviews() {
 
   return (
     <>
-      {/* 
-        IMPORTANT: Next.js script loading strategy setup.
-        Loads Google API safely without blocking Next.js renders.
-      */}
       <Script
         src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
         strategy="afterInteractive"
         onLoad={() => setIsGoogleApiLoaded(true)}
-        onError={() => setApiError(true)}
+        onError={() => {
+          console.error("Google Maps JS file failed to load completely.");
+          setApiError(true);
+        }}
       />
 
       <section ref={sectionRef} className="section-padding relative overflow-hidden" id="visit-us">
@@ -257,15 +270,15 @@ export default function LocationAndReviews() {
             
             {/* --- LEFT: MAP CONTAINER --- */}
             <div ref={mapContainerRef} className="lg:col-span-7 h-[500px] lg:h-auto min-h-[500px] opacity-0 flex flex-col relative group">
-              <div className="absolute -inset-1 bg-gradient-to-br from-accent-yellow/20 via-transparent to-accent-blue/20 rounded-[2rem] blur opacity-40 group-hover:opacity-70 transition duration-1000"></div>
+              <div className="absolute -inset-1 bg-gradient-to-br from-[#4285F4]/20 via-transparent to-[#34A853]/20 rounded-[2rem] blur opacity-40 group-hover:opacity-70 transition duration-1000"></div>
               
               <div className="relative glass-card-premium w-full h-full flex flex-col overflow-hidden !rounded-[2rem]">
                 
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/40 backdrop-blur-md relative z-10">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-accent-blue/10 flex items-center justify-center">
-                      <svg width="16" height="16" fill="none" stroke="#0A84FF" strokeWidth="2" viewBox="0 0 24 24">
+                    <div className="w-8 h-8 rounded-lg bg-[#4285F4]/10 flex items-center justify-center">
+                      <svg width="16" height="16" fill="none" stroke="#4285F4" strokeWidth="2" viewBox="0 0 24 24">
                         <path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" strokeLinecap="round" strokeLinejoin="round" />
                         <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
@@ -281,16 +294,21 @@ export default function LocationAndReviews() {
                 <div className="w-full flex-grow relative bg-[#121212]">
                   {loadingConfig.map && !apiError && (
                     <div className="absolute inset-0 flex items-center justify-center z-20">
-                      <div className="w-10 h-10 border-4 border-white/10 border-t-accent-blue rounded-full animate-spin"></div>
+                      <div className="w-10 h-10 border-4 border-white/10 border-t-[#4285F4] rounded-full animate-spin"></div>
                     </div>
                   )}
                   {apiError && (
-                    <div className="absolute inset-0 flex items-center justify-center z-20 text-muted bg-[#121212]">
-                      <p className="text-center">Map failed to load.<br/>Please check your connection.</p>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-[#121212]">
+                       <svg className="w-12 h-12 mb-4 opacity-50" viewBox="0 0 48 48">
+                         <path fill="#757575" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20c11 0 20-8.955 20-20C44 22.659 43.862 21.35 43.611 20.083z" />
+                       </svg>
+                       <p className="text-center text-muted font-medium">Map currently unavailable.</p>
+                       <p className="text-center text-[11px] text-muted max-w-[200px] mt-2">Checking API permissions and billing settings.</p>
                     </div>
                   )}
+                  {/* The Map Div. We leave bottom 30px without dense gradient so Google logo is clickable/accessible */}
                   <div ref={mapElementRef} className="w-full h-full absolute inset-0 mix-blend-screen" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" style={{ height: '50%', top: '0%' }} />
                 </div>
 
                 {/* Footer Action */}
@@ -313,7 +331,7 @@ export default function LocationAndReviews() {
             {/* --- RIGHT: REVIEWS CONTAINER --- */}
             <div ref={reviewsContainerRef} className="lg:col-span-5 opacity-0 flex flex-col h-full">
               <div className="glass-card-premium w-full h-full p-8 flex flex-col !rounded-[2rem] relative group overflow-hidden">
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent-yellow/10 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#FBBC05]/10 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
                 {loadingConfig.reviews ? (
                   /* Loading Skeletons */
@@ -326,18 +344,26 @@ export default function LocationAndReviews() {
                   /* Render Reviews */
                   <div className="flex flex-col h-full z-10 relative">
                     <div className="flex flex-col items-center text-center pb-6 border-b border-white/5 shrink-0">
-                      <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-3">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                          <path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z"/>
+                      
+                      {/* Official Google G Logo */}
+                      <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center mb-3 shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="28px" height="28px">
+                          <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20c11 0 20-8.955 20-20C44 22.659 43.862 21.35 43.611 20.083z" />
+                          <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C16.318 4 9.656 8.337 6.306 14.691z" />
+                          <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.222 0-9.653-3.34-11.124-7.868l-6.529 5.044C9.646 39.695 16.31 44 24 44z" />
+                          <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571 c.001-.001.002-.001.003-.002l6.19 5.238C36.971 39.205 44 34 44 24C44 22.659 43.862 21.35 43.611 20.083z" />
                         </svg>
                       </div>
+                      
                       <h3 className="text-lg font-bold text-white mb-2">{placeData.name}</h3>
                       <div className="flex items-center gap-3">
                         <span className="text-3xl font-black text-white">{placeData.rating.toFixed(1)}</span>
                         <div className="flex flex-col text-left gap-1">
+                          
+                          {/* Authentic Google Stars Color #FBBC04 */}
                           <div className="flex gap-0.5">
                             {[1, 2, 3, 4, 5].map((s) => (
-                              <svg key={s} width="14" height="14" viewBox="0 0 24 24" fill={s <= Math.round(placeData.rating) ? "#FFD60A" : "#333"}>
+                              <svg key={s} width="16" height="16" viewBox="0 0 24 24" fill={s <= Math.round(placeData.rating) ? "#FBBC04" : "#e0e0e0"}>
                                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                               </svg>
                             ))}
@@ -372,7 +398,7 @@ export default function LocationAndReviews() {
                               </p>
                               
                               <div className="mt-auto flex items-center gap-3 pt-4 border-t border-white/5">
-                                <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 ring-2 ring-white/5 shrink-0">
+                                <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 ring-2 ring-[#4285F4]/30 shrink-0">
                                   <img 
                                     src={placeData.reviews[activeReviewIndex].profile_photo_url} 
                                     alt={placeData.reviews[activeReviewIndex].author_name}
@@ -395,7 +421,7 @@ export default function LocationAndReviews() {
                             <button
                               key={idx}
                               onClick={() => setActiveReviewIndex(idx)}
-                              className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeReviewIndex ? 'w-6 bg-accent-yellow' : 'w-2 bg-white/20 hover:bg-white/40'}`}
+                              className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeReviewIndex ? 'w-6 bg-[#4285F4]' : 'w-2 bg-white/20 hover:bg-white/40'}`}
                               aria-label={`Go to review ${idx + 1}`}
                             />
                           ))}
@@ -403,14 +429,18 @@ export default function LocationAndReviews() {
                       )}
                     </div>
 
-                    <div className="mt-6 shrink-0">
+                    {/* Google Attribution & Call To Action */}
+                    <div className="mt-6 shrink-0 flex flex-col items-center gap-3">
+                      <div className="text-[10px] text-muted font-medium flex items-center gap-1">
+                        Powered by <strong className="text-white">Google</strong>
+                      </div>
                       <a
                         href={process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID ? `https://search.google.com/local/reviews?placeid=${process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID}` : '#'}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full flex items-center justify-center py-3.5 rounded-xl border border-white/10 bg-white/5 text-white text-sm font-bold transition-all hover:bg-white/10 hover:border-white/20"
+                        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl border border-white/10 bg-white/5 text-white text-sm font-bold transition-all hover:bg-[#4285F4]/10 hover:border-[#4285F4]/30 hover:text-[#4285F4]"
                       >
-                        Read All on Google
+                        Read more reviews on Google
                       </a>
                     </div>
                   </div>

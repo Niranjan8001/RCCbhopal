@@ -3,9 +3,8 @@ import HeroSection from '@/components/HeroSection';
 import ProjectShowcase from '@/components/ProjectShowcase';
 import CostEstimator from '@/components/CostEstimator';
 import ProcessTimeline from '@/components/ProcessTimeline';
-import Testimonials from '@/components/Testimonials';
+import LocationAndReviews from '@/components/LocationAndReviews';
 import AboutUs from '@/components/AboutUs';
-import OurPresence from '@/components/OurPresence';
 import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
 import CursorGlow from '@/components/CursorGlow';
@@ -31,10 +30,7 @@ export default function Home() {
       <ProcessTimeline />
 
       <div className="section-divider" />
-      <Testimonials />
-
-      <div className="section-divider" />
-      <OurPresence />
+      <LocationAndReviews />
 
       <div className="section-divider" />
       <AboutUs />

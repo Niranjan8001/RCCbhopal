@@ -122,10 +122,10 @@ export default function Navbar() {
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  className="text-3xl font-bold text-foreground hover:text-accent-yellow transition-colors"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 30 }}
+                  className="text-3xl font-bold text-foreground hover:text-accent-yellow transition-colors flex items-center justify-center min-h-[44px] py-2 w-full"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 50 }}
                   transition={{ delay: i * 0.08, duration: 0.4 }}
                   onClick={() => setIsOpen(false)}
                 >
@@ -136,11 +136,11 @@ export default function Navbar() {
                 href="https://wa.me/917987900965?text=Hello%20RCC,%20I%20want%20to%20know%20about%20your%20services"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary mt-4"
+                className="btn-primary mt-6 min-h-[44px] w-[80vw] mx-auto text-center justify-center"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 30 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
                 onClick={() => setIsOpen(false)}
               >
                 Get a Quote

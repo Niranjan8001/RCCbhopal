@@ -71,7 +71,7 @@ export default function LocationAndReviews() {
   const [activeReviewIndex, setActiveReviewIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  const coordinates = { lat: 23.2599, lng: 77.4126 }; 
+  const coordinates = { lat: 23.19777, lng: 77.46467 }; // Exact Katara Hills (5G93+JF)
 
   // --- 1. Global Auth Failure Handling (CRITICAL FOR MAP ERRORS) ---
   useEffect(() => {
@@ -178,6 +178,7 @@ export default function LocationAndReviews() {
         styles: darkMapStyles,
         disableDefaultUI: true, // Disable clutter but keep watermark
         zoomControl: true, // Allow user zooming
+        gestureHandling: "cooperative", // Prevents getting stuck scrolling on mobile
         mapId: 'rcc_premium_map_style', 
       });
       
@@ -314,10 +315,10 @@ export default function LocationAndReviews() {
                 {/* Footer Action */}
                 <div className="px-6 py-5 border-t border-white/5 bg-black/40 backdrop-blur-md relative z-10">
                   <a
-                    href="https://www.google.com/maps/dir/?api=1&destination=23.2599,77.4126"
+                    href="https://www.google.com/maps/dir/?api=1&destination=23.19777,77.46467"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-accent-blue/10 border border-accent-blue/20 text-accent-blue text-sm font-bold transition-all duration-300 hover:bg-accent-blue hover:text-white hover:-translate-y-0.5"
+                    className="w-full flex items-center justify-center gap-2 px-6 py-4 min-h-[44px] rounded-xl bg-accent-blue/10 border border-accent-blue/20 text-accent-blue text-sm md:text-base font-bold transition-all duration-300 hover:bg-accent-blue hover:text-white hover:-translate-y-0.5"
                   >
                     <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path d="M13 5l7 7-7 7M5 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />

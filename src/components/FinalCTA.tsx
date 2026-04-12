@@ -77,13 +77,13 @@ export default function FinalCTA() {
             ✦ Free consultation for projects above ₹50 Lakhs
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 cursor-pointer relative z-10">
-            <a href="https://wa.me/917987900965?text=Hello%20RCC,%20I%20want%20to%20know%20about%20your%20services" target="_blank" rel="noopener noreferrer" className="btn-primary pulse-glow text-lg !px-12 !py-5">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 cursor-pointer relative z-10 w-full px-4 sm:px-0">
+            <a href="https://wa.me/917987900965?text=Hello%20RCC,%20I%20want%20to%20know%20about%20your%20services" target="_blank" rel="noopener noreferrer" className="btn-primary pulse-glow text-lg !px-12 !py-5 w-full sm:w-auto min-h-[44px]">
               Contact Us Today
             </a>
           </div>
 
-          <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-muted relative z-10">
+          <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-sm text-muted relative z-10">
             <div className="flex items-center gap-2">
               <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />

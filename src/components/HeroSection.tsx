@@ -173,14 +173,14 @@ export default function HeroSection() {
           that stand the test of time.
         </p>
 
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#estimator" className="btn-primary">
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 sm:px-0">
+          <a href="#estimator" className="btn-primary w-full sm:w-auto min-h-[44px]">
             <span>Get Free Estimate</span>
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
-          <a href="#projects" className="btn-secondary">
+          <a href="#projects" className="btn-secondary w-full sm:w-auto min-h-[44px]">
             View Our Work
           </a>
         </div>

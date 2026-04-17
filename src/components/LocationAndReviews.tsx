@@ -176,10 +176,9 @@ export default function LocationAndReviews() {
         center: coordinates,
         zoom: 16,
         styles: darkMapStyles,
-        disableDefaultUI: true, // Disable clutter but keep watermark
-        zoomControl: true, // Allow user zooming
-        gestureHandling: "cooperative", // Prevents getting stuck scrolling on mobile
-        mapId: 'rcc_premium_map_style', 
+        disableDefaultUI: true,
+        zoomControl: true,
+        gestureHandling: "cooperative",
       });
       
       mapInstanceRef.current = map;
@@ -308,7 +307,7 @@ export default function LocationAndReviews() {
                     </div>
                   )}
                   {/* The Map Div. We leave bottom 30px without dense gradient so Google logo is clickable/accessible */}
-                  <div ref={mapElementRef} className="w-full h-full absolute inset-0 mix-blend-screen" />
+                  <div ref={mapElementRef} className="w-full h-full absolute inset-0" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" style={{ height: '50%', top: '0%' }} />
                 </div>
 

@@ -350,3 +350,259 @@ input[type="range"]::-moz-range-thumb:hover {
 .cost-glow {
   animation: costPulse 3s ease-in-out infinite;
 }
+
+/* =================================================================
+   MOBILE RESPONSIVE OVERRIDES — max-width: 768px ONLY
+   Desktop remains 100% untouched.
+   ================================================================= */
+@media (max-width: 768px) {
+
+  /* ===== 1. HEADER FIX ===== */
+  /* Reduce header height on mobile */
+  nav .max-w-7xl,
+  nav > div > div {
+    height: 60px !important;
+  }
+
+  /* Reduce nav horizontal padding */
+  nav.fixed {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Logo sizing */
+  nav img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  nav a > span {
+    font-size: 17px !important;
+  }
+
+  /* "Get a Quote" button in mobile menu — smaller, pill-shaped */
+  nav ~ div .btn-primary,
+  .fixed.z-40 .btn-primary {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    min-height: 40px !important;
+  }
+
+  /* Hamburger button — ensure proper spacing */
+  nav button[aria-label="Toggle menu"] {
+    width: 44px;
+    height: 44px;
+    margin-left: 8px;
+  }
+
+  /* ===== 2. HERO TEXT FIX ===== */
+  /* Main heading */
+  #hero h1 {
+    font-size: 30px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 20px !important;
+    padding: 0 8px;
+  }
+
+  /* Badge above heading */
+  #hero .inline-flex.items-center.gap-2 {
+    margin-bottom: 20px !important;
+    padding: 6px 14px !important;
+  }
+  #hero .inline-flex.items-center.gap-2 span.text-sm {
+    font-size: 12px !important;
+  }
+
+  /* Subtext paragraph */
+  #hero p {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+    margin-bottom: 32px !important;
+    padding: 0 16px;
+    max-width: 100% !important;
+  }
+
+  /* Hero content container — consistent padding */
+  #hero > div > div {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* ===== 3. BUTTONS (CRITICAL FIX) ===== */
+  /* CTA button container */
+  #hero .flex.flex-col {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  /* Both CTA buttons — full-width, centered */
+  #hero .btn-primary {
+    width: 92% !important;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 14px 24px !important;
+    font-size: 16px !important;
+    min-height: 50px !important;
+    justify-content: center;
+  }
+
+  #hero .btn-secondary {
+    width: 92% !important;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 14px 24px !important;
+    font-size: 16px !important;
+    min-height: 50px !important;
+    border-width: 1.5px !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    justify-content: center;
+  }
+
+  /* ===== 4. BACKGROUND OVERLAY (MOBILE ONLY) ===== */
+  /* Add stronger dark overlay on hero for text readability */
+  #hero > div:first-child::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Ensure hero content sits above the overlay */
+  #hero > div.relative.z-10,
+  #hero > div[class*="z-10"] {
+    z-index: 10;
+  }
+
+  /* ===== 5. STATS SECTION (VERTICAL STACK) ===== */
+  /* Stats bar container — vertical stack */
+  #hero .glass-card-premium {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 20px 16px !important;
+    border-radius: 20px !important;
+    width: 88% !important;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  /* Stats wrapper margin top */
+  #hero .mt-16 {
+    margin-top: 32px !important;
+  }
+
+  /* Each stat item — full-width row, centered */
+  #hero .glass-card-premium > div {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 10px 16px !important;
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Remove bottom border from last stat */
+  #hero .glass-card-premium > div:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Stat value */
+  #hero .glass-card-premium span.text-2xl,
+  #hero .glass-card-premium span.tabular-nums {
+    font-size: 22px !important;
+  }
+
+  /* Stat label */
+  #hero .glass-card-premium span.text-xs,
+  #hero .glass-card-premium span.text-muted {
+    font-size: 13px !important;
+  }
+
+  /* ===== 6. SCROLL INDICATOR ===== */
+  /* Hide scroll indicator on mobile — it clutters the UI */
+  #hero > div.absolute.bottom-10,
+  #hero > [class*="absolute"][class*="bottom-10"] {
+    display: none !important;
+  }
+
+  /* ===== 7. WHATSAPP BUTTON ===== */
+  /* Reduce size and add proper margin */
+  .fixed.bottom-6.right-6,
+  div[class*="fixed"][class*="bottom-6"][class*="right-6"] {
+    bottom: 16px !important;
+    right: 16px !important;
+  }
+
+  /* Smaller WhatsApp button */
+  .fixed.bottom-6.right-6 .w-14,
+  div[class*="fixed"][class*="bottom-6"] .w-14 {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .fixed.bottom-6.right-6 svg,
+  div[class*="fixed"][class*="bottom-6"] svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  /* Reduce pulse ring for smaller button */
+  .fixed.bottom-6.right-6 .animate-ping,
+  div[class*="fixed"][class*="bottom-6"] .animate-ping {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  /* ===== 8. SPACING SYSTEM (GLOBAL) ===== */
+  /* Consistent horizontal padding for sections */
+  .section-padding {
+    padding: 60px 16px !important;
+  }
+
+  /* Glass cards — prevent overflow */
+  .glass-card,
+  .glass-card-strong,
+  .glass-card-premium {
+    border-radius: 16px;
+  }
+
+  /* ===== 9. PERFORMANCE + POLISH ===== */
+  /* Kill horizontal overflow at root level */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* Prevent any element from causing horizontal scroll */
+  main {
+    overflow-x: hidden !important;
+  }
+
+  /* Radial glow — reduce on mobile for performance */
+  #hero .w-\[800px\] {
+    width: 400px !important;
+    height: 400px !important;
+  }
+
+  /* Reduce particles for performance */
+  .particle {
+    display: none;
+  }
+
+  /* Smooth button hover — disable transform on tap devices */
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none;
+  }
+
+  /* Section dividers — tighter on mobile */
+  .section-divider {
+    margin: 0;
+  }
+}

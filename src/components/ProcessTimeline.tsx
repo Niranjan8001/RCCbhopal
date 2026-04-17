@@ -212,13 +212,25 @@ export default function ProcessTimeline() {
                       </span>
                       <h3 className="text-2xl sm:text-3xl font-bold mb-3">{step.title}</h3>
                       <p className="text-muted text-sm leading-relaxed">{step.description}</p>
+                      {/* Mobile-only icon — inside the card at bottom */}
+                      <div
+                        className="mt-4 w-11 h-11 rounded-xl flex items-center justify-center md:hidden mx-auto"
+                        style={{
+                          background: `${step.color}15`,
+                          border: `1px solid ${step.color}30`,
+                          color: step.color,
+                          boxShadow: `0 0 20px ${step.color}10`,
+                        }}
+                      >
+                        {step.icon}
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Center icon */}
                 <div
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-500 hover:scale-110"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-2xl hidden md:flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-500 hover:scale-110"
                   style={{
                     background: `${step.color}15`,
                     border: `1px solid ${step.color}30`,

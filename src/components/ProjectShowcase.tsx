@@ -58,6 +58,8 @@ export default function ProjectShowcase() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const NUM_PROJECTS = projects.length;
   const isLastPage = currentPage === NUM_PROJECTS;
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileModalOpen, setMobileModalOpen] = useState(false);
 
   const closeBookAndScroll = useCallback(() => {
     if (isClosing) return;
@@ -107,12 +109,142 @@ export default function ProjectShowcase() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentPage, NUM_PROJECTS, isLastPage, isClosing, closeBookAndScroll]);
 
+  // Mobile viewport detection
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Mobile modal scroll lock
+  useEffect(() => {
+    if (mobileModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else if (isMobile) {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileModalOpen, isMobile]);
+
   return (
     <section 
       ref={sectionRef} 
-      className="relative w-full h-screen bg-background overflow-hidden flex items-center justify-center pt-16 md:pt-20" 
+      className={`relative w-full bg-background overflow-hidden ${isMobile ? '' : 'h-screen flex items-center justify-center pt-16 md:pt-20'}`}
       id="projects"
     >
+      {isMobile ? (
+        <div className="px-4 py-12">
+          {/* Section Header */}
+          <span className="text-accent-yellow text-xs font-semibold uppercase tracking-[0.2em] mb-4 block">
+            Portfolio
+          </span>
+          <h2 className="text-[28px] font-black tracking-tight leading-tight mb-3">
+            Our Landmark<br />
+            <span className="text-muted">Projects</span>
+          </h2>
+          <p className="text-muted text-sm leading-relaxed mb-8">
+            Tap the book to explore our luxury portfolio.
+          </p>
+
+          {/* Cover Card — Tap to Open */}
+          <div
+            className="relative w-[88%] max-w-[300px] mx-auto aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer active:scale-[0.98] transition-transform"
+            onClick={() => setMobileModalOpen(true)}
+            style={{
+              backgroundColor: '#3d2314',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.3' mix-blend-mode='overlay'/%3E%3C/svg%3E"), linear-gradient(135deg, #4a2f1d 0%, #29150b 100%)`,
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(255,214,10,0.08)',
+            }}
+          >
+            <div className="absolute inset-3 border border-[rgba(255,255,255,0.08)] rounded-xl" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
+              <div className="w-24 h-24 relative opacity-60">
+                <Image src="/logo.png" alt="RCC" fill className="object-contain" />
+              </div>
+              <div className="flex items-center gap-2 text-[#d4af37] text-xs tracking-widest uppercase opacity-80">
+                <span>Tap to Explore</span>
+                <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>→</motion.span>
+              </div>
+            </div>
+          </div>
+
+          {/* Full Screen Modal */}
+          <AnimatePresence>
+            {mobileModalOpen && (
+              <motion.div
+                className="fixed inset-0 z-[100] bg-background/[0.98] backdrop-blur-xl overflow-y-auto"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {/* Close button */}
+                <button
+                  onClick={() => setMobileModalOpen(false)}
+                  className="fixed top-4 right-4 z-[110] w-10 h-10 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-white text-xl backdrop-blur-md"
+                  aria-label="Close portfolio"
+                >
+                  ✕
+                </button>
+
+                {/* Scrollable content */}
+                <div className="px-4 pt-16 pb-10">
+                  <h2 className="text-2xl font-black text-center mb-2">Our Projects</h2>
+                  <p className="text-muted text-xs text-center mb-8 tracking-widest uppercase">Swipe up to explore</p>
+                  <div className="space-y-5">
+                    {projects.map((project, idx) => (
+                      <motion.div
+                        key={project.title}
+                        className="glass-card rounded-2xl overflow-hidden"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.08, duration: 0.5 }}
+                      >
+                        {/* Project Image */}
+                        <div className="relative w-full aspect-[16/10] overflow-hidden">
+                          <Image src={project.image} alt={project.title} fill className="object-cover" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                          <span
+                            className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase backdrop-blur-sm"
+                            style={{ backgroundColor: `${project.color}20`, color: project.color, border: `1px solid ${project.color}30` }}
+                          >
+                            {project.category}
+                          </span>
+                        </div>
+
+                        {/* Project Details */}
+                        <div className="p-5">
+                          <h3 className="text-lg font-bold mb-2">{project.title}</h3>
+                          <p className="text-muted text-sm leading-relaxed mb-4">{project.description}</p>
+                          <div className="flex items-center gap-3 text-xs text-muted">
+                            <span className="flex items-center gap-1">
+                              <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" strokeLinecap="round" strokeLinejoin="round"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                              {project.location}
+                            </span>
+                            <span>•</span>
+                            <span>{project.year}</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Bottom close */}
+                  <div className="text-center mt-8">
+                    <button
+                      onClick={() => setMobileModalOpen(false)}
+                      className="btn-secondary !py-3 !px-8 !text-sm"
+                    >
+                      Close Portfolio
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      ) : (<>
       {/* Ambient background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-0 w-[40vw] h-[40vw] bg-accent-yellow/5 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2" />
@@ -374,6 +506,7 @@ export default function ProjectShowcase() {
           </div>
         </div>
       </div>
+      </>)}
     </section>
   );
 }

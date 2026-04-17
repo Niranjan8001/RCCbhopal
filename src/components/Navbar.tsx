@@ -16,9 +16,12 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
-  const bgOpacity = useTransform(scrollY, [0, 100], [0, 0.92]);
-  const borderOpacity = useTransform(scrollY, [0, 100], [0, 0.1]);
-  const blurAmount = useTransform(scrollY, [0, 100], [10, 40]);
+  // Apple-style glassmorphism — dynamic tinting on scroll
+  const bgOpacity = useTransform(scrollY, [0, 120], [0.25, 0.72]);
+  const borderOpacity = useTransform(scrollY, [0, 120], [0.06, 0.1]);
+  const blurAmount = useTransform(scrollY, [0, 120], [20, 40]);
+  const shadowOpacity = useTransform(scrollY, [0, 120], [0, 0.25]);
+  const reflectionOpacity = useTransform(scrollY, [0, 120], [0.08, 0.03]);
 
   // Hide on scroll down, show on scroll up
   useMotionValueEvent(scrollY, 'change', (latest) => {
@@ -42,18 +45,28 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 px-6 md:px-12"
+        className="fixed top-0 left-0 right-0 z-[9999] px-6 md:px-12"
         initial={{ y: -100 }}
         animate={{ y: hidden && !isOpen ? -100 : 0 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       >
+        {/* Glass base — translucent tint + blur */}
         <motion.div
           className="absolute inset-0"
           style={{
-            backgroundColor: `rgba(10, 10, 10, ${bgOpacity})`,
-            borderBottom: `1px solid rgba(255, 255, 255, ${borderOpacity})`,
+            backgroundColor: `rgba(14, 14, 14, ${bgOpacity})`,
             backdropFilter: `blur(${blurAmount}px)`,
             WebkitBackdropFilter: `blur(${blurAmount}px)`,
+            borderBottom: `1px solid rgba(255, 255, 255, ${borderOpacity})`,
+            boxShadow: `0 8px 32px rgba(0, 0, 0, ${shadowOpacity})`,
+            transition: 'box-shadow 0.3s ease',
+          }}
+        />
+        {/* Light reflection — Apple glass shine */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `linear-gradient(to bottom, rgba(255,255,255,${reflectionOpacity}), rgba(255,255,255,0.01))`,
           }}
         />
         <div className="relative max-w-7xl mx-auto flex items-center justify-between h-20">
@@ -69,7 +82,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-medium text-muted hover:text-foreground transition-colors duration-300 relative group flex items-center h-full"
+                className="text-sm font-medium text-white/80 hover:text-white transition-colors duration-300 relative group flex items-center h-full"
               >
                 {link.label}
                 <span className="absolute bottom-6 left-0 w-0 h-px bg-accent-yellow transition-all duration-300 group-hover:w-full" />

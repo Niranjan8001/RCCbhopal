@@ -605,4 +605,364 @@ input[type="range"]::-moz-range-thumb:hover {
   .section-divider {
     margin: 0;
   }
+
+  /* =================================================================
+     SECTION 1: OUR PROCESS — TIMELINE REBUILD (MOBILE)
+     ================================================================= */
+
+  /* Hide the broken vertical connecting line (mobile dots line) */
+  #process .md\:hidden.absolute,
+  #process > div > div > div.relative > div.md\:hidden,
+  #process div[class*="absolute"][class*="left-8"][class*="w-px"] {
+    display: none !important;
+  }
+
+  /* Hide the SVG timeline line (already hidden via md:block but reinforce) */
+  #process svg {
+    display: none !important;
+  }
+
+  /* Process section padding */
+  #process {
+    padding: 48px 16px !important;
+  }
+
+  /* Process heading spacing */
+  #process .process-heading {
+    margin-bottom: 32px !important;
+  }
+
+  #process .process-heading h2 {
+    font-size: 28px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 8px !important;
+  }
+
+  #process .process-heading p {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    padding: 0 8px;
+  }
+
+  /* Steps container — tighter vertical spacing */
+  #process .space-y-20 {
+    --tw-space-y-reverse: 0 !important;
+    margin-top: 0 !important;
+  }
+  #process .space-y-20 > * + * {
+    margin-top: 20px !important;
+  }
+
+  /* Each step wrapper — vertical stack, no flex-row */
+  #process .space-y-20 > div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    width: 92% !important;
+    max-width: 400px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* The content card wrapper (flex-1) */
+  #process .space-y-20 > div > div.flex-1 {
+    text-align: left !important;
+    width: 100% !important;
+  }
+
+  /* Glass card inside — clean mobile card design with left yellow border */
+  #process .glass-card {
+    padding: 18px 20px !important;
+    border-radius: 18px !important;
+    border-left: 3px solid rgba(255, 214, 10, 0.5) !important;
+    position: relative;
+    overflow: visible !important;
+  }
+
+  /* Step label */
+  #process .glass-card .text-xs.font-bold {
+    font-size: 10px !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* Step title */
+  #process .glass-card h3 {
+    font-size: 20px !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* Step description */
+  #process .glass-card p {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Center icon — move inside the card flow (BELOW text) */
+  #process .space-y-20 > div > div.w-16 {
+    order: 2 !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 12px !important;
+    margin: 14px 0 0 20px !important;
+    align-self: flex-start;
+    position: static !important;
+    flex-shrink: 0 !important;
+  }
+
+  #process .space-y-20 > div > div.w-16 svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  /* Hide the empty spacer div on mobile */
+  #process .space-y-20 > div > div.flex-1.hidden {
+    display: none !important;
+  }
+
+  /* Reduce background glow blobs for performance */
+  #process > div.absolute {
+    display: none !important;
+  }
+
+  /* =================================================================
+     SECTION 2: OUR VISION — REMOVE EXPERIENCE CARD + CLEAN TEXT
+     ================================================================= */
+
+  /* Section padding */
+  #about {
+    padding: 48px 16px !important;
+  }
+
+  /* Hide the "30+ Years of Excellence" badge on mobile */
+  #about .inline-flex.items-center.gap-3 {
+    display: none !important;
+  }
+
+  /* Accent line */
+  #about .w-12.h-1 {
+    margin-bottom: 16px !important;
+  }
+
+  /* "Our Vision" label */
+  #about h2.text-sm {
+    font-size: 12px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Main heading */
+  #about h3 {
+    font-size: 26px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Description paragraph */
+  #about p.text-lg {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 24px !important;
+  }
+
+  /* Grid layout — single column on mobile */
+  #about .grid.grid-cols-1 {
+    gap: 24px !important;
+  }
+
+  /* About grid with margins */
+  #about .grid.grid-cols-1.lg\:grid-cols-2 {
+    margin-bottom: 48px !important;
+  }
+
+  /* Founders statements grid */
+  #about .grid.grid-cols-1.md\:grid-cols-2 {
+    gap: 16px !important;
+    margin-bottom: 40px !important;
+    padding: 0 !important;
+  }
+
+  /* Founder quote cards */
+  #about .glass-card-premium.p-10 {
+    padding: 20px !important;
+    border-radius: 18px !important;
+  }
+
+  #about .glass-card-premium .text-lg.italic {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Founder name */
+  #about .glass-card-premium h4.text-lg {
+    font-size: 16px !important;
+  }
+
+  /* Quote icon — reduce on mobile */
+  #about .glass-card-premium svg[width="60"] {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  /* Developer card */
+  #about .glass-card-premium.rounded-\[2rem\] {
+    padding: 20px !important;
+    border-radius: 18px !important;
+  }
+
+  #about .glass-card-premium .w-32.h-32 {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  #about .glass-card-premium h3.text-3xl {
+    font-size: 22px !important;
+    margin-bottom: 8px !important;
+  }
+
+  #about .glass-card-premium p.text-lg.text-muted {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Hide background glows in About for performance */
+  #about > div.absolute {
+    display: none !important;
+  }
+
+  /* =================================================================
+     SECTION 3: PORTFOLIO — LAYOUT & BOOK FIX
+     ================================================================= */
+
+  /* Portfolio section — auto height, vertical layout */
+  #projects {
+    height: auto !important;
+    min-height: auto !important;
+    padding: 48px 16px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  /* Main layout container — vertical stack */
+  #projects > div:last-child {
+    flex-direction: column !important;
+    align-items: center !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+
+  /* Left side text block — position static, full width */
+  #projects .absolute.left-6,
+  #projects [class*="absolute"][class*="left-6"] {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 4px !important;
+    margin-bottom: 24px !important;
+    opacity: 1 !important;
+  }
+
+  /* Portfolio label */
+  #projects [class*="absolute"][class*="left-6"] span {
+    font-size: 12px !important;
+  }
+
+  /* "Our Landmark Projects" title */
+  #projects [class*="absolute"][class*="left-6"] h2 {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Description text */
+  #projects [class*="absolute"][class*="left-6"] p {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    max-width: 100% !important;
+  }
+
+  /* Book container — center, contained width */
+  #projects [style*="perspective"] {
+    width: 88vw !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    transform: translateX(0) !important;
+    aspect-ratio: 2 / 1.4 !important;
+  }
+
+  /* When book is closed, don't offset to right on mobile */
+  #projects .translate-x-\[20\%\] {
+    transform: translateX(0) !important;
+  }
+
+  /* Navigation buttons at bottom of book */
+  #projects .absolute.bottom-6,
+  #projects [class*="absolute"][class*="bottom-6"][class*="left-0"] {
+    position: relative !important;
+    bottom: auto !important;
+    margin-top: 20px !important;
+    gap: 12px !important;
+  }
+
+  /* Nav buttons sizing */
+  #projects .btn-secondary {
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    min-height: 40px !important;
+  }
+
+  /* Hide ambient background glow for performance */
+  #projects > div.absolute.inset-0 {
+    display: none !important;
+  }
+
+  /* =================================================================
+     GLOBAL SPACING SYSTEM (ADDITIONAL FIXES)
+     ================================================================= */
+
+  /* All sections — consistent horizontal padding */
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Vertical rhythm between major sections */
+  .section-divider {
+    margin: 8px 0 !important;
+  }
+
+  /* All headings — tighter line-height */
+  section h2 {
+    line-height: 1.25 !important;
+  }
+
+  /* All paragraphs — readable line-height */
+  section p {
+    line-height: 1.55 !important;
+  }
+
+  /* Fix negative margins that break layout */
+  [class*="-translate-x-"],
+  [class*="-translate-y-"] {
+    /* Let Tailwind handle, but prevent overflow */
+  }
+
+  /* Prevent fixed-height sections from breaking vertical flow */
+  section.h-screen,
+  section[class*="h-screen"] {
+    height: auto !important;
+    min-height: auto !important;
+  }
+
+  /* Ambient glow blobs — reduce globally */
+  .absolute.rounded-full[class*="blur-"] {
+    opacity: 0.5 !important;
+  }
+  [class*="w-[500px]"],
+  [class*="w-[400px]"] {
+    width: 250px !important;
+    height: 250px !important;
+  }
 }

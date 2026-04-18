@@ -64,9 +64,12 @@ export default function LocationAndReviews() {
   const mapInstanceRef = useRef<any>(null);
 
   // Robust State Management
-  const [apiError, setApiError] = useState(false);
-  const [placeData, setPlaceData] = useState<PlaceDetails | null>(null);
-  const [loadingConfig, setLoadingConfig] = useState({ map: true, reviews: true });
+  const [apiError, setApiError] = useState(!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+  const [placeData, setPlaceData] = useState<PlaceDetails | null>(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ? null : FALLBACK_DATA);
+  const [loadingConfig, setLoadingConfig] = useState({ 
+    map: !!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY, 
+    reviews: !!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY 
+  });
   const [activeReviewIndex, setActiveReviewIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -173,17 +176,27 @@ export default function LocationAndReviews() {
         disableDefaultUI: true,
         zoomControl: true,
         gestureHandling: "cooperative",
+        mapId: "DEMO_MAP_ID", // Required for AdvancedMarkerElement
       });
       
       mapInstanceRef.current = map;
 
-      // Add Marker
-      new window.google.maps.Marker({
-        position: coordinates,
-        map,
-        title: "RCC Headquarters",
-        animation: window.google.maps.Animation.DROP,
-      });
+      // Add Advanced Marker
+      if (window.google.maps.marker?.AdvancedMarkerElement) {
+        new window.google.maps.marker.AdvancedMarkerElement({
+          position: coordinates,
+          map,
+          title: "RCC Headquarters",
+        });
+      } else {
+        // Fallback to classic marker if library not perfectly loaded
+        new window.google.maps.Marker({
+          position: coordinates,
+          map,
+          title: "RCC Headquarters",
+          animation: window.google.maps.Animation.DROP,
+        });
+      }
 
       setLoadingConfig(prev => ({ ...prev, map: false }));
       fetchReviews(map);

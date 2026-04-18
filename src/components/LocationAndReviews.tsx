@@ -14,10 +14,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ============================================================
-// CONFIGURATION — Change API key here if needed
-// ============================================================
-const GOOGLE_MAPS_API_KEY = 'AIzaSyBpFbLzyONRIyXttbiDcT4ItqGqzC-8IUQ';
+// Public Place ID (not a secret — this is a public Google Business identifier)
 const GOOGLE_PLACE_ID = 'ChIJSbhTdQBBfDkRwRB832aNDBY';
 
 // Minimum viable types for Google API data
@@ -58,56 +55,6 @@ const FALLBACK_DATA: PlaceDetails = {
   ]
 };
 
-// ============================================================
-// Google Maps Script Loader — Prevents duplicate loading
-// ============================================================
-let googleMapsLoadPromise: Promise<void> | null = null;
-
-function loadGoogleMapsScript(): Promise<void> {
-  // Already loaded
-  if (window.google?.maps) return Promise.resolve();
-
-  // Already loading
-  if (googleMapsLoadPromise) return googleMapsLoadPromise;
-
-  // Check if a script tag already exists
-  const existing = document.querySelector('script[src*="maps.googleapis.com"]');
-  if (existing) {
-    googleMapsLoadPromise = new Promise((resolve) => {
-      existing.addEventListener('load', () => resolve());
-      // If it's already loaded, resolve immediately
-      if (window.google?.maps) resolve();
-    });
-    return googleMapsLoadPromise;
-  }
-
-  // Create and inject the script
-  googleMapsLoadPromise = new Promise((resolve, reject) => {
-    if (!GOOGLE_MAPS_API_KEY) {
-      console.error('[RCC Map] No Google Maps API key configured.');
-      reject(new Error('Missing API key'));
-      return;
-    }
-
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      console.log('[RCC Map] Google Maps script loaded successfully.');
-      resolve();
-    };
-    script.onerror = () => {
-      console.error('[RCC Map] Failed to load Google Maps script.');
-      googleMapsLoadPromise = null;
-      reject(new Error('Script load failed'));
-    };
-    document.head.appendChild(script);
-  });
-
-  return googleMapsLoadPromise;
-}
-
 export default function LocationAndReviews() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
@@ -125,10 +72,10 @@ export default function LocationAndReviews() {
 
   const coordinates = { lat: 23.19777, lng: 77.46467 }; // Exact Katara Hills (5G93+JF)
 
-  // --- 1. Global Auth Failure Handling ---
+  // --- 1. Global Auth Failure Handling (CRITICAL FOR MAP ERRORS) ---
   useEffect(() => {
     window.gm_authFailure = () => {
-      console.error("[RCC Map] Google Maps Authentication Failure: Check API Key, Billing, and Referrer Restrictions.");
+      console.error("[RCC Map] Authentication Failure: Check API Key, Billing, and Referrer Restrictions.");
       setApiError(true);
       setLoadingConfig({ map: false, reviews: false });
       setPlaceData(FALLBACK_DATA);
@@ -230,7 +177,7 @@ export default function LocationAndReviews() {
       
       mapInstanceRef.current = map;
 
-      // Add Marker (using classic Marker — AdvancedMarkerElement requires Map ID)
+      // Add Marker
       new window.google.maps.Marker({
         position: coordinates,
         map,
@@ -250,20 +197,37 @@ export default function LocationAndReviews() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchReviews, apiError]);
 
-  // --- 6. Load Google Maps script and initialize ---
+  // --- 6. Wait for Google Maps script (loaded globally from layout.tsx) ---
   useEffect(() => {
     if (apiError) return;
 
-    loadGoogleMapsScript()
-      .then(() => {
-        // Small delay to ensure google.maps is fully hydrated
-        setTimeout(() => initMap(), 150);
-      })
-      .catch(() => {
+    let cancelled = false;
+    let attempts = 0;
+    const MAX_ATTEMPTS = 100; // 20 seconds max (100 × 200ms)
+
+    const waitForGoogle = () => {
+      if (cancelled) return;
+
+      if (window.google?.maps) {
+        initMap();
+        return;
+      }
+
+      attempts++;
+      if (attempts >= MAX_ATTEMPTS) {
+        console.error('[RCC Map] Google Maps failed to load after 20 seconds.');
         setApiError(true);
         setLoadingConfig({ map: false, reviews: false });
         setPlaceData(FALLBACK_DATA);
-      });
+        return;
+      }
+
+      setTimeout(waitForGoogle, 200);
+    };
+
+    waitForGoogle();
+
+    return () => { cancelled = true; };
   }, [initMap, apiError]);
 
   // Fallback trigger if auth failure is detected

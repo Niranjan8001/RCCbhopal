@@ -49,7 +49,7 @@ export default function AboutUs() {
             </p>
 
             {/* Years badge */}
-            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl glass-card-premium !rounded-full">
+            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl glass-card-premium !rounded-full lg:hidden">
               <span className="text-3xl font-black text-accent-yellow tabular-nums">30+</span>
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-white">Years of Excellence</span>

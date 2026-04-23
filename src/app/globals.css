@@ -395,33 +395,48 @@ input[type="range"]::-moz-range-thumb:hover {
   }
 
   /* ===== 2. HERO TEXT FIX ===== */
-  /* Main heading */
-  #hero h1 {
-    font-size: 30px !important;
-    line-height: 1.25 !important;
-    margin-bottom: 20px !important;
-    padding: 0 8px;
+
+  /* CRITICAL: Push hero content below the fixed 60px navbar so headings
+     don't collide with the "Get a Quote" button. The section uses
+     flex items-center, so we add padding-top to the inner content div. */
+  #hero {
+    align-items: flex-start !important;
   }
 
-  /* Badge above heading */
+  /* The motion.div that wraps all hero content */
+  #hero .relative.z-10.text-center {
+    padding-top: 88px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Main heading */
+  #hero h1 {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 16px !important;
+    padding: 0 4px;
+  }
+
+  /* Badge above heading — reduce bottom margin so it doesn't push content off-screen */
   #hero .inline-flex.items-center.gap-2 {
-    margin-bottom: 20px !important;
-    padding: 6px 14px !important;
+    margin-bottom: 16px !important;
+    padding: 5px 12px !important;
   }
   #hero .inline-flex.items-center.gap-2 span.text-sm {
-    font-size: 12px !important;
+    font-size: 11px !important;
   }
 
   /* Subtext paragraph */
   #hero p {
-    font-size: 15px !important;
-    line-height: 1.65 !important;
-    margin-bottom: 32px !important;
-    padding: 0 16px;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 28px !important;
+    padding: 0 8px;
     max-width: 100% !important;
   }
 
-  /* Hero content container — consistent padding */
+  /* Hero content container — consistent padding (fallback) */
   #hero > div > div {
     padding-left: 16px !important;
     padding-right: 16px !important;

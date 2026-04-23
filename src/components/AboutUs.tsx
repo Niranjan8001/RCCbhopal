@@ -1,18 +1,12 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 export default function AboutUs() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  });
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [80, -80]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
     <section ref={sectionRef} className="py-32 px-6 relative overflow-hidden" id="about">
@@ -58,44 +52,76 @@ export default function AboutUs() {
             </div>
           </motion.div>
 
-          <motion.div
-            style={{ y: y1 }}
-            className="hidden lg:flex flex-row items-center justify-center gap-12 h-[500px] rounded-[2rem] bg-white/[0.03] border border-white/10 relative px-8"
-          >
-            {/* Subtle background glow */}
-            <div className="absolute inset-0 rounded-[2rem] overflow-hidden">
-              <div className="absolute top-0 left-1/4 w-48 h-48 bg-accent-yellow/5 rounded-full blur-[80px]" />
-              <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-accent-blue/5 rounded-full blur-[80px]" />
-            </div>
+          {/* Founder Cards — Anti-Gravity Floating */}
+          <div className="flex flex-col sm:flex-row gap-6 lg:gap-8 items-stretch">
 
-            {/* Avatar 1 */}
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-yellow to-accent-red rounded-full blur-[20px] opacity-20 group-hover:opacity-60 transition-all duration-700 pointer-events-none" />
-              <div className="relative w-56 h-56 rounded-full overflow-hidden border-2 border-white/20 shadow-[0_0_30px_rgba(255,214,10,0.1)] transition-all duration-700 group-hover:scale-105 group-hover:border-accent-yellow/50">
-                <Image src="/sanjay.png" alt="Founder 1" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
-                  <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 text-center px-4">
-                    <p className="text-white font-bold text-lg tracking-wide">Sanjay Saxena</p>
-                    <p className="text-accent-yellow text-sm font-medium mt-1">Founder & CEO</p>
-                  </div>
+            {/* Card 1 — Sanjay Saxena */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.8 }}
+              className="flex-1 animate-anti-gravity"
+            >
+              <div className="relative glass-card-premium !rounded-2xl overflow-hidden group glow-edge-gold bg-black/40 backdrop-blur-3xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)] h-full flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl" />
+
+                {/* Rectangular Image */}
+                <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden rounded-t-2xl shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10" />
+                  <Image
+                    src="/sanjay.png"
+                    alt="Sanjay Saxena"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
-              </div>
-            </div>
 
-            {/* Avatar 2 */}
-            <motion.div className="relative group" style={{ y: y2 }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-blue to-accent-green rounded-full blur-[20px] opacity-20 group-hover:opacity-60 transition-all duration-700 pointer-events-none" />
-              <div className="relative w-56 h-56 rounded-full overflow-hidden border-2 border-white/20 shadow-[0_0_30px_rgba(0,194,255,0.1)] transition-all duration-700 group-hover:scale-105 group-hover:border-accent-blue/50">
-                <Image src="/roshan.png" alt="Founder 2" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
-                  <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 text-center px-4">
-                    <p className="text-white font-bold text-lg tracking-wide">Roshan Saxena</p>
-                    <p className="text-accent-blue text-sm font-medium mt-1">Managing Director</p>
-                  </div>
+                {/* Content */}
+                <div className="p-6 flex flex-col flex-grow relative z-10">
+                  <h4 className="text-xl font-bold text-white tracking-wide mb-1">Sanjay Saxena</h4>
+                  <span className="text-accent-yellow text-sm font-semibold mb-4">Founder & CEO</span>
+                  <p className="text-white/60 text-sm leading-relaxed font-light">
+                    Visionary leader with 30+ years of experience in transforming urban landscapes through iconic architectural projects.
+                  </p>
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+
+            {/* Card 2 — Roshan Saxena */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="flex-1 animate-anti-gravity-delayed"
+            >
+              <div className="relative glass-card-premium !rounded-2xl overflow-hidden group glow-edge-blue bg-black/40 backdrop-blur-3xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)] h-full flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl" />
+
+                {/* Rectangular Image */}
+                <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden rounded-t-2xl shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10" />
+                  <Image
+                    src="/roshan.png"
+                    alt="Roshan Saxena"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="p-6 flex flex-col flex-grow relative z-10">
+                  <h4 className="text-xl font-bold text-white tracking-wide mb-1">Roshan Saxena</h4>
+                  <span className="text-accent-blue text-sm font-semibold mb-4">Managing Director</span>
+                  <p className="text-white/60 text-sm leading-relaxed font-light">
+                    Strategic mind driving operational excellence and client relationships, ensuring every project exceeds expectations.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
         </div>
 
         {/* Founders Statements */}

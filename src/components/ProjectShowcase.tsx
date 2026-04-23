@@ -136,14 +136,14 @@ export default function ProjectShowcase() {
       {isMobile ? (
         <div className="px-4 py-12">
           {/* Section Header */}
-          <span className="text-accent-yellow text-xs font-semibold uppercase tracking-[0.2em] mb-4 block">
+          <span className="text-accent-yellow text-xs font-semibold uppercase tracking-[0.2em] mb-4 block text-center">
             Portfolio
           </span>
-          <h2 className="text-[28px] font-black tracking-tight leading-tight mb-3">
+          <h2 className="text-[28px] font-black tracking-tight leading-tight mb-3 text-center">
             Our Landmark<br />
             <span className="text-muted">Projects</span>
           </h2>
-          <p className="text-muted text-sm leading-relaxed mb-8">
+          <p className="text-muted text-sm leading-relaxed mb-8 text-center">
             Tap the book to explore our luxury portfolio.
           </p>
 

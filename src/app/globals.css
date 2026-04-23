@@ -492,35 +492,39 @@ input[type="range"]::-moz-range-thumb:hover {
   }
 
   /* ===== 5. STATS SECTION (VERTICAL STACK) ===== */
-  /* Stats bar container — vertical stack */
+  /* Stats wrapper — force block-level centering */
+  #hero .mt-16 {
+    margin-top: 32px !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  /* Stats bar container — vertical stack, centered */
   #hero .glass-card-premium {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 4px !important;
-    padding: 20px 16px !important;
+    gap: 0 !important;
+    padding: 16px 0 !important;
     border-radius: 20px !important;
     width: 88% !important;
     max-width: 360px;
     margin: 0 auto;
   }
 
-  /* Stats wrapper margin top */
-  #hero .mt-16 {
-    margin-top: 32px !important;
-  }
-
-  /* Each stat item — full-width row, centered */
+  /* Each stat item — centered row */
   #hero .glass-card-premium > div {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 10px !important;
-    padding: 10px 16px !important;
+    padding: 12px 16px !important;
     width: 100% !important;
     border-right: none !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center !important;
   }
 
   /* Remove bottom border from last stat */

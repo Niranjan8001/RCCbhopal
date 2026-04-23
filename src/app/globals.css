@@ -1015,3 +1015,113 @@ input[type="range"]::-moz-range-thumb:hover {
   box-shadow: 0 0 15px rgba(191, 90, 242, 0.4), inset 0 0 10px rgba(191, 90, 242, 0.2);
   border-color: rgba(191, 90, 242, 0.5);
 }
+
+/* =================================================================
+   LOCATION & REVIEWS MOBILE FIXES (max-width: 480px)
+   ================================================================= */
+@media (max-width: 480px) {
+  #visit-us {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+  
+  #visit-us .text-center.mb-16 {
+    margin-bottom: 40px !important;
+  }
+
+  /* Center align and scale headings */
+  #visit-us h2 {
+    font-size: 32px !important;
+    line-height: 1.25 !important;
+    padding: 0 16px;
+    margin-bottom: 16px !important;
+  }
+  
+  #visit-us p.max-w-xl {
+    font-size: 14px !important;
+    padding: 0 16px;
+    margin-bottom: 24px !important;
+  }
+
+  /* Grid and Cards Spacing - safe margins left and right */
+  #visit-us .grid {
+    gap: 32px !important;
+    padding: 0 16px !important;
+  }
+
+  /* Floating cards */
+  #visit-us .glass-card-premium {
+    padding: 24px !important;
+    border-radius: 28px !important;
+  }
+  
+  /* The first card has `p-1` for image wrapper, keep it small */
+  #visit-us .glass-card-premium.p-1 {
+    padding: 8px !important;
+  }
+
+  /* Image height reduction */
+  #visit-us .h-\[250px\] {
+    height: 180px !important;
+    margin-bottom: 16px !important;
+    border-radius: 20px !important;
+  }
+
+  /* Contact Card Typography & Alignment */
+  #visit-us .px-6.pb-6 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-bottom: 12px !important;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #visit-us .px-6.pb-6 p {
+    font-size: 13px !important;
+    margin-bottom: 24px !important;
+    padding-left: 0 !important;
+    border-left: none !important;
+  }
+
+  /* CTA Button collision prevention */
+  #visit-us a.rounded-2xl {
+    padding: 14px 20px !important;
+    font-size: 15px !important;
+    margin-top: auto;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Review card sizing */
+  #visit-us .glass-card-premium.h-full {
+    min-height: auto !important;
+  }
+  
+  #visit-us .h-\[200px\] {
+    height: auto !important;
+    min-height: 180px !important;
+    margin-bottom: 16px !important;
+  }
+  
+  #visit-us .text-8xl {
+    font-size: 5rem !important;
+    top: -12px !important;
+    left: -4px !important;
+  }
+
+  #visit-us p.italic {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+  
+  /* Fix the review avatar and name wrapping */
+  #visit-us .mt-8.flex {
+    margin-top: 16px !important;
+    flex-direction: column;
+    text-align: center;
+    gap: 8px !important;
+  }
+}
+

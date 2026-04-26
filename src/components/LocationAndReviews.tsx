@@ -8,52 +8,11 @@ declare global {
   }
 }
 
-import { useEffect, useRef, useState, useCallback } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import TestimonialCarousel from './TestimonialCarousel';
 
-gsap.registerPlugin(ScrollTrigger);
 
-// Public Place ID
-const GOOGLE_PLACE_ID = 'ChIJSbhTdQBBfDkRwRB832aNDBY';
-
-interface GooglePlaceReview {
-  author_name: string;
-  profile_photo_url: string;
-  rating: number;
-  text: string;
-  relative_time_description: string;
-}
-
-interface PlaceDetails {
-  name: string;
-  rating: number;
-  user_ratings_total: number;
-  reviews: GooglePlaceReview[];
-}
-
-const FALLBACK_DATA: PlaceDetails = {
-  name: "Reliable Construction & Consultancy (RCC)",
-  rating: 5.0,
-  user_ratings_total: 100,
-  reviews: [
-    {
-      author_name: "Amitesh Tiwari",
-      profile_photo_url: "https://ui-avatars.com/api/?name=Amitesh+Tiwari&background=random",
-      rating: 5,
-      text: "Reliable construction is really a reliable vendor when it comes to construction and building. They are really good in terms of services.",
-      relative_time_description: "3 months ago"
-    },
-    {
-      author_name: "Renu Sahai",
-      profile_photo_url: "https://ui-avatars.com/api/?name=Renu+Sahai&background=random",
-      rating: 5,
-      text: "Our house looks completely transformed thanks to Reliable Construction & Consultancy. The renovation was done with great care and professionalism.",
-      relative_time_description: "4 months ago"
-    }
-  ]
-};
 
 // 3D Tilt Card Component
 function TiltCard({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) {
@@ -106,94 +65,8 @@ function TiltCard({ children, className, delay = 0 }: { children: React.ReactNod
 
 export default function LocationAndReviews() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [apiError, setApiError] = useState(!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
-  const [placeData, setPlaceData] = useState<PlaceDetails | null>(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ? null : FALLBACK_DATA);
-  const [loadingConfig, setLoadingConfig] = useState({ reviews: !!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY });
-  const [activeReviewIndex, setActiveReviewIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
-  useEffect(() => {
-    window.gm_authFailure = () => {
-      console.error("[RCC Map] Authentication Failure");
-      setApiError(true);
-      setLoadingConfig({ reviews: false });
-      setPlaceData(FALLBACK_DATA);
-    };
-  }, []);
 
-  const fetchReviews = useCallback(() => {
-    if (!GOOGLE_PLACE_ID || !window.google?.maps?.places) {
-      setPlaceData(FALLBACK_DATA);
-      setLoadingConfig({ reviews: false });
-      return;
-    }
-
-    try {
-      const dummyElement = document.createElement('div');
-      const service = new window.google.maps.places.PlacesService(dummyElement);
-      service.getDetails({
-        placeId: GOOGLE_PLACE_ID,
-        fields: ['name', 'rating', 'user_ratings_total', 'reviews']
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      }, (place: any, status: any) => {
-        if (status === window.google.maps.places.PlacesServiceStatus.OK && place) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const validReviews = place.reviews?.filter((r: any) => r.text && r.text.trim().length > 5) || [];
-          if (validReviews.length > 0) {
-            setPlaceData({
-              name: place.name || 'RCC',
-              rating: place.rating || 0,
-              user_ratings_total: place.user_ratings_total || 0,
-              reviews: validReviews
-            });
-          } else {
-            setPlaceData(FALLBACK_DATA);
-          }
-        } else {
-          setPlaceData(FALLBACK_DATA);
-        }
-        setLoadingConfig({ reviews: false });
-      });
-    } catch (err) {
-      console.error("[RCC Map] Error fetching places:", err);
-      setPlaceData(FALLBACK_DATA);
-      setLoadingConfig({ reviews: false });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (apiError) return;
-    let cancelled = false;
-    let attempts = 0;
-    const MAX_ATTEMPTS = 100;
-
-    const waitForGoogle = () => {
-      if (cancelled) return;
-      if (window.google?.maps) {
-        fetchReviews();
-        return;
-      }
-      attempts++;
-      if (attempts >= MAX_ATTEMPTS) {
-        setApiError(true);
-        setLoadingConfig({ reviews: false });
-        setPlaceData(FALLBACK_DATA);
-        return;
-      }
-      setTimeout(waitForGoogle, 200);
-    };
-
-    waitForGoogle();
-    return () => { cancelled = true; };
-  }, [fetchReviews, apiError]);
-
-  useEffect(() => {
-    if (!placeData?.reviews?.length || isPaused) return;
-    const interval = setInterval(() => {
-      setActiveReviewIndex(prev => (prev + 1) % placeData.reviews.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [placeData, isPaused]);
 
   return (
     <section ref={sectionRef} className="section-padding relative min-h-screen flex flex-col justify-center overflow-hidden bg-black" id="visit-us">
@@ -290,110 +163,9 @@ export default function LocationAndReviews() {
             </div>
           </TiltCard>
 
-          {/* --- RIGHT: TESTIMONIAL CARD --- */}
+          {/* --- RIGHT: TESTIMONIAL CAROUSEL --- */}
           <TiltCard className="w-full h-full" delay={1}>
-            <div className="relative glass-card-premium h-full p-8 md:p-12 !rounded-[2.5rem] overflow-hidden group flex flex-col justify-between shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] glow-edge-gold bg-black/40 backdrop-blur-3xl">
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent-yellow/20 rounded-full blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
-              {loadingConfig.reviews ? (
-                <div className="flex-grow flex flex-col items-center justify-center space-y-6 animate-pulse">
-                  <div className="w-20 h-20 bg-white/5 rounded-full" />
-                  <div className="w-40 h-6 bg-white/5 rounded-lg" />
-                  <div className="w-full h-32 bg-white/5 rounded-2xl mt-8" />
-                </div>
-              ) : placeData ? (
-                <div className="flex flex-col h-full z-10 relative" style={{ transform: "translateZ(40px)" }}>
-                  
-                  <div className="flex items-center justify-between border-b border-white/10 pb-6 mb-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.5)] backdrop-blur-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="32px" height="32px">
-                          <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20c11 0 20-8.955 20-20C44 22.659 43.862 21.35 43.611 20.083z" />
-                          <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C16.318 4 9.656 8.337 6.306 14.691z" />
-                          <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.222 0-9.653-3.34-11.124-7.868l-6.529 5.044C9.646 39.695 16.31 44 24 44z" />
-                          <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571 c.001-.001.002-.001.003-.002l6.19 5.238C36.971 39.205 44 34 44 24C44 22.659 43.862 21.35 43.611 20.083z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-white mb-1">{placeData.name}</h3>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xl font-black text-white">{placeData.rating.toFixed(1)}</span>
-                          <div className="flex gap-1">
-                            {[1, 2, 3, 4, 5].map((s) => (
-                              <svg key={s} width="16" height="16" viewBox="0 0 24 24" fill={s <= Math.round(placeData.rating) ? "#FFD60A" : "#333"} className="drop-shadow-[0_0_5px_rgba(255,214,10,0.5)]">
-                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                              </svg>
-                            ))}
-                          </div>
-                          <span className="text-xs text-white/50 ml-2">({placeData.user_ratings_total})</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div 
-                    className="flex-grow flex flex-col relative"
-                    onMouseEnter={() => setIsPaused(true)}
-                    onMouseLeave={() => setIsPaused(false)}
-                    onTouchStart={() => setIsPaused(true)}
-                    onTouchEnd={() => setIsPaused(false)}
-                  >
-                    <span className="absolute -top-6 -left-4 text-8xl text-white/[0.03] font-serif leading-none select-none pointer-events-none drop-shadow-2xl">&quot;</span>
-                    
-                    <div className="relative h-[200px] w-full flex items-center">
-                      <AnimatePresence mode="wait">
-                        {placeData.reviews.length > 0 && (
-                          <motion.div
-                            key={activeReviewIndex}
-                            initial={{ opacity: 0, scale: 0.95, filter: 'blur(8px)' }}
-                            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                            exit={{ opacity: 0, scale: 1.05, filter: 'blur(8px)' }}
-                            transition={{ duration: 0.6, ease: "easeOut" }}
-                            className="w-full"
-                          >
-                            <p className="text-white/90 text-lg md:text-xl leading-relaxed line-clamp-4 italic font-light drop-shadow-md">
-                              &quot;{placeData.reviews[activeReviewIndex].text}&quot;
-                            </p>
-                            
-                            <div className="mt-8 flex items-center gap-4">
-                              <div className="w-12 h-12 rounded-full overflow-hidden bg-black ring-2 ring-accent-yellow/50 shadow-[0_0_15px_rgba(255,214,10,0.3)] shrink-0">
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img 
-                                  src={placeData.reviews[activeReviewIndex].profile_photo_url} 
-                                  alt={placeData.reviews[activeReviewIndex].author_name}
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                              <div className="flex flex-col">
-                                <span className="text-base font-bold text-white tracking-wide">{placeData.reviews[activeReviewIndex].author_name}</span>
-                                <span className="text-xs text-white/50 font-medium">{placeData.reviews[activeReviewIndex].relative_time_description}</span>
-                              </div>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-
-                    {placeData.reviews.length > 1 && (
-                      <div className="flex gap-2 justify-center mt-6">
-                        {placeData.reviews.map((_, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => setActiveReviewIndex(idx)}
-                            className={`h-1.5 rounded-full transition-all duration-500 ${idx === activeReviewIndex ? 'w-8 bg-accent-yellow shadow-[0_0_10px_rgba(255,214,10,0.8)]' : 'w-2 bg-white/20 hover:bg-white/40'}`}
-                            aria-label={`Go to review ${idx + 1}`}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div className="flex-grow flex items-center justify-center text-red-400 text-sm bg-red-400/5 rounded-2xl border border-red-400/10">
-                  Reviews unavailable.
-                </div>
-              )}
-            </div>
+            <TestimonialCarousel />
           </TiltCard>
 
         </div>

@@ -122,7 +122,7 @@ export default function LocationAndReviews() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="/images/modern_building_hq.png" 
+                  src="/images/rcc_headquarters.jpeg" 
                   alt="RCC Headquarters" 
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 filter contrast-125 saturate-110"
                 />

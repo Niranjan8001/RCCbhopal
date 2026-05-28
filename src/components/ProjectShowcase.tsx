@@ -6,13 +6,13 @@ import Image from 'next/image';
 
 const projects = [
   {
-    title: 'The Aurora Tower',
-    category: 'Commercial',
-    location: 'Mumbai, India',
-    year: '2024',
-    color: '#FFD60A',
-    description: 'A 45-story commercial masterpiece featuring sustainable design and panoramic sky gardens.',
-    image: '/project1.png',
+    title: 'Project #1',
+    category: 'Renovation',
+    location: 'Nehru Nagar, Bhopal',
+    year: '2026',
+    color: '#30D158',
+    description: 'A striking residential renovation in Nehru Nagar, Bhopal, fusing classic structural integrity with high-fidelity minimalist glassmorphism and state-of-the-art thermal-insulated materials.',
+    image: '/proj1.png',
   },
   {
     title: 'Serenity Villas',
@@ -488,6 +488,11 @@ export default function ProjectShowcase() {
                               alt={projects[i].title} 
                               fill 
                               className="object-cover transition-transform duration-1000 hover:scale-105" 
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='none' stroke='%23C5A880' stroke-width='1'%3E%3Crect x='3' y='3' width='18' height='18' rx='2' ry='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpolyline points='21 15 16 10 5 21'/%3E%3C/svg%3E";
+                                target.style.objectFit = "center";
+                              }}
                             />
                             {/* Inner vignette */}
                             <div className="absolute inset-0 bg-black/10 shadow-[inset_0_0_40px_rgba(0,0,0,0.3)] pointer-events-none" />

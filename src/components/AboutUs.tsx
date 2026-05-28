@@ -66,15 +66,17 @@ export default function AboutUs() {
               <div className="relative glass-card-premium !rounded-2xl overflow-hidden group glow-edge-gold bg-black/40 backdrop-blur-3xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)] h-full flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-accent-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl" />
 
-                {/* Rectangular Image */}
-                <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden rounded-t-2xl shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10" />
-                  <Image
-                    src="/sanjay.png"
-                    alt="Sanjay Saxena"
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                {/* Circular Image Container */}
+                <div className="flex justify-center pt-8 px-6 shrink-0">
+                  <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-accent-yellow/30 transition-all duration-700 shadow-lg">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10" />
+                    <Image
+                      src="/sanjay.png"
+                      alt="Sanjay Saxena"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
                 </div>
 
                 {/* Content */}
@@ -99,15 +101,17 @@ export default function AboutUs() {
               <div className="relative glass-card-premium !rounded-2xl overflow-hidden group glow-edge-blue bg-black/40 backdrop-blur-3xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)] h-full flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl" />
 
-                {/* Rectangular Image */}
-                <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden rounded-t-2xl shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10" />
-                  <Image
-                    src="/roshan.png"
-                    alt="Roshan Saxena"
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                {/* Circular Image Container */}
+                <div className="flex justify-center pt-8 px-6 shrink-0">
+                  <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-accent-blue/30 transition-all duration-700 shadow-lg">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10" />
+                    <Image
+                      src="/roshan.png"
+                      alt="Roshan Saxena"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
                 </div>
 
                 {/* Content */}

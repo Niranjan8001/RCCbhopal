@@ -151,7 +151,7 @@ export default function CostEstimator() {
                   step="100"
                   value={area}
                   onChange={handleSliderChange}
-                  className="w-full h-1.5 rounded-full appearance-none cursor-pointer outline-none"
+                  className="w-full h-1.5 rounded-full appearance-none cursor-pointer focus-visible:ring-2 focus-visible:ring-accent-yellow focus-visible:ring-offset-2 outline-none"
                   style={{
                     background: `linear-gradient(to right, ${tiers[tierIndex].color} ${sliderPercent}%, rgba(255,255,255,0.1) ${sliderPercent}%)`,
                   }}

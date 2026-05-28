@@ -9,7 +9,7 @@
   --color-accent-green: #30D158;
   --color-glass: rgba(255, 255, 255, 0.05);
   --color-glass-border: rgba(255, 255, 255, 0.1);
-  --color-muted: #888888;
+  --color-muted: #A3A3A3;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -297,6 +297,11 @@ input[type="range"] {
   height: 6px;
   border-radius: 3px;
   outline: none;
+}
+
+input[type="range"]:focus-visible {
+  outline: 2px solid #FFD60A;
+  outline-offset: 4px;
 }
 
 input[type="range"]::-webkit-slider-thumb {

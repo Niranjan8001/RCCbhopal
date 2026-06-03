@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ProjectShowcase from '@/components/ProjectShowcase';
 import CostEstimator from '@/components/CostEstimator';
+import PlanComparison from '@/components/PlanComparison';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import LocationAndReviews from '@/components/LocationAndReviews';
 import AboutUs from '@/components/AboutUs';
@@ -25,6 +26,9 @@ export default function Home() {
 
       <div className="section-divider" />
       <CostEstimator />
+
+      <div className="section-divider" />
+      <PlanComparison />
 
       <div className="section-divider" />
       <ProcessTimeline />

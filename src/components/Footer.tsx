@@ -96,12 +96,6 @@ export default function Footer() {
           <p className="text-xs text-muted">
             &copy; {new Date().getFullYear()} Reliable Construction & Consultancy. All rights reserved.
           </p>
-          <p className="text-xs text-muted">
-            Built with <span className="text-accent-red">♥</span> by{' '}
-            <a href="https://github.com/Niranjan8001" target="_blank" rel="noopener noreferrer" className="text-accent-yellow hover:underline font-medium">
-              Niranjan Saxena
-            </a>
-          </p>
         </div>
       </div>
     </footer>

@@ -183,51 +183,7 @@ export default function AboutUs() {
           </motion.div>
         </div>
 
-        {/* Developer Card Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="glass-card-premium rounded-[2rem] p-8 md:p-12 relative overflow-hidden group border border-white/10 bg-white/[0.02]">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-yellow/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            
-            <div className="flex flex-col md:flex-row items-center md:items-center gap-8 text-center md:text-left relative z-10">
-              <div className="w-32 h-32 rounded-full shrink-0 shadow-[0_0_30px_rgba(255,214,10,0.2)] border-2 border-accent-yellow/50 relative overflow-hidden">
-                <Image src="/developer.png" alt="Niranjan Saxena" fill className="object-cover" />
-              </div>
-              
-              <div className="flex-1">
-                <div className="inline-flex items-center justify-center md:justify-start gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse" />
-                  <span className="text-xs font-bold text-white uppercase tracking-[0.1em]">Website Developer</span>
-                </div>
-                
-                <h3 className="text-3xl font-black mb-3 text-white">Niranjan Saxena</h3>
-                
-                <p className="text-lg text-muted leading-relaxed mb-6 font-medium">
-                  I&apos;m Niranjan Saxena, a Full Stack Web Developer from Bhopal, Madhya Pradesh, focused on delivering high-quality, conversion-driven websites. I design and develop digital experiences that combine aesthetics with performance, helping businesses grow online with precision and reliability. From business websites to custom solutions, I ensure every project reflects professionalism, speed, and scalability.
-                </p>
-                
-                <div className="flex flex-wrap items-center justify-center md:justify-start gap-6">
-                  <a href="https://github.com/Niranjan8001" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-bold text-white hover:text-accent-yellow transition-colors group/link">
-                    <svg className="w-5 h-5 group-hover/link:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.linkedin.com/in/niranjan-saxena-6587b23a1/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-bold text-white hover:text-accent-yellow transition-colors group/link">
-                    <svg className="w-5 h-5 group-hover/link:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    LinkedIn
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <div className="absolute top-0 right-0 w-64 h-64 bg-accent-yellow/5 rounded-full blur-[100px] -z-10" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent-red/5 rounded-full blur-[80px] -z-10" />
-          </div>
-        </motion.div>
+
       </div>
     </section>
   );

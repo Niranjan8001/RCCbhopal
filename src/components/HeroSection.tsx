@@ -9,6 +9,7 @@ export default function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
+  const rightVisualRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -16,20 +17,18 @@ export default function HeroSection() {
     offset: ['start start', 'end start'],
   });
 
-  // Fade out slightly on scroll
   const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const contentY = useTransform(scrollYProgress, [0, 0.5], [0, -40]);
 
+  // Stagger entrance animations
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Stagger animate left side text elements
       gsap.fromTo(
         '.anim-left',
         { y: 30, opacity: 0, filter: 'blur(3px)' },
-        { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out', stagger: 0.1 }
+        { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out', stagger: 0.08 }
       );
 
-      // Fade/slide in right visual panel
       gsap.fromTo(
         '.anim-right',
         { scale: 0.98, opacity: 0, filter: 'blur(5px)' },
@@ -40,7 +39,46 @@ export default function HeroSection() {
     return () => ctx.revert();
   }, []);
 
-  // Floating particles
+  // 3D Parallax Mouse Move effect on the right visual card
+  useEffect(() => {
+    const el = rightVisualRef.current;
+    if (!el) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      // Soft architectural 3D card tilt
+      gsap.to(el, {
+        rotateY: x * 0.06,
+        rotateX: -y * 0.06,
+        transformPerspective: 1200,
+        transformStyle: 'preserve-3d',
+        ease: 'power2.out',
+        duration: 0.5,
+      });
+    };
+
+    const handleMouseLeave = () => {
+      gsap.to(el, {
+        rotateY: 0,
+        rotateX: 0,
+        ease: 'power2.out',
+        duration: 0.8,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    el.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (el) el.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
+
+  // Floating warm gold ambient particles
   useEffect(() => {
     if (!particlesRef.current) return;
     const container = particlesRef.current;
@@ -147,8 +185,8 @@ export default function HeroSection() {
               {/* Badge 1: 100% Client Trust */}
               <div className="flex items-center gap-3">
                 <div className="text-[#F5C542] flex-shrink-0">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0110 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                  <svg className="w-8 h-8 stroke-[1.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                   </svg>
                 </div>
                 <div>
@@ -160,8 +198,8 @@ export default function HeroSection() {
               {/* Badge 2: Quality Assured */}
               <div className="flex items-center gap-3">
                 <div className="text-[#F5C542] flex-shrink-0">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 5a6 6 0 00-6 6v2h12v-2a6 6 0 00-6-6zM4 13h16a1 1 0 011 1v1H3v-1a1 1 0 011-1zM12 3v2" />
+                  <svg className="w-8 h-8 stroke-[1.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5a7.5 7.5 0 00-7.5 7.5v1h15v-1a7.5 7.5 0 00-7.5-7.5zM3.5 14h17M6 14v1a3 3 0 006 0v-1M12 14v1a3 3 0 006 0v-1M12 2v2.5" />
                   </svg>
                 </div>
                 <div>
@@ -173,8 +211,8 @@ export default function HeroSection() {
               {/* Badge 3: On-Time Delivery */}
               <div className="flex items-center gap-3">
                 <div className="text-[#F5C542] flex-shrink-0">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75" />
+                  <svg className="w-8 h-8 stroke-[1.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                   </svg>
                 </div>
                 <div>
@@ -186,8 +224,8 @@ export default function HeroSection() {
               {/* Badge 4: End-to-End Solutions */}
               <div className="flex items-center gap-3">
                 <div className="text-[#F5C542] flex-shrink-0">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21" />
+                  <svg className="w-8 h-8 stroke-[1.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21h10.5V3.75c0-.414-.336-.75-.75-.75H7.5a.75.75 0 00-.75.75V21z" />
                   </svg>
                 </div>
                 <div>
@@ -204,7 +242,7 @@ export default function HeroSection() {
                 <div className="flex items-start gap-4">
                   <div className="p-2.5 rounded-xl bg-[#F5C542]/10 text-[#F5C542] flex-shrink-0">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                     </svg>
                   </div>
                   <div>
@@ -217,7 +255,8 @@ export default function HeroSection() {
                 <div className="flex items-start gap-4 md:pl-6">
                   <div className="p-2.5 rounded-xl bg-[#F5C542]/10 text-[#F5C542] flex-shrink-0">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.87-5.83" />
+                      <circle cx="12" cy="12" r="3" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
                     </svg>
                   </div>
                   <div>
@@ -230,7 +269,7 @@ export default function HeroSection() {
                 <div className="flex items-start gap-4 md:pl-6">
                   <div className="p-2.5 rounded-xl bg-[#F5C542]/10 text-[#F5C542] flex-shrink-0">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                     </svg>
                   </div>
                   <div>
@@ -246,33 +285,120 @@ export default function HeroSection() {
           {/* Right Column: Luxury Architectural Visual Panel with Staggered Columns */}
           <div ref={rightRef} className="lg:col-span-5 relative w-full flex items-center justify-center anim-right py-8 min-h-[500px] lg:min-h-[650px]">
             
-            {/* Visual Wrapper */}
-            <div className="relative w-full aspect-[4/5] max-w-[450px]">
+            {/* Visual Wrapper - with 3D perspective */}
+            <div 
+              ref={rightVisualRef} 
+              className="relative w-full aspect-[4/5] max-w-[450px]"
+              style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
+            >
               
-              {/* Continuous background image clipped into staggered columns */}
+              {/* Column 1 - deepest 3D depth */}
               <div 
-                className="absolute inset-0"
-                style={{
-                  clipPath: 'polygon(0% 35%, 25% 35%, 25% 20%, 50% 20%, 50% 5%, 75% 5%, 75% 15%, 100% 15%, 100% 100%, 0% 100%)'
+                className="absolute left-0 w-[25.2%] h-full pointer-events-none overflow-hidden"
+                style={{ 
+                  clipPath: 'polygon(0% 35%, 100% 35%, 100% 100%, 0% 100%)', 
+                  transform: 'translateZ(-35px) scale(1.02)', 
+                  transformStyle: 'preserve-3d' 
                 }}
               >
-                <Image
-                  src="/images/HDBack.png"
-                  alt="Luxury Architectural Building and Cranes Sunset visual"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                
-                {/* Vignette Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#070707] via-transparent to-transparent z-10" />
+                <div className="absolute left-0 top-0 w-[400%] h-full">
+                  <Image
+                    src="/images/HDBack.png"
+                    alt="Column 1 sunset skyline view"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  {/* Vignette Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#070707] via-transparent to-transparent z-10" />
+                </div>
               </div>
+              {/* Border Overlay for Column 1 */}
+              <div 
+                className="absolute left-0 w-[25%] top-[35%] bottom-0 border-l border-t border-[#F5C542]/30 shadow-[0_-8px_24px_rgba(245,197,66,0.05)] pointer-events-none z-20"
+                style={{ transform: 'translateZ(-35px) scale(1.02)' }}
+              />
 
-              {/* Gold borders on each column exactly overlaying the clip-path edges */}
-              <div className="absolute left-0 w-1/4 top-[35%] bottom-0 border-l border-t border-[#F5C542]/30 z-20 shadow-[0_-8px_24px_rgba(245,197,66,0.05)] pointer-events-none" />
-              <div className="absolute left-[25%] w-1/4 top-[20%] bottom-0 border-l border-t border-[#F5C542]/30 z-20 shadow-[0_-8px_24px_rgba(245,197,66,0.05)] pointer-events-none" />
-              <div className="absolute left-[50%] w-1/4 top-[5%] bottom-0 border-l border-t border-[#F5C542]/30 z-20 shadow-[0_-8px_24px_rgba(245,197,66,0.05)] pointer-events-none" />
-              <div className="absolute left-[75%] w-1/4 top-[15%] bottom-0 border-l border-r border-t border-[#F5C542]/30 z-20 shadow-[0_-8px_24px_rgba(245,197,66,0.05)] pointer-events-none" />
+              {/* Column 2 - medium depth */}
+              <div 
+                className="absolute left-[25%] w-[25.2%] h-full pointer-events-none overflow-hidden"
+                style={{ 
+                  clipPath: 'polygon(0% 20%, 100% 20%, 100% 100%, 0% 100%)', 
+                  transform: 'translateZ(-20px) scale(1.01)', 
+                  transformStyle: 'preserve-3d' 
+                }}
+              >
+                <div className="absolute left-[-100%] top-0 w-[400%] h-full">
+                  <Image
+                    src="/images/HDBack.png"
+                    alt="Column 2 sunset skyline view"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  {/* Vignette Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#070707] via-transparent to-transparent z-10" />
+                </div>
+              </div>
+              {/* Border Overlay for Column 2 */}
+              <div 
+                className="absolute left-[25%] w-[25%] top-[20%] bottom-0 border-l border-t border-[#F5C542]/30 shadow-[0_-8px_24px_rgba(245,197,66,0.05)] pointer-events-none z-20"
+                style={{ transform: 'translateZ(-20px) scale(1.01)' }}
+              />
+
+              {/* Column 3 - near depth */}
+              <div 
+                className="absolute left-[50%] w-[25.2%] h-full pointer-events-none overflow-hidden"
+                style={{ 
+                  clipPath: 'polygon(0% 5%, 100% 5%, 100% 100%, 0% 100%)', 
+                  transform: 'translateZ(-5px)', 
+                  transformStyle: 'preserve-3d' 
+                }}
+              >
+                <div className="absolute left-[-200%] top-0 w-[400%] h-full">
+                  <Image
+                    src="/images/HDBack.png"
+                    alt="Column 3 sunset skyline view"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  {/* Vignette Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#070707] via-transparent to-transparent z-10" />
+                </div>
+              </div>
+              {/* Border Overlay for Column 3 */}
+              <div 
+                className="absolute left-[50%] w-[25%] top-[5%] bottom-0 border-l border-t border-[#F5C542]/30 shadow-[0_-8px_24px_rgba(245,197,66,0.05)] pointer-events-none z-20"
+                style={{ transform: 'translateZ(-5px)' }}
+              />
+
+              {/* Column 4 - front depth */}
+              <div 
+                className="absolute left-[75%] w-[25.2%] h-full pointer-events-none overflow-hidden"
+                style={{ 
+                  clipPath: 'polygon(0% 15%, 100% 15%, 100% 100%, 0% 100%)', 
+                  transform: 'translateZ(10px) scale(0.99)', 
+                  transformStyle: 'preserve-3d' 
+                }}
+              >
+                <div className="absolute left-[-300%] top-0 w-[400%] h-full">
+                  <Image
+                    src="/images/HDBack.png"
+                    alt="Column 4 sunset skyline view"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  {/* Vignette Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#070707] via-transparent to-transparent z-10" />
+                </div>
+              </div>
+              {/* Border Overlay for Column 4 */}
+              <div 
+                className="absolute left-[75%] w-[25%] top-[15%] bottom-0 border-l border-r border-t border-[#F5C542]/30 shadow-[0_-8px_24px_rgba(245,197,66,0.05)] pointer-events-none z-20"
+                style={{ transform: 'translateZ(10px) scale(0.99)' }}
+              />
 
               {/* Blueprint Guideline Accents behind visual */}
               <div className="absolute -z-10 -inset-6 pointer-events-none opacity-20">
@@ -282,8 +408,11 @@ export default function HeroSection() {
                 </svg>
               </div>
 
-              {/* Awwwards Rotating Text Badge (Top Right) */}
-              <div className="absolute top-10 right-4 lg:right-6 z-30 hidden md:block">
+              {/* Awwwards Rotating Text Badge (Top Right) - highest 3D float */}
+              <div 
+                className="layer-badge absolute top-10 right-4 lg:right-6 z-30 hidden md:block"
+                style={{ transform: 'translateZ(40px)', transformStyle: 'preserve-3d' }}
+              >
                 <div className="relative w-24 h-24 flex items-center justify-center">
                   <svg className="w-22 h-22 animate-[spin_20s_linear_infinite]" viewBox="0 0 100 100">
                     <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />

@@ -70,6 +70,7 @@ export default function LocationAndReviews() {
 
   return (
     <section ref={sectionRef} className="section-padding relative min-h-screen flex flex-col justify-center overflow-hidden bg-black" id="visit-us">
+      <div id="testimonials" className="absolute top-0" />
       {/* Cinematic High-Tech Background */}
       <div className="absolute inset-0 pointer-events-none bg-grid-faint opacity-50"></div>
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">

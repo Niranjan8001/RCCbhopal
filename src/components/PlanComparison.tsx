@@ -215,7 +215,7 @@ export default function PlanComparison() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding relative overflow-hidden" id="comparison">
+    <section ref={sectionRef} className="section-padding relative overflow-hidden" id="pricing">
       {/* Background blobs */}
       <div className="absolute inset-0 pointer-events-none -z-10">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent-yellow/5 rounded-full blur-[140px]" />

@@ -7,6 +7,7 @@ import Image from 'next/image';
 const navLinks = [
   { label: 'Projects', href: '#projects' },
   { label: 'Estimator', href: '#estimator' },
+  { label: 'Pricing', href: '#pricing' },
   { label: 'Process', href: '#process' },
   { label: 'Testimonials', href: '#testimonials' },
   { label: 'About', href: '#about' },
@@ -54,7 +55,7 @@ export default function Navbar() {
         <motion.div
           className="absolute inset-0"
           style={{
-            backgroundColor: `rgba(14, 14, 14, ${bgOpacity})`,
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
             backdropFilter: `blur(${blurAmount}px)`,
             WebkitBackdropFilter: `blur(${blurAmount}px)`,
             borderBottom: `1px solid rgba(255, 255, 255, ${borderOpacity})`,

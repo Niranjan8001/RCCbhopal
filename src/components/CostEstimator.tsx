@@ -8,8 +8,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const tiers = [
-  { label: 'Silver', rate: 1500, color: '#C0C0C0' },
-  { label: 'Gold', rate: 1800, color: '#FFD60A' },
+  { label: 'Silver', rate: 1550, color: '#C0C0C0' },
+  { label: 'Gold', rate: 1850, color: '#FFD60A' },
 ];
 
 const buildTypes = [

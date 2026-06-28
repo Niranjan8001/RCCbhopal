@@ -30,7 +30,7 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-start pt-[80px] overflow-hidden"
       id="hero"
     >
       {/* Background image */}
@@ -49,8 +49,14 @@ export default function HeroSection() {
 
       {/* Centered content block */}
       <motion.div
-        className="relative z-20 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto w-full py-32"
-        style={{ opacity: contentOpacity, y: contentY }}
+        className="relative z-20 flex flex-col items-center justify-center text-center px-6 sm:px-10 max-w-3xl mx-auto w-full py-10 sm:py-12 rounded-2xl border border-white/10 mt-3"
+        style={{
+          opacity: contentOpacity,
+          y: contentY,
+          backgroundColor: 'rgba(7, 7, 7, 0.55)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+        }}
       >
         {/* Eyebrow badge */}
         <div className="hero-anim flex items-center gap-3 mb-7">
@@ -89,7 +95,7 @@ export default function HeroSection() {
         </div>
 
         {/* Social proof stats */}
-        <div className="hero-anim flex flex-wrap items-center justify-center gap-8 sm:gap-12 mt-14 pt-8 border-t border-white/10 w-full max-w-lg mx-auto">
+        <div className="hero-anim flex flex-wrap items-center justify-center gap-8 sm:gap-12 mt-8 pt-6 border-t border-white/10 w-full max-w-lg mx-auto">
           {[
             { value: '30+', label: 'Years of Legacy' },
             { value: '100%', label: 'Client Trust' },

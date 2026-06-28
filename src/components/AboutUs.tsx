@@ -36,10 +36,7 @@ export default function AboutUs() {
               Engineering <span className="text-muted text-glow-white">Excellence</span> Since 1991.
             </h3>
             <p className="text-lg text-muted leading-relaxed mb-8">
-              Reliable Construction & Consultancy (RCC) is built on a foundation of trust, precision, 
-              and uncompromising quality. Dominating the construction landscape since 1991 and formally established in 2024, 
-              we have spent over three decades transforming urban landscapes 
-              with iconic structures that blend visionary design with enduring structural integrity.
+              RCC is the modern evolution of a three-decade legacy. Our foundational engineering expertise began in 1991, delivering solid structural projects across Madhya Pradesh. In 2024, RCC was launched to bring that time-tested expertise into the modern era of luxury residential construction.
             </p>
 
             {/* Years badge */}

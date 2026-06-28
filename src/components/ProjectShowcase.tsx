@@ -6,7 +6,8 @@ import Image from 'next/image';
 
 const projects = [
   {
-    title: 'Project #1',
+    title: 'Luxury Villa Renovation',
+    sqft: '3,200 sq ft',
     category: 'Renovation',
     location: 'Nehru Nagar, Bhopal',
     year: '2026',
@@ -15,7 +16,8 @@ const projects = [
     image: '/proj1.png',
   },
   {
-    title: 'Project #2',
+    title: 'Premium Duplex Construction',
+    sqft: '4,500 sq ft',
     category: 'Construction',
     location: 'Aakriti Aqua City, Bhopal',
     year: '2025',
@@ -25,6 +27,7 @@ const projects = [
   },
   {
     title: 'Metro Central Hub',
+    sqft: '85,000 sq ft',
     category: 'Infrastructure',
     location: 'Delhi, India',
     year: '2024',
@@ -34,6 +37,7 @@ const projects = [
   },
   {
     title: 'Horizon Mall',
+    sqft: '1,20,000 sq ft',
     category: 'Retail',
     location: 'Bangalore, India',
     year: '2023',
@@ -43,6 +47,7 @@ const projects = [
   },
   {
     title: 'CloudNine Residences',
+    sqft: '18,000 sq ft',
     category: 'Residential',
     location: 'Pune, India',
     year: '2024',
@@ -143,30 +148,14 @@ export default function ProjectShowcase() {
             Our Landmark<br />
             <span className="text-muted">Projects</span>
           </h2>
-          <p className="text-muted text-sm leading-relaxed mb-8 text-center">
-            Tap the book to explore our luxury portfolio.
-          </p>
-
-          {/* Cover Card — Tap to Open */}
-          <div
-            className="relative w-[88%] max-w-[300px] mx-auto aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer active:scale-[0.98] transition-transform"
-            onClick={() => setMobileModalOpen(true)}
-            style={{
-              backgroundColor: '#3d2314',
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.3' mix-blend-mode='overlay'/%3E%3C/svg%3E"), linear-gradient(135deg, #4a2f1d 0%, #29150b 100%)`,
-              boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(255,214,10,0.08)',
-            }}
-          >
-            <div className="absolute inset-3 border border-[rgba(255,255,255,0.08)] rounded-xl" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
-              <div className="w-24 h-24 relative opacity-60">
-                <Image src="/logo.png" alt="RCC" fill className="object-contain" />
-              </div>
-              <div className="flex items-center gap-2 text-[#d4af37] text-xs tracking-widest uppercase opacity-80">
-                <span>Tap to Explore</span>
-                <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>→</motion.span>
-              </div>
-            </div>
+          <div className="flex justify-center mb-8">
+            <button
+              onClick={() => setMobileModalOpen(true)}
+              className="btn-primary w-full max-w-[300px] min-h-[48px] text-sm font-bold"
+            >
+              <span>View Luxury Projects</span>
+              <span className="inline-block ml-1">↗</span>
+            </button>
           </div>
 
           {/* Full Screen Modal */}
@@ -224,6 +213,8 @@ export default function ProjectShowcase() {
                             </span>
                             <span>•</span>
                             <span>{project.year}</span>
+                            <span>•</span>
+                            <span>{project.sqft}</span>
                           </div>
                         </div>
                       </motion.div>
@@ -323,9 +314,16 @@ export default function ProjectShowcase() {
             <br />
             <span className="text-muted">Projects</span>
           </h2>
-          <p className="text-muted text-sm sm:text-base leading-relaxed max-w-sm">
-            Click the book to open our interactive luxury portfolio. Experience our architectural legacy through a new dimension.
+          <p className="text-muted text-sm sm:text-base leading-relaxed max-w-sm mb-6">
+            An interactive showcase of our most iconic builds across Bhopal and beyond.
           </p>
+          <button
+            onClick={() => setCurrentPage(1)}
+            className="btn-primary text-sm font-bold min-h-[44px] px-6 py-2.5 flex items-center gap-2"
+          >
+            <span>View Luxury Projects</span>
+            <span className="inline-block">↗</span>
+          </button>
         </div>
 
         {/* 3D Book Container */}
@@ -446,9 +444,13 @@ export default function ProjectShowcase() {
                               <p className="text-neutral-400 text-[9px] sm:text-[10px] uppercase tracking-widest mb-1">Year</p>
                               <p className="font-semibold text-neutral-800 text-xs sm:text-sm">{projects[i-1].year}</p>
                             </div>
-                            <div className="col-span-2">
+                            <div>
+                              <p className="text-neutral-400 text-[9px] sm:text-[10px] uppercase tracking-widest mb-1 mt-2">Area</p>
+                              <p className="font-semibold text-neutral-800 text-xs sm:text-sm">{projects[i-1].sqft}</p>
+                            </div>
+                            <div>
                               <p className="text-neutral-400 text-[9px] sm:text-[10px] uppercase tracking-widest mb-1 mt-2">Category</p>
-                              <span 
+                              <span
                                 className="inline-block px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-wider bg-black/5 mt-1"
                                 style={{ color: projects[i-1].color }}
                               >

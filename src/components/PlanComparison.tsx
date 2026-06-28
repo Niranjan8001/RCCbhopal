@@ -8,11 +8,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const specifications = [
   {
-    name: 'Cement Brand',
-    desc: 'Foundation & structural core',
-    silver: 'Same Approved Brand',
-    gold: 'Same Approved Brand',
-    isSame: true,
+    name: 'Superstructure',
+    desc: 'Steel reinforcement & cement grade',
+    silver: 'Standard Branded Steel & Cement',
+    gold: 'Tata Tiscon / JSW + Premium Cement',
+    isSame: false,
     icon: (
       <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
         <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14L4 7m8 4v10M4 7v10l8 4" strokeLinecap="round" strokeLinejoin="round" />
@@ -20,22 +20,10 @@ const specifications = [
     ),
   },
   {
-    name: 'Steel Brand',
-    desc: 'Reinforcement & seismic safety',
-    silver: 'Same Approved Brand',
-    gold: 'Same Approved Brand',
-    isSame: true,
-    icon: (
-      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Electrical Fittings',
-    desc: 'Wiring, conduits & safety piping',
-    silver: 'Standard Range',
-    gold: 'Premium Range',
+    name: 'Electricals',
+    desc: 'Wiring, conduits & distribution boards',
+    silver: 'RR Kabel + Anchor',
+    gold: 'Polycab / Finolex + Legrand / Schneider',
     isSame: false,
     icon: (
       <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -68,10 +56,10 @@ const specifications = [
     ),
   },
   {
-    name: 'Sanitary Ware',
-    desc: 'Water closets, basins & sinks',
-    silver: 'Standard Models',
-    gold: 'Premium Models',
+    name: 'Bath Fittings',
+    desc: 'Water closets, basins & bathroom accessories',
+    silver: 'Jaquar / Cera (Standard)',
+    gold: 'Kohler / Grohe / TOTO',
     isSame: false,
     icon: (
       <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -80,22 +68,10 @@ const specifications = [
     ),
   },
   {
-    name: 'Bathroom Accessories',
-    desc: 'Towel rails, mirrors & soap holders',
-    silver: 'Standard Quality',
-    gold: 'Premium Quality',
-    isSame: false,
-    icon: (
-      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Floor Tiles',
+    name: 'Flooring',
     desc: 'Vitrified tiles for living & bedrooms',
-    silver: 'Standard Selection',
-    gold: 'Premium Selection',
+    silver: '2x4 ft Vitrified Tiles (₹50-60/sqft)',
+    gold: '4x8 ft GVT / Italian Finish (₹120+/sqft)',
     isSame: false,
     icon: (
       <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -116,10 +92,10 @@ const specifications = [
     ),
   },
   {
-    name: 'Kitchen Fixtures',
-    desc: 'Sink faucets, pipes & countertops',
-    silver: 'Standard Quality',
-    gold: 'Premium Quality',
+    name: 'Kitchen',
+    desc: 'Countertops, sink & cabinet hardware',
+    silver: 'Granite Top + Stainless Sink',
+    gold: 'Quartz Top + Hettich/Blum Hardware',
     isSame: false,
     icon: (
       <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -128,10 +104,10 @@ const specifications = [
     ),
   },
   {
-    name: 'Door Hardware',
-    desc: 'Hinges, handles, locks & towers bolts',
-    silver: 'Standard Quality',
-    gold: 'Premium Quality',
+    name: 'Doors & Windows',
+    desc: 'Interior doors, frames & window systems',
+    silver: '7-foot Flush Doors + UPVC',
+    gold: '8-foot Teak Veneer + Premium Aluminum',
     isSame: false,
     icon: (
       <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -266,6 +242,9 @@ export default function PlanComparison() {
           {/* Gold Card */}
           <div className="relative glass-card-premium p-8 rounded-3xl overflow-hidden border border-accent-yellow/10 plan-card-col hover:border-accent-yellow/20 transition-all duration-500">
             <div className="absolute top-0 right-0 w-32 h-32 bg-accent-yellow/5 rounded-full blur-[50px] pointer-events-none" />
+            <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-accent-yellow text-background text-[10px] font-extrabold uppercase tracking-wider shadow-[0_0_16px_rgba(255,214,10,0.3)]">
+              Most Popular
+            </div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-full bg-accent-yellow/10 flex items-center justify-center text-accent-yellow border border-accent-yellow/20">
                 <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -288,13 +267,18 @@ export default function PlanComparison() {
 
         {/* Modern Comparison Table */}
         <div className="glass-card-premium rounded-3xl overflow-hidden border border-white/5 spec-table-container shadow-2xl">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto overflow-y-auto max-h-[680px]">
             <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-white/10 bg-white/[0.01]">
+              <thead className="sticky top-0 z-10">
+                <tr className="border-b border-white/10 bg-[#0D0D0D]">
                   <th className="py-6 px-6 text-sm font-bold text-white uppercase tracking-wider">Specifications</th>
                   <th className="py-6 px-6 text-sm font-bold text-neutral-400 uppercase tracking-wider w-1/3">Silver Plan</th>
-                  <th className="py-6 px-6 text-sm font-bold text-accent-yellow uppercase tracking-wider w-1/3">Gold Plan</th>
+                  <th className="py-6 px-6 text-sm font-bold text-accent-yellow uppercase tracking-wider w-1/3 bg-accent-yellow/[0.04]">
+                    <div className="flex items-center gap-2.5">
+                      <span>Gold Plan</span>
+                      <span className="text-[9px] font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-accent-yellow/20 text-accent-yellow border border-accent-yellow/30">★ Top Pick</span>
+                    </div>
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -313,22 +297,16 @@ export default function PlanComparison() {
                     </td>
                     <td className="py-5 px-6">
                       <div className="flex items-center gap-2">
-                        {spec.isSame ? (
-                          <svg className="text-accent-blue flex-shrink-0" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                            <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        ) : (
-                          <svg className="text-neutral-500 flex-shrink-0" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M8 12h8" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        )}
-                        <span className={`text-sm ${spec.isSame ? 'text-neutral-300 font-semibold' : 'text-neutral-400'}`}>
+                        <svg className="text-neutral-500 flex-shrink-0" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                          <path d="M8 12h8" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <span className="text-sm text-neutral-400">
                           {spec.silver}
                         </span>
                       </div>
                     </td>
-                    <td className="py-5 px-6">
+                    <td className="py-5 px-6 bg-accent-yellow/[0.02]">
                       <div className="flex items-center gap-2">
                         <svg className="text-accent-yellow flex-shrink-0 filter drop-shadow-[0_0_6px_rgba(255,214,10,0.5)]" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                           <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />

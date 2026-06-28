@@ -46,9 +46,9 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-6 left-0 right-0 z-[9999] flex justify-center pointer-events-none px-4">
+      <div className="fixed top-4 left-0 right-0 z-[9999] flex justify-center pointer-events-none px-4">
         <nav
-          className={`pointer-events-auto w-fit px-6 h-14 flex items-center justify-between gap-8 rounded-full border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`pointer-events-auto w-fit px-6 h-12 flex items-center justify-between gap-6 rounded-full border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             hidden && !isOpen 
               ? 'translate-y-[-100px] opacity-0' 
               : 'translate-y-0 opacity-100'

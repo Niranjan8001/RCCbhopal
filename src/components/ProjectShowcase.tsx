@@ -46,13 +46,13 @@ const projects = [
     image: '/proj4.jpeg',
   },
   {
-    title: 'Twin Bungalow, Shahpura',
-    sqft: '5,200 sq ft',
-    category: 'Construction',
-    location: 'Shahpura, Bhopal',
+    title: 'Commercial Shop Complex',
+    sqft: '6,800 sq ft',
+    category: 'Commercial',
+    location: 'Bhopal',
     year: '2023',
     color: '#5AC8FA',
-    description: 'A paired twin-bungalow construction in Shahpura, Bhopal — built with reinforced concrete structural framing, solid brick cavity walls, and a meticulous finishing schedule covering flooring, plasterwork, and exterior cladding to premium handover standard.',
+    description: 'A multi-unit commercial shop complex built to durable RCC structural standards — featuring robust load-bearing frames, polished flooring, plastered shop-front facades, and utility-ready interiors designed for long-term retail tenancy.',
     image: '/proj5.png',
   },
 ];

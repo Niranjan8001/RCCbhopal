@@ -135,7 +135,7 @@ export default function ProjectShowcase() {
   return (
     <section 
       ref={sectionRef} 
-      className={`relative w-full bg-background overflow-hidden ${isMobile ? '' : 'h-screen flex items-center justify-center pt-16 md:pt-20'}`}
+      className={`relative w-full bg-background overflow-hidden ${isMobile ? '' : 'h-screen flex flex-col items-center justify-start pt-16 md:pt-20'}`}
       id="projects"
     >
       {isMobile ? (
@@ -241,64 +241,8 @@ export default function ProjectShowcase() {
         <div className="absolute top-1/2 left-0 w-[40vw] h-[40vw] bg-accent-yellow/5 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2" />
       </div>
 
-      {/* Navigation Layer */}
-      <AnimatePresence>
-        {currentPage > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="absolute bottom-6 md:bottom-12 left-0 right-0 flex justify-center items-center gap-4 md:gap-8 z-50 pointer-events-none"
-          >
-            <button
-              onClick={() => setCurrentPage((p) => Math.max(p - 1, 0))}
-              className={`btn-secondary !px-4 !py-3 md:!px-6 pointer-events-auto backdrop-blur-xl bg-white/5 border-white/10 ${
-                currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              <span className="hidden sm:inline">← Previous</span>
-              <span className="sm:hidden">←</span>
-            </button>
-            
-            <button
-              onClick={() => setCurrentPage(0)}
-              className="text-xs md:text-sm font-medium text-muted hover:text-white transition-colors pointer-events-auto px-4 tracking-widest uppercase"
-            >
-              Close Book
-            </button>
-            
-            {isLastPage ? (
-              <motion.button
-                onClick={closeBookAndScroll}
-                className="btn-secondary !px-4 !py-3 md:!px-6 pointer-events-auto backdrop-blur-xl border-accent-yellow/40 text-accent-yellow"
-                animate={{
-                  boxShadow: [
-                    '0 0 8px rgba(255,214,10,0.15), 0 0 20px rgba(255,214,10,0.05)',
-                    '0 0 16px rgba(255,214,10,0.35), 0 0 40px rgba(255,214,10,0.12)',
-                    '0 0 8px rgba(255,214,10,0.15), 0 0 20px rgba(255,214,10,0.05)',
-                  ],
-                }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <span className="hidden sm:inline">Close Book ✦</span>
-                <span className="sm:hidden">✦</span>
-              </motion.button>
-            ) : (
-              <button
-                onClick={() => setCurrentPage((p) => Math.min(p + 1, NUM_PROJECTS))}
-                className="btn-secondary !px-4 !py-3 md:!px-6 pointer-events-auto backdrop-blur-xl bg-white/5 border-white/10"
-              >
-                <span className="hidden sm:inline">Next Project →</span>
-                <span className="sm:hidden">→</span>
-              </button>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Main Layout Container */}
-      <div className="relative w-full max-w-[1400px] mx-auto flex items-center h-full px-6 lg:px-16 z-10">
+      <div className="relative w-full max-w-[1400px] mx-auto flex items-center flex-1 min-h-0 px-6 lg:px-16 z-10">
         
         {/* Left Side: Minimal Text (visible when closed) */}
         <div 
@@ -513,6 +457,62 @@ export default function ProjectShowcase() {
           </div>
         </div>
       </div>
+
+      {/* Navigation Row — in-flow below the book */}
+      <AnimatePresence>
+        {currentPage > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="relative w-full flex justify-center items-center gap-4 md:gap-8 z-50 pointer-events-none shrink-0 py-4 md:py-5"
+          >
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(p - 1, 0))}
+              className={`btn-secondary !px-4 !py-3 md:!px-6 pointer-events-auto backdrop-blur-xl bg-white/5 border-white/10 ${
+                currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              <span className="hidden sm:inline">← Previous</span>
+              <span className="sm:hidden">←</span>
+            </button>
+
+            <button
+              onClick={() => setCurrentPage(0)}
+              className="text-xs md:text-sm font-medium text-muted hover:text-white transition-colors pointer-events-auto px-4 tracking-widest uppercase"
+            >
+              Close Book
+            </button>
+
+            {isLastPage ? (
+              <motion.button
+                onClick={closeBookAndScroll}
+                className="btn-secondary !px-4 !py-3 md:!px-6 pointer-events-auto backdrop-blur-xl border-accent-yellow/40 text-accent-yellow"
+                animate={{
+                  boxShadow: [
+                    '0 0 8px rgba(255,214,10,0.15), 0 0 20px rgba(255,214,10,0.05)',
+                    '0 0 16px rgba(255,214,10,0.35), 0 0 40px rgba(255,214,10,0.12)',
+                    '0 0 8px rgba(255,214,10,0.15), 0 0 20px rgba(255,214,10,0.05)',
+                  ],
+                }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <span className="hidden sm:inline">Close Book ✦</span>
+                <span className="sm:hidden">✦</span>
+              </motion.button>
+            ) : (
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, NUM_PROJECTS))}
+                className="btn-secondary !px-4 !py-3 md:!px-6 pointer-events-auto backdrop-blur-xl bg-white/5 border-white/10"
+              >
+                <span className="hidden sm:inline">Next Project →</span>
+                <span className="sm:hidden">→</span>
+              </button>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
       </>)}
     </section>
   );

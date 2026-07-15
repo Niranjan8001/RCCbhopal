@@ -46,14 +46,14 @@ const projects = [
     image: '/proj4.jpeg',
   },
   {
-    title: 'CloudNine Residences',
-    sqft: '18,000 sq ft',
-    category: 'Residential',
-    location: 'Pune, India',
-    year: '2024',
-    color: '#FFD60A',
-    description: 'Smart-home integrated luxury apartments with infinity pools and rooftop observatory.',
-    image: '/project1.png',
+    title: 'Twin Bungalow, Shahpura',
+    sqft: '5,200 sq ft',
+    category: 'Construction',
+    location: 'Shahpura, Bhopal',
+    year: '2023',
+    color: '#5AC8FA',
+    description: 'A paired twin-bungalow construction in Shahpura, Bhopal — built with reinforced concrete structural framing, solid brick cavity walls, and a meticulous finishing schedule covering flooring, plasterwork, and exterior cladding to premium handover standard.',
+    image: '/proj5.png',
   },
 ];
 
@@ -353,7 +353,7 @@ export default function ProjectShowcase() {
                         <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[rgba(0,0,0,0.08)] to-transparent z-0 pointer-events-none" />
 
                         {/* Content Wrapper */}
-                        <div className="relative z-10 w-full h-full p-6 sm:p-10 lg:p-16 flex flex-col text-neutral-900 border-[1px] border-[rgba(0,0,0,0.03)] m-2 sm:m-4 rounded-sm" style={{ width: 'calc(100% - 1rem)', height: 'calc(100% - 1rem)' }}>
+                        <div className="relative z-10 w-full h-full p-5 sm:p-8 lg:p-10 flex flex-col text-neutral-900 border-[1px] border-[rgba(0,0,0,0.03)] m-2 sm:m-4 rounded-sm" style={{ width: 'calc(100% - 1rem)', height: 'calc(100% - 1rem)' }}>
                           <span 
                             className="absolute top-4 right-4 sm:top-8 sm:right-8 text-neutral-300 font-bold text-xl sm:text-2xl"
                             style={{ fontFamily: 'var(--font-serif)' }}
@@ -369,7 +369,7 @@ export default function ProjectShowcase() {
                           </h4>
                           
                           <h3 
-                            className="text-2xl sm:text-4xl lg:text-5xl font-black text-neutral-900 mb-4 sm:mb-8 leading-[1.1] tracking-tight"
+                            className="text-xl sm:text-3xl lg:text-4xl font-black text-neutral-900 mb-3 sm:mb-5 leading-[1.1] tracking-tight"
                             style={{ fontFamily: 'var(--font-serif)' }}
                           >
                             {projects[i-1].title}
@@ -379,7 +379,7 @@ export default function ProjectShowcase() {
                             {projects[i-1].description}
                           </p>
 
-                          <div className="grid grid-cols-2 gap-y-4 gap-x-4 mt-8 border-t border-neutral-200 pt-6 sm:pt-8 w-full max-w-sm">
+                          <div className="grid grid-cols-2 gap-y-3 gap-x-4 mt-4 border-t border-neutral-200 pt-4 sm:pt-5 w-full max-w-sm">
                             <div>
                               <p className="text-neutral-400 text-[9px] sm:text-[10px] uppercase tracking-widest mb-1">Location</p>
                               <p className="font-semibold text-neutral-800 text-xs sm:text-sm">{projects[i-1].location}</p>

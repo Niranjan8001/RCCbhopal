@@ -34,31 +34,39 @@ ABOUT RCC:
 Keep replies concise — 2 to 4 sentences maximum. Be warm and confident, not salesy. Use ₹ symbol for all currency. Never make up project locations or costs not mentioned above.`;
 
 export async function POST(request: NextRequest) {
-  const { messages } = await request.json();
+  try {
+    const { messages } = await request.json();
 
-  const stream = await client.messages.create({
-    model: 'claude-haiku-4-5-20251001',
-    max_tokens: 512,
-    system: SYSTEM_PROMPT,
-    messages,
-    stream: true,
-  });
+    const stream = await client.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 512,
+      system: SYSTEM_PROMPT,
+      messages,
+      stream: true,
+    });
 
-  const readable = new ReadableStream({
-    async start(controller) {
-      for await (const event of stream) {
-        if (
-          event.type === 'content_block_delta' &&
-          event.delta.type === 'text_delta'
-        ) {
-          controller.enqueue(new TextEncoder().encode(event.delta.text));
+    const readable = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const event of stream) {
+            if (
+              event.type === 'content_block_delta' &&
+              event.delta.type === 'text_delta'
+            ) {
+              controller.enqueue(new TextEncoder().encode(event.delta.text));
+            }
+          }
+        } finally {
+          controller.close();
         }
-      }
-      controller.close();
-    },
-  });
+      },
+    });
 
-  return new Response(readable, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-  });
+    return new Response(readable, {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    });
+  } catch (err) {
+    console.error('[chat/route] error:', err);
+    return new Response('error', { status: 500 });
+  }
 }

@@ -1,6 +1,8 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { NextRequest } from 'next/server';
 
+export const runtime = 'nodejs';
+
 const SYSTEM_PROMPT = `You are the RCC AI Advisor — a warm, knowledgeable construction consultant for RCC (Reliable Construction & Consultancy), a luxury residential construction firm in Bhopal with 30+ years of engineering legacy.
 
 Your two roles:

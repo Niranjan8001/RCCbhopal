@@ -1,8 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { NextRequest } from 'next/server';
 
-const client = new Anthropic();
-
 const SYSTEM_PROMPT = `You are the RCC AI Advisor — a warm, knowledgeable construction consultant for RCC (Reliable Construction & Consultancy), a luxury residential construction firm in Bhopal with 30+ years of engineering legacy.
 
 Your two roles:
@@ -35,6 +33,13 @@ Keep replies concise — 2 to 4 sentences maximum. Be warm and confident, not sa
 
 export async function POST(request: NextRequest) {
   try {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      console.error('[chat/route] ANTHROPIC_API_KEY is not set');
+      return new Response('error', { status: 500 });
+    }
+
+    const client = new Anthropic({ apiKey });
     const { messages } = await request.json();
 
     const stream = await client.messages.create({

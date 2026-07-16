@@ -62,7 +62,8 @@ export default function ProjectShowcase() {
   const [isClosing, setIsClosing] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const NUM_PROJECTS = projects.length;
-  const isLastPage = currentPage === NUM_PROJECTS;
+  const TOTAL_PAGES = NUM_PROJECTS + 1;
+  const isLastPage = currentPage === TOTAL_PAGES;
   const [isMobile, setIsMobile] = useState(false);
   const [mobileModalOpen, setMobileModalOpen] = useState(false);
 
@@ -83,7 +84,7 @@ export default function ProjectShowcase() {
 
   useEffect(() => {
     // Lock scroll when book is fully open inside bounds
-    if (currentPage > 0 && currentPage <= NUM_PROJECTS) {
+    if (currentPage > 0 && currentPage <= TOTAL_PAGES) {
       document.body.style.overflow = 'hidden';
     } else if (!isClosing) {
       document.body.style.overflow = '';
@@ -96,12 +97,12 @@ export default function ProjectShowcase() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isClosing) return;
-      if (currentPage > 0 && currentPage <= NUM_PROJECTS) {
+      if (currentPage > 0 && currentPage <= TOTAL_PAGES) {
         if (e.key === 'ArrowRight') {
           if (isLastPage) {
             closeBookAndScroll();
           } else {
-            setCurrentPage((p) => Math.min(p + 1, NUM_PROJECTS));
+            setCurrentPage((p) => Math.min(p + 1, TOTAL_PAGES));
           }
         } else if (e.key === 'ArrowLeft') {
           setCurrentPage((p) => Math.max(p - 1, 0));
@@ -221,6 +222,29 @@ export default function ProjectShowcase() {
                     ))}
                   </div>
 
+                  {/* And many more card */}
+                  <motion.div
+                    className="glass-card rounded-2xl overflow-hidden mt-5"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: projects.length * 0.08, duration: 0.5 }}
+                  >
+                    <div className="p-6 text-center">
+                      <p className="text-4xl font-black text-white/20 mb-2" style={{ fontFamily: 'var(--font-serif)' }}>50+</p>
+                      <h3 className="text-lg font-bold mb-2">and many more.</h3>
+                      <p className="text-muted text-sm leading-relaxed mb-4">
+                        Our portfolio spans residential, commercial, renovation, and government builds across Bhopal — from intimate family homes to large-scale CPWD contracts.
+                      </p>
+                      <div className="flex items-center justify-center gap-4 text-xs text-muted">
+                        <span>15+ Years</span>
+                        <span>•</span>
+                        <span>50+ Projects</span>
+                        <span>•</span>
+                        <span>Bhopal & Beyond</span>
+                      </div>
+                    </div>
+                  </motion.div>
+
                   {/* Bottom close */}
                   <div className="text-center mt-8">
                     <button
@@ -280,7 +304,7 @@ export default function ProjectShowcase() {
           {/* Spine Container (Right Half of the 2-page spread) */}
           <div className="absolute top-0 bottom-0 left-1/2 w-1/2" style={{ transformStyle: 'preserve-3d' }}>
             
-            {Array.from({ length: NUM_PROJECTS + 1 }).map((_, i) => {
+            {Array.from({ length: TOTAL_PAGES + 1 }).map((_, i) => {
               const isFlipped = i < currentPage;
               const closedRotation = 0;
               const openedRotation = -180;
@@ -305,9 +329,46 @@ export default function ProjectShowcase() {
                 >
                   {/* --- FRONT FACE --- */}
                   <div className="absolute inset-0 backface-hidden" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
-                    {i === 0 ? (
+                    {i === TOTAL_PAGES ? (
+                      // TOTAL_PAGES: "AND MANY MORE" RIGHT PAGE
+                      <div className="absolute inset-0 bg-[#f4f2eb] flex flex-col rounded-r-lg lg:rounded-r-xl shadow-[inset_15px_0_30px_rgba(0,0,0,0.06),_2px_5px_15px_rgba(0,0,0,0.1)] border-l border-black/10 overflow-hidden">
+                        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[rgba(0,0,0,0.08)] to-transparent z-0 pointer-events-none" />
+                        <div className="relative z-10 w-full h-full p-5 sm:p-8 lg:p-10 flex flex-col justify-between text-neutral-900 border-[1px] border-[rgba(0,0,0,0.03)] m-2 sm:m-4 rounded-sm" style={{ width: 'calc(100% - 1rem)', height: 'calc(100% - 1rem)' }}>
+                          <div>
+                            <h4 className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] mb-4 text-neutral-400">
+                              Our Portfolio
+                            </h4>
+                            <div className="mb-4 sm:mb-6">
+                              <span
+                                className="text-6xl sm:text-7xl lg:text-8xl font-black leading-none tracking-tight text-neutral-200"
+                                style={{ fontFamily: 'var(--font-serif)' }}
+                              >
+                                50+
+                              </span>
+                            </div>
+                            <h3
+                              className="text-2xl sm:text-3xl lg:text-4xl font-black text-neutral-800 mb-4 sm:mb-6 leading-[1.1] tracking-tight"
+                              style={{ fontFamily: 'var(--font-serif)' }}
+                            >
+                              and many more.
+                            </h3>
+                            <p className="text-neutral-500 text-xs sm:text-sm lg:text-base leading-relaxed max-w-sm">
+                              Every project tells a story. Our work spans residential, commercial, renovation, and government builds across Bhopal — from intimate family homes to large-scale CPWD contracts.
+                            </p>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 border-t border-neutral-200 pt-4 sm:pt-5">
+                            {[['15+', 'Years'], ['50+', 'Projects'], ['Bhopal', '& Beyond']].map(([val, label]) => (
+                              <div key={label} className="text-center">
+                                <p className="font-black text-neutral-800 text-base sm:text-xl">{val}</p>
+                                <p className="text-neutral-400 text-[9px] sm:text-[10px] uppercase tracking-widest mt-0.5">{label}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ) : i === 0 ? (
                       // 0: COVER FRONT
-                      <div 
+                      <div
                         className="w-full h-full relative cursor-pointer"
                         onClick={() => { if (currentPage === 0) setCurrentPage(1); }}
                       >
@@ -409,15 +470,28 @@ export default function ProjectShowcase() {
 
                   {/* --- BACK FACE --- */}
                   <div className="absolute inset-0 backface-hidden rotate-y-180" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                    {i === NUM_PROJECTS ? (
-                      // N: BACK COVER EXTERIOR
+                    {i === TOTAL_PAGES ? (
+                      // TOTAL_PAGES: BACK COVER EXTERIOR
                       <div className="w-full h-full relative border-r border-black/80 rounded-l-lg lg:rounded-l-xl overflow-hidden" style={{
                         backgroundColor: '#3d2314',
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.3' mix-blend-mode='overlay'/%3E%3C/svg%3E"), linear-gradient(135deg, #29150b 0%, #4a2f1d 100%)`, 
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.3' mix-blend-mode='overlay'/%3E%3C/svg%3E"), linear-gradient(135deg, #29150b 0%, #4a2f1d 100%)`,
                         boxShadow: 'inset -4px 0 10px rgba(0,0,0,0.6), inset 4px 0 10px rgba(255,255,255,0.1)',
                       }}>
-                         <div className="absolute inset-4 border-2 border-[rgba(0,0,0,0.4)] rounded-sm" style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05), 0 0 0 1px rgba(255,255,255,0.05)' }} />
-                         <div className="absolute right-[2%] top-0 bottom-0 w-[4%] bg-gradient-to-l from-[rgba(0,0,0,0.5)] via-[rgba(255,255,255,0.08)] to-[rgba(0,0,0,0.5)]" />
+                        <div className="absolute inset-4 border-2 border-[rgba(0,0,0,0.4)] rounded-sm" style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05), 0 0 0 1px rgba(255,255,255,0.05)' }} />
+                        <div className="absolute right-[2%] top-0 bottom-0 w-[4%] bg-gradient-to-l from-[rgba(0,0,0,0.5)] via-[rgba(255,255,255,0.08)] to-[rgba(0,0,0,0.5)]" />
+                      </div>
+                    ) : i === NUM_PROJECTS ? (
+                      // NUM_PROJECTS: plain parchment left page (pairs with "and many more" right page)
+                      <div className="absolute inset-0 bg-[#f4f2eb] flex flex-col rounded-l-lg lg:rounded-l-xl shadow-[inset_-15px_0_30px_rgba(0,0,0,0.06),_-2px_5px_15px_rgba(0,0,0,0.1)] border-r border-black/10 overflow-hidden">
+                        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[rgba(0,0,0,0.08)] to-transparent z-10 pointer-events-none" />
+                        <div className="relative z-0 w-full h-full flex items-center justify-center p-8 sm:p-12">
+                          <p
+                            className="text-neutral-300 text-4xl sm:text-5xl font-black tracking-tight select-none"
+                            style={{ fontFamily: 'var(--font-serif)', writingMode: 'vertical-rl', textOrientation: 'mixed', transform: 'rotate(180deg)' }}
+                          >
+                            RCC
+                          </p>
+                        </div>
                       </div>
                     ) : (
                       // 0..N-1: PROJECT IMAGE (Left Page)
@@ -503,7 +577,7 @@ export default function ProjectShowcase() {
               </motion.button>
             ) : (
               <button
-                onClick={() => setCurrentPage((p) => Math.min(p + 1, NUM_PROJECTS))}
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, TOTAL_PAGES))}
                 className="btn-secondary !px-4 !py-3 md:!px-6 pointer-events-auto backdrop-blur-xl bg-white/5 border-white/10"
               >
                 <span className="hidden sm:inline">Next Project →</span>

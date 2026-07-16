@@ -59,7 +59,7 @@ export default function AIChatWidget() {
         body: JSON.stringify({ messages: next }),
       });
 
-      if (!res.body) throw new Error('No response body');
+      if (!res.ok || !res.body) throw new Error('API error');
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();

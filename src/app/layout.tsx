@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import AIChatWidget from "@/components/AIChatWidget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -88,6 +89,7 @@ export default function RootLayout({
           }}
         />
         {children}
+        <AIChatWidget />
         {process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY && (
           <Script
             id="google-maps-script"

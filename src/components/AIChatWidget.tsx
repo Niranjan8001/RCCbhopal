@@ -21,9 +21,29 @@ function renderContent(text: string) {
   );
 }
 
-function extractEstimate(content: string): string | null {
-  const match = content.match(/Estimated cost:\s*(₹[\d,]+)/i);
-  return match ? match[1] : null;
+type ProjectDetails = { cost: string; area?: string; floors?: string; tier?: string; location?: string };
+
+function extractDetails(content: string): ProjectDetails | null {
+  const costMatch = content.match(/Estimated cost:\s*(₹[\d,]+)/i);
+  if (!costMatch) return null;
+  return {
+    cost: costMatch[1],
+    area: content.match(/Area:\s*([\d,]+)\s*sq ft/i)?.[1],
+    floors: content.match(/Floors:\s*(\w+)/i)?.[1],
+    tier: content.match(/Tier:\s*(Silver|Gold)/i)?.[1],
+    location: content.match(/Location:\s*(.+?)(?:\n|$)/i)?.[1]?.trim(),
+  };
+}
+
+function buildWhatsAppMessage(d: ProjectDetails): string {
+  const lines = [`Hi RCC! I used your AI Advisor and got a project estimate.\n`];
+  if (d.area)     lines.push(`📐 Area: ${d.area} sq ft`);
+  if (d.floors)   lines.push(`🏠 Type: ${d.floors}`);
+  if (d.tier)     lines.push(`✨ Tier: ${d.tier}`);
+  if (d.location) lines.push(`📍 Location: ${d.location}`);
+  lines.push(`💰 Estimated Cost: ${d.cost}`);
+  lines.push(`\nI'd like a detailed quote and to discuss my project.`);
+  return lines.join('\n');
 }
 
 export default function AIChatWidget() {
@@ -148,7 +168,7 @@ export default function AIChatWidget() {
               {messages.map((msg, idx) => {
                 const isAI = msg.role === 'assistant';
                 const isStreaming = streaming && idx === messages.length - 1 && isAI;
-                const estimate = isAI ? extractEstimate(msg.content) : null;
+                const details = isAI ? extractDetails(msg.content) : null;
 
                 return (
                   <div key={idx} className={`flex gap-2.5 ${isAI ? '' : 'flex-row-reverse'}`}>
@@ -174,11 +194,9 @@ export default function AIChatWidget() {
                         )}
                       </div>
                       {/* WhatsApp CTA after estimate */}
-                      {isAI && estimate && !isStreaming && (
+                      {isAI && details && !isStreaming && (
                         <a
-                          href={`https://wa.me/917987900965?text=${encodeURIComponent(
-                            `Hi RCC! I used your AI Advisor and got an estimate of ${estimate} for my project. I'd like a detailed quote.`
-                          )}`}
+                          href={`https://wa.me/917987900965?text=${encodeURIComponent(buildWhatsAppMessage(details))}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#25D366] text-white text-xs font-bold tracking-wide hover:bg-[#1ebe59] transition-colors"

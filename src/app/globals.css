@@ -1539,3 +1539,78 @@ input[type="range"]::-moz-range-thumb:hover {
   }
 }
 
+/* =================================================================
+   SITE VISITS MAP — pins, marker pulse, gallery dots
+   ================================================================= */
+
+.sv-map-shell {
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sv-pin {
+  width: 36px;
+  height: 36px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: #FF6500;
+  box-shadow: 0 0 15px rgba(255, 101, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  position: relative;
+}
+
+.sv-pin::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #0A0A0A;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.sv-pin:hover {
+  transform: rotate(-45deg) scale(1.15);
+  box-shadow: 0 0 25px rgba(255, 101, 0, 0.8), 0 6px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Gallery Pagination Dots (mirrors .tc-dot) ── */
+.sv-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+
+.sv-dot {
+  width: 8px;
+  height: 6px;
+  border-radius: 100px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sv-dot:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.sv-dot-active {
+  width: 28px;
+  background: #0A84FF;
+  box-shadow: 0 0 12px rgba(10, 132, 255, 0.7), 0 0 4px rgba(10, 132, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+  .sv-map-shell {
+    border-radius: 16px;
+  }
+}
+

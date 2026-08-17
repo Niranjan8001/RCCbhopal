@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-5">
               <Image src="/logo.png" alt="RCC Logo" width={40} height={40} className="rounded-full bg-white" />
-              <span className="text-xl font-bold tracking-tight">RCC Build</span>
+              <span className="text-xl font-bold tracking-tight">Reliable Construction & Consultancy</span>
             </div>
             <p className="text-sm text-muted leading-relaxed mb-6 max-w-xs">
               Reliable Construction & Consultancy — Engineering excellence since 1991. Premium construction solutions for those who demand the best.
@@ -75,7 +75,7 @@ export default function Footer() {
                 <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="text-muted mt-0.5 flex-shrink-0">
                   <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                <a href="mailto:info@rccbuild.in" className="text-sm text-muted hover:text-foreground transition-colors">info@rccbuild.in</a>
+                <a href="mailto:help@rccbhopal.in" className="text-sm text-muted hover:text-foreground transition-colors">help@rccbhopal.in</a>
               </li>
             </ul>
           </div>

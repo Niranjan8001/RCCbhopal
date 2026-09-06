@@ -15,13 +15,14 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.rccbhopal.in"),
   title: "RCC | Build Beyond Imagination",
   description: "Premium construction solutions that transform your vision into architectural masterpieces. Experience luxury construction redefined.",
   keywords: ["construction", "luxury building", "premium construction", "architecture", "design build"],
   openGraph: {
     title: "RCC | Build Beyond Imagination",
     description: "Premium construction solutions that transform your vision into architectural masterpieces. Experience luxury construction redefined.",
-    url: "https://rccbuild.in",
+    url: "https://www.rccbhopal.in",
     siteName: "Reliable Construction & Consultancy",
     images: [
       {
@@ -58,8 +59,8 @@ export default function RootLayout({
               "@type": "ConstructionBusiness",
               "name": "Reliable Construction & Consultancy (RCC)",
               "image": "/logo.png",
-              "@id": "https://rccbuild.in/#business",
-              "url": "https://rccbuild.in",
+              "@id": "https://www.rccbhopal.in/#business",
+              "url": "https://www.rccbhopal.in",
               "telephone": "+917987900965",
               "priceRange": "$$$",
               "address": {

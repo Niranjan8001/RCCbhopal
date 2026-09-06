@@ -37,7 +37,7 @@ const siteVisitsJsonLd = {
       },
       photo: visit.photos.map((photo) => ({
         '@type': 'ImageObject',
-        contentUrl: `https://rccbuild.in${photo}`,
+        contentUrl: `https://www.rccbhopal.in${photo}`,
         caption: `${visit.title} — ${visit.locality}`,
       })),
     },

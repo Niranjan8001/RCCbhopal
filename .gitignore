@@ -34,6 +34,12 @@ yarn-error.log*
 .env*
 !.env.example
 
+# Source design PDFs kept locally for reference. They sit under public/, which
+# Next.js serves publicly, and the drawing sheets still carry a private client's
+# name in the title block — the exported images in public/images/3d-design have
+# that name redacted. Never commit/deploy these originals.
+/public/pdfs/
+
 # vercel
 .vercel
 

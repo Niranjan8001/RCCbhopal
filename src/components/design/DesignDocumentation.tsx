@@ -6,12 +6,13 @@ import Image from 'next/image';
 import type { DesignSection } from '@/data/designShowcase';
 import ImageLightbox from './ImageLightbox';
 
-type FilterKey = 'all' | 'elevation' | 'floor-plan';
+type FilterKey = 'all' | 'elevation' | 'floor-plan' | 'column-layout';
 
 const FILTERS: { key: FilterKey; label: string }[] = [
   { key: 'all', label: 'All' },
   { key: 'elevation', label: 'Elevations' },
   { key: 'floor-plan', label: 'Floor Plans' },
+  { key: 'column-layout', label: 'Column Layouts' },
 ];
 
 export default function DesignDocumentation({ section }: { section: DesignSection }) {
@@ -49,7 +50,7 @@ export default function DesignDocumentation({ section }: { section: DesignSectio
       </motion.div>
 
       {/* Filter pills */}
-      <div className="flex justify-center gap-2 mb-8" role="tablist" aria-label="Filter technical drawings">
+      <div className="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label="Filter technical drawings">
         {FILTERS.map((f) => (
           <button
             key={f.key}

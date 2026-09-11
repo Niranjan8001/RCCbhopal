@@ -5,11 +5,12 @@ import { DESIGN_SECTIONS } from '@/data/designShowcase';
 import RoomGallery from './design/RoomGallery';
 import DesignDocumentation from './design/DesignDocumentation';
 
-const [livingArea, diningArea, technical] = DESIGN_SECTIONS;
+const [livingArea, diningArea, exteriorElevations, technical] = DESIGN_SECTIONS;
 
 const JUMP_LINKS = [
   { href: '#living-area', label: 'Living Area' },
   { href: '#dining-area', label: 'Dining Area' },
+  { href: '#exterior-elevations', label: 'Exterior Elevations' },
   { href: '#technical', label: 'Design Documentation' },
 ];
 
@@ -62,6 +63,10 @@ export default function DesignShowcase() {
         <div className="section-divider my-16 md:my-24" />
 
         <RoomGallery section={diningArea} />
+
+        <div className="section-divider my-16 md:my-24" />
+
+        <RoomGallery section={exteriorElevations} />
 
         <div className="section-divider my-16 md:my-24" />
 

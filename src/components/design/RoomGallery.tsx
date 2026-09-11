@@ -11,6 +11,7 @@ export default function RoomGallery({ section, priority }: { section: DesignSect
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const images = section.images;
+  const contain = section.fit === 'contain';
 
   const goPrev = useCallback(() => setActive((i) => (i - 1 + images.length) % images.length), [images.length]);
   const goNext = useCallback(() => setActive((i) => (i + 1) % images.length), [images.length]);
@@ -69,7 +70,9 @@ export default function RoomGallery({ section, priority }: { section: DesignSect
                 alt={images[active].alt}
                 fill
                 sizes="(max-width: 768px) 100vw, 900px"
-                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                className={`transition-transform duration-700 group-hover:scale-[1.03] ${
+                  contain ? 'object-contain' : 'object-cover'
+                }`}
                 priority={priority && active === 0}
               />
             </motion.div>
@@ -139,7 +142,13 @@ export default function RoomGallery({ section, priority }: { section: DesignSect
                 active === i ? 'border-accent-yellow shadow-[0_0_20px_rgba(255,214,10,0.25)]' : 'border-white/10 opacity-70 hover:opacity-100'
               }`}
             >
-              <Image src={img.src} alt={img.alt} fill sizes="160px" className="object-cover" />
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                sizes="160px"
+                className={contain ? 'object-contain' : 'object-cover'}
+              />
             </button>
           ))}
         </div>

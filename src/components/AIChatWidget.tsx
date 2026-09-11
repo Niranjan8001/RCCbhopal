@@ -132,12 +132,12 @@ export default function AIChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.97 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-[9.5rem] md:bottom-[5.5rem] left-4 sm:left-6 z-[65] w-[calc(100vw-2rem)] sm:w-[360px] flex flex-col rounded-2xl overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.6)] border border-white/10"
+            className="fixed bottom-[5.5rem] left-4 sm:left-6 z-[65] w-[calc(100vw-2rem)] sm:w-[360px] flex flex-col rounded-2xl overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.6)] border border-white/10"
             style={{
               backgroundColor: 'rgba(10, 10, 10, 0.92)',
               backdropFilter: 'blur(24px)',
               WebkitBackdropFilter: 'blur(24px)',
-              height: 'min(500px, calc(100dvh - 11rem))',
+              height: 'min(520px, calc(100dvh - 7rem))',
             }}
           >
             {/* Header */}
@@ -254,7 +254,7 @@ export default function AIChatWidget() {
       {/* Toggle Button */}
       <motion.button
         onClick={() => setIsOpen((o) => !o)}
-        className="fixed bottom-[4.75rem] md:bottom-6 left-4 sm:left-6 z-[65] w-14 h-14 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(245,197,66,0.35)] border border-[#F5C542]/30"
+        className="fixed bottom-6 left-4 sm:left-6 z-[65] w-14 h-14 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(245,197,66,0.35)] border border-[#F5C542]/30"
         style={{ backgroundColor: 'rgba(10,10,10,0.92)', backdropFilter: 'blur(16px)' }}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}

@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import ContactForm from './ContactForm';
 import ResponseTimeNote from './ResponseTimeNote';
 import { trackEvent } from '@/lib/analytics';
 
@@ -112,10 +111,6 @@ export default function FinalCTA() {
               </svg>
               <span>No obligation estimate</span>
             </div>
-          </div>
-
-          <div className="mt-12 pt-10 border-t border-white/10 relative z-10 max-w-md mx-auto text-left">
-            <ContactForm />
           </div>
         </div>
       </div>

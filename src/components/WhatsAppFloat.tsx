@@ -18,7 +18,7 @@ export default function WhatsAppFloat() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="hidden md:flex fixed bottom-6 right-6 z-[60] items-center gap-3"
+          className="fixed bottom-6 right-6 z-[60] flex items-center gap-3"
           initial={{ opacity: 0, scale: 0.5, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}

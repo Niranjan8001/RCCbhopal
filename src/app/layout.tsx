@@ -4,7 +4,6 @@ import "./globals.css";
 import Script from "next/script";
 import AIChatWidget from "@/components/AIChatWidget";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
-import StickyMobileCTA from "@/components/StickyMobileCTA";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -99,7 +98,6 @@ export default function RootLayout({
         />
         {children}
         <AIChatWidget />
-        <StickyMobileCTA />
         <GoogleAnalytics />
         {process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY && (
           <Script

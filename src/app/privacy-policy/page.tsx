@@ -37,11 +37,6 @@ export default function PrivacyPolicyPage() {
 
         <Section title="What we collect">
           <p>
-            <strong className="text-white/90">Contact form:</strong> if you fill in our contact form,
-            we collect your name, phone number, the message/project details you provide, and — if you
-            choose to share it — your email address.
-          </p>
-          <p>
             <strong className="text-white/90">AI chat widget:</strong> messages you type into the RCC
             AI Advisor are sent to Anthropic (the provider of the underlying AI model) to generate a
             response. We don&apos;t ask the assistant to collect personal details beyond what you
@@ -62,18 +57,17 @@ export default function PrivacyPolicyPage() {
 
         <Section title="Why we collect it">
           <p>
-            Contact-form details are used only to respond to your enquiry — to understand your
-            project and get back to you. We don&apos;t use this information for unrelated marketing,
-            and we don&apos;t sell it to third parties.
+            Any information you volunteer through the AI chat widget is used only to generate a
+            helpful response to your question or estimate request. We don&apos;t use it for unrelated
+            marketing, and we don&apos;t sell it to third parties.
           </p>
         </Section>
 
         <Section title="Third parties involved">
           <p>
-            Contact-form submissions are delivered to us via Resend, an email-delivery service. AI
-            chat messages are processed by Anthropic to generate responses. Our site-visits map uses
-            Google Maps/Places, which is subject to Google&apos;s own privacy policy for any data it
-            collects while the map is loaded. We only use these providers to operate the features
+            AI chat messages are processed by Anthropic to generate responses. Our site-visits map
+            uses Google Maps/Places, which is subject to Google&apos;s own privacy policy for any data
+            it collects while the map is loaded. We only use these providers to operate the features
             described above.
           </p>
         </Section>
@@ -88,26 +82,23 @@ export default function PrivacyPolicyPage() {
 
         <Section title="How long we keep information">
           <p>
-            Contact-form submissions are delivered to us by email and are not stored in a database on
-            this website. We retain enquiry emails for as long as reasonably needed to respond to and
-            follow up on your enquiry.
+            This website does not store your AI chat conversation in a database — each conversation
+            exists only for the duration of your session in your browser.
           </p>
         </Section>
 
         <Section title="Security">
           <p>
-            We use reasonable technical measures (such as server-side validation and not exposing
-            service credentials to the browser) to protect the information submitted through this
-            site. No method of transmission over the internet is completely secure, so we can&apos;t
-            guarantee absolute security.
+            We use reasonable technical measures (such as not exposing service credentials to the
+            browser) to protect this website. No method of transmission over the internet is
+            completely secure, so we can&apos;t guarantee absolute security.
           </p>
         </Section>
 
         <Section title="Your choices">
           <p>
-            You can choose not to submit the contact form or use the AI chat widget — WhatsApp and
-            phone remain available as direct alternatives. If you&apos;d like us to delete an enquiry
-            you previously sent us, contact us using the details below and we&apos;ll action it.
+            You can choose not to use the AI chat widget — WhatsApp and phone remain available as
+            direct alternatives for getting in touch with us.
           </p>
         </Section>
 

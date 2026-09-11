@@ -12,7 +12,7 @@ const FAQS = [
   {
     question: 'How does the consultation process work?',
     answer:
-      'It starts with an in-depth consultation to understand your vision, requirements, and budget — either through our AI Advisor chat, WhatsApp, or the contact form below. From there we move through Design, Build, and Deliver, with a week-by-week timeline and milestone-linked payments throughout.',
+      'It starts with an in-depth consultation to understand your vision, requirements, and budget — either through our AI Advisor chat or directly on WhatsApp. From there we move through Design, Build, and Deliver, with a week-by-week timeline and milestone-linked payments throughout.',
   },
   {
     question: 'How do I request a project estimate?',

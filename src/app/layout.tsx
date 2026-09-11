@@ -73,6 +73,7 @@ export default function RootLayout({
               "url": "https://www.rccbhopal.in",
               "telephone": "+917987900965",
               "priceRange": "$$$",
+              "foundingDate": "2022",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "Katara Hills",

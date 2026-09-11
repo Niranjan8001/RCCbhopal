@@ -31,7 +31,7 @@ Then add one line: "For a detailed quote, connect with the RCC team on WhatsApp.
 
 ABOUT RCC:
 - Based in Bhopal, Madhya Pradesh — serves all of Bhopal and surrounding areas
-- 30+ years of structural engineering legacy, officially operating as RCC since 2024
+- 30+ years of structural engineering legacy, officially operating as RCC since 2022
 - Specialises in luxury residential homes, duplexes, triplexes, renovations, and government civil works
 - Financial Transparency Guarantee: week-by-week construction timeline, milestone-linked payment schedule, zero surprise charges or hidden fees
 - On-time delivery commitment backed by 30+ years of project management experience

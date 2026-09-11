@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ProjectShowcase from '@/components/ProjectShowcase';
+import DesignShowcase from '@/components/DesignShowcase';
 import SiteVisitsMap from '@/components/SiteVisitsMap';
 import CostEstimator from '@/components/CostEstimator';
 import PlanComparison from '@/components/PlanComparison';
@@ -61,6 +62,9 @@ export default function Home() {
 
       <div className="section-divider" />
       <ProjectShowcase />
+
+      <div className="section-divider" />
+      <DesignShowcase />
 
       <div className="section-divider" />
       <SiteVisitsMap />

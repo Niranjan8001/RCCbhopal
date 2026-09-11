@@ -40,6 +40,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { label: 'Projects', href: '#projects' },
+                { label: '3D Design Visualization', href: '#design-showcase' },
                 { label: 'Cost Estimator', href: '#estimator' },
                 { label: 'Our Process', href: '#process' },
                 { label: 'Testimonials', href: '#testimonials' },

@@ -58,6 +58,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} antialiased`}>
       <body className="noise-overlay">
+        <Script id="disable-scroll-restoration" strategy="beforeInteractive">
+          {`if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } window.scrollTo(0, 0);`}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

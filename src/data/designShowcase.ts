@@ -14,6 +14,13 @@ export interface DesignImage {
   caption?: string;
   /** Only set on documentation images — used by the Elevations / Floor Plans filter. */
   category?: 'elevation' | 'floor-plan';
+  /**
+   * Key callouts transcribed directly from the drawing sheet (paint codes,
+   * material finishes, dimensions, fixture notes) so they're readable
+   * without zooming into the image. Verbatim from the source — nothing
+   * inferred beyond what's printed on the sheet.
+   */
+  specs?: { label: string; value: string }[];
 }
 
 export interface DesignSection {
@@ -80,6 +87,18 @@ export const DESIGN_SECTIONS: DesignSection[] = [
         label: "Wall Elevation — BB'",
         caption: 'Sectional Plan & 3D Reference',
         category: 'elevation',
+        specs: [
+          { label: 'False Ceiling', value: '12" down false ceiling' },
+          { label: 'Sliding Door Glass', value: '8mm thick toughened glass (as/selec)' },
+          { label: 'Door Louvers', value: 'Fluted louvers (as/selec) pasted on sliding door, level +1"' },
+          { label: 'Signage', value: 'Neon sign (as/purchase)' },
+          { label: 'Wall Finish', value: 'AsianPaint 7935 Yellow Charm' },
+          { label: 'Wall Moulding', value: "38mm x 19mm MDF moulding pasted on wall finish, AsianPaint 7935 Yellow Charm" },
+          { label: 'Skirting', value: '4" stone skirting (as/selec)' },
+          { label: 'Ceiling Height', value: "8'-2\"" },
+          { label: 'Overall Elevation Width', value: "21'-0\"" },
+          { label: 'Sectional Plan', value: 'Wooden sliding door finish with fluted louvers; highlighter wall; way to toilet' },
+        ],
       },
       {
         src: '/images/3d-design/wall-elevation-aa.png',
@@ -87,18 +106,47 @@ export const DESIGN_SECTIONS: DesignSection[] = [
         label: "Wall Elevation — AA'",
         caption: 'Sectional Plan & 3D Reference',
         category: 'elevation',
+        specs: [
+          { label: 'False Ceiling', value: '14" down false ceiling' },
+          { label: 'Wall Finish', value: 'AsianPaint 8298 Silver Trinket' },
+          { label: 'Wall Moulding', value: "38mm x 19mm MDF moulding pasted on wall finish, AsianPaint 8292 White Gold" },
+          { label: 'Wallpaper', value: 'As per selection (as/selec)' },
+          { label: 'Lighting', value: 'Wall sconce light' },
+          { label: 'Feature Panel', value: '12mm thick ply pasted on wall finish with laminate (SF 5113 Red Gate Dark), advance brand, with profile light on both sides' },
+          { label: 'Accent Wall', value: 'Artificial grass wall panel pasted on level ±00' },
+          { label: 'Skirting', value: '4" stone skirting (as/selec)' },
+          { label: 'Aquarium Platform', value: '3" raised platform' },
+          { label: 'Aquarium Height', value: "5'-9\"" },
+          { label: 'Overall Elevation Width', value: "24'-4\"" },
+          { label: 'Sectional Plan', value: 'Aquarium with landscaping under staircase area; L-shape sofa' },
+        ],
       },
       {
         src: '/images/3d-design/floor-furniture-layout.png',
         alt: 'Detailed floor and furniture layout plan showing the dining table, sofa, aquarium, and staircase placement',
         label: 'Floor & Furniture Layout Plan',
         category: 'floor-plan',
+        specs: [
+          { label: 'Furniture Shown', value: 'Dining table, L-shape sofa, sofa chairs, center table, side table' },
+          { label: 'Feature', value: 'Aquarium with landscaping under the staircase area' },
+          { label: 'Door Finish', value: 'Wooden sliding door finish with fluted louvers' },
+          { label: 'Accent Wall', value: 'Highlighter wall' },
+          { label: 'Circulation', value: 'Marked routes to the kitchen, bedroom and toilet, plus the staircase (up/down) and main entry' },
+        ],
       },
       {
         src: '/images/3d-design/floor-plan-sections.png',
         alt: 'Floor plan with section-cut markers A-A, B-B and C-C, showing furniture layout and room entry points',
         label: 'Floor Plan — Layout & Sections',
         category: 'floor-plan',
+        specs: [
+          { label: 'Furniture Shown', value: 'Dining table, two L-shape sofas, sofa chairs, center table, side table' },
+          { label: 'Feature', value: 'Aquarium with landscaping under the staircase area' },
+          { label: 'Section Markers', value: 'Section cuts A-A, B-B and C-C' },
+          { label: 'Door Finish', value: 'Wooden sliding door finish with fluted louvers' },
+          { label: 'Accent Wall', value: 'Highlighter wall' },
+          { label: 'Circulation', value: 'Marked route to the toilet and main entry' },
+        ],
       },
     ],
   },

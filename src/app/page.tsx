@@ -7,6 +7,7 @@ import PlanComparison from '@/components/PlanComparison';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import LocationAndReviews from '@/components/LocationAndReviews';
 import AboutUs from '@/components/AboutUs';
+import FAQ from '@/components/FAQ';
 import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
 import CursorGlow from '@/components/CursorGlow';
@@ -78,6 +79,9 @@ export default function Home() {
 
       <div className="section-divider" />
       <AboutUs />
+
+      <div className="section-divider" />
+      <FAQ />
 
       <FinalCTA />
       <Footer />

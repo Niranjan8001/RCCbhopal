@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -42,7 +43,7 @@ export default function Footer() {
                 { label: 'Cost Estimator', href: '#estimator' },
                 { label: 'Our Process', href: '#process' },
                 { label: 'Testimonials', href: '#testimonials' },
-                { label: 'Our Presence', href: '#presence' },
+                { label: 'Our Presence', href: '#visit-us' },
                 { label: 'About Us', href: '#about' },
               ].map((link) => (
                 <li key={link.label}>
@@ -84,9 +85,7 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-[0.15em] mb-6">Legal</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-sm text-muted hover:text-foreground transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="text-sm text-muted hover:text-foreground transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="text-sm text-muted hover:text-foreground transition-colors">Cookie Policy</a></li>
+              <li><Link href="/privacy-policy" className="text-sm text-muted hover:text-foreground transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>

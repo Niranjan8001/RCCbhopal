@@ -3,6 +3,9 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ContactForm from './ContactForm';
+import ResponseTimeNote from './ResponseTimeNote';
+import { trackEvent } from '@/lib/analytics';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -78,10 +81,17 @@ export default function FinalCTA() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 cursor-pointer relative z-10 w-full px-4 sm:px-0">
-            <a href="https://wa.me/917987900965?text=Hello%20RCC,%20I%20want%20to%20know%20about%20your%20services" target="_blank" rel="noopener noreferrer" className="btn-primary pulse-glow text-lg !px-12 !py-5 w-full sm:w-auto min-h-[44px]">
+            <a
+              href="https://wa.me/917987900965?text=Hello%20RCC,%20I%20want%20to%20know%20about%20your%20services"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent('whatsapp_click', { source: 'final_cta' })}
+              className="btn-primary pulse-glow text-lg !px-12 !py-5 w-full sm:w-auto min-h-[44px]"
+            >
               Contact Us Today
             </a>
           </div>
+          <ResponseTimeNote className="mt-4 relative z-10" />
 
           <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-sm text-muted relative z-10">
             <div className="flex items-center gap-2">
@@ -102,6 +112,10 @@ export default function FinalCTA() {
               </svg>
               <span>No obligation estimate</span>
             </div>
+          </div>
+
+          <div className="mt-12 pt-10 border-t border-white/10 relative z-10 max-w-md mx-auto text-left">
+            <ContactForm />
           </div>
         </div>
       </div>

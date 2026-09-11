@@ -3,6 +3,8 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import AIChatWidget from "@/components/AIChatWidget";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
+import StickyMobileCTA from "@/components/StickyMobileCTA";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,9 +18,15 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.rccbhopal.in"),
-  title: "RCC | Build Beyond Imagination",
+  title: {
+    default: "RCC | Build Beyond Imagination",
+    template: "%s | RCC",
+  },
   description: "Premium construction solutions that transform your vision into architectural masterpieces. Experience luxury construction redefined.",
   keywords: ["construction", "luxury building", "premium construction", "architecture", "design build"],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "RCC | Build Beyond Imagination",
     description: "Premium construction solutions that transform your vision into architectural masterpieces. Experience luxury construction redefined.",
@@ -91,6 +99,8 @@ export default function RootLayout({
         />
         {children}
         <AIChatWidget />
+        <StickyMobileCTA />
+        <GoogleAnalytics />
         {process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY && (
           <Script
             id="google-maps-script"

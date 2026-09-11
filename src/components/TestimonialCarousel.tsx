@@ -19,57 +19,6 @@ interface ReviewsData {
   reviews: ReviewItem[];
 }
 
-/* ─────────────────── Review Data ─────────────────── */
-const REVIEWS_DATA: ReviewsData = {
-  name: "Reliable Construction & Consultancy (RCC)",
-  rating: 5.0,
-  totalReviews: 100,
-  reviews: [
-    {
-      author: "Amitesh Tiwari",
-      rating: 5,
-      text: "Reliable construction is really a reliable vendor when it comes to construction and building. They are really good in terms of services.",
-      time: "3 months ago",
-      avatar: "https://ui-avatars.com/api/?name=Amitesh+Tiwari&background=1a1a2e&color=FFD60A&bold=true&size=128"
-    },
-    {
-      author: "Renu Sahai",
-      rating: 5,
-      text: "Our house looks completely transformed thanks to Reliable Construction & Consultancy. The renovation was done with great care and professionalism.",
-      time: "4 months ago",
-      avatar: "https://ui-avatars.com/api/?name=Renu+Sahai&background=1a1a2e&color=FFD60A&bold=true&size=128"
-    },
-    {
-      author: "Vikram Patel",
-      rating: 5,
-      text: "Exceptional quality of work and timely delivery. The team at RCC truly understands modern architecture and delivered beyond our expectations.",
-      time: "2 months ago",
-      avatar: "https://ui-avatars.com/api/?name=Vikram+Patel&background=1a1a2e&color=FFD60A&bold=true&size=128"
-    },
-    {
-      author: "Priya Sharma",
-      rating: 5,
-      text: "From the initial consultation to the final handover, every step was handled with utmost professionalism. Our dream home is now a reality thanks to RCC.",
-      time: "1 month ago",
-      avatar: "https://ui-avatars.com/api/?name=Priya+Sharma&background=1a1a2e&color=FFD60A&bold=true&size=128"
-    },
-    {
-      author: "Rajesh Kumar",
-      rating: 5,
-      text: "Best construction company in Bhopal. Their attention to detail and use of premium materials sets them apart from the competition. Highly recommended!",
-      time: "5 months ago",
-      avatar: "https://ui-avatars.com/api/?name=Rajesh+Kumar&background=1a1a2e&color=FFD60A&bold=true&size=128"
-    },
-    {
-      author: "Anita Deshmukh",
-      rating: 5,
-      text: "We were impressed by the transparency and honesty throughout the project. No hidden costs, no delays. RCC delivered exactly what was promised.",
-      time: "6 months ago",
-      avatar: "https://ui-avatars.com/api/?name=Anita+Deshmukh&background=1a1a2e&color=FFD60A&bold=true&size=128"
-    }
-  ]
-};
-
 /* ─────────────────── Skeleton Shimmer ─────────────────── */
 function SkeletonLoader() {
   return (
@@ -168,14 +117,24 @@ export default function TestimonialCarousel() {
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  /* ── Load reviews (with brief skeleton for polish) ── */
+  /* ── Load real reviews from Google via our server route ── */
   useEffect(() => {
-    // Brief skeleton display for smooth UX transition
-    const timer = setTimeout(() => {
-      setData(REVIEWS_DATA);
-      setLoading(false);
-    }, 600);
-    return () => clearTimeout(timer);
+    let cancelled = false;
+    fetch('/api/reviews')
+      .then((res) => res.json())
+      .then((json: ReviewsData) => {
+        if (cancelled) return;
+        setData(json);
+        setLoading(false);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setData(null);
+        setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   /* ── Auto-slide ── */

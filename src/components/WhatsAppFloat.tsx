@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { trackEvent } from '@/lib/analytics';
 
 export default function WhatsAppFloat() {
   const [isVisible, setIsVisible] = useState(false);
@@ -17,7 +18,7 @@ export default function WhatsAppFloat() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed bottom-6 right-6 z-[60] flex items-center gap-3"
+          className="hidden md:flex fixed bottom-6 right-6 z-[60] items-center gap-3"
           initial={{ opacity: 0, scale: 0.5, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
@@ -46,6 +47,7 @@ export default function WhatsAppFloat() {
             className="relative group"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            onClick={() => trackEvent('whatsapp_click', { source: 'float_button' })}
           >
             {/* Pulse ring */}
             <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20" />

@@ -4,6 +4,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ResponseTimeNote from './ResponseTimeNote';
+import { trackEvent } from '@/lib/analytics';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -241,6 +243,7 @@ export default function CostEstimator() {
                 href="https://wa.me/917987900965?text=Hi%2C%20I%20need%20a%20cost%20estimate%20for%20my%20project"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent('whatsapp_click', { source: 'cost_estimator' })}
                 className="btn-primary w-full sm:w-auto !px-8 !py-4 !text-base min-h-[44px]"
               >
                 <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -248,6 +251,7 @@ export default function CostEstimator() {
                 </svg>
                 Get Detailed Quote
               </a>
+              <ResponseTimeNote className="mt-4" />
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
 //   rpdf/WA SILVER PLAN.pdf  and  rpdf/WA GOLD PLAN.pdf
 // Both documents are titled "SPECIFICATIONS & RATES" but contain no price
 // figures — only material specifications. Do not add pricing here; the
-// ₹/sqft rates shown elsewhere on the site (CostEstimator, the summary cards
+// ₹/sqft rates shown elsewhere on the site (the plan summary cards
 // above this data) come from a separate source and are unrelated to these PDFs.
 //
 // `highlight: true` marks a row where Gold's specification is a genuine,

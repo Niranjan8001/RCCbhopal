@@ -17,7 +17,7 @@ const FAQS = [
   {
     question: 'How do I request a project estimate?',
     answer:
-      'Use the Instant Cost Calculator above to get an approximate figure by adjusting area, tier, and build type, or ask our AI Advisor to "estimate my project" for a guided, conversational estimate. Either way, you can send the result straight to our team on WhatsApp for a detailed quote.',
+      'Our Silver and Gold plan rates and our design & consultancy charges are published on this page, so you can work out an indicative figure yourself. You can also ask our AI Advisor to "estimate my project" for a guided, conversational estimate, then send the result straight to our team on WhatsApp for a detailed quote.',
   },
   {
     question: 'What information is needed to start a project?',

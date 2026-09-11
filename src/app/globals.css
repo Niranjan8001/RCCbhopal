@@ -364,15 +364,6 @@ input[type="range"]::-moz-range-thumb:hover {
   animation: strikeLine 0.45s ease-out 1s forwards;
 }
 
-/* ===== COST PULSE ===== */
-@keyframes costPulse {
-  0%, 100% { text-shadow: 0 0 20px rgba(255, 214, 10, 0.1); }
-  50% { text-shadow: 0 0 40px rgba(255, 214, 10, 0.3), 0 0 80px rgba(255, 214, 10, 0.1); }
-}
-.cost-glow {
-  animation: costPulse 3s ease-in-out infinite;
-}
-
 /* =================================================================
    MOBILE RESPONSIVE OVERRIDES — max-width: 768px ONLY
    Desktop remains 100% untouched.

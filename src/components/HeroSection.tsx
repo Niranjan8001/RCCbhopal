@@ -81,10 +81,10 @@ export default function HeroSection() {
         {/* CTA Buttons — stacked on mobile, side-by-side on md+ */}
         <div className="hero-anim flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <a
-            href="#estimator"
+            href="#pricing"
             className="w-full md:w-auto flex items-center justify-center px-8 py-4 rounded-full bg-[#F5C542] text-[#070707] font-bold text-sm uppercase tracking-wider transition-all duration-300 hover:bg-[#FFD86B] hover:shadow-[0_0_35px_rgba(245,197,66,0.45)] active:scale-[0.98]"
           >
-            Calculate Your Cost
+            View Plans &amp; Pricing
           </a>
           <a
             href="#projects"

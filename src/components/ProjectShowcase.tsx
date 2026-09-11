@@ -74,9 +74,9 @@ export default function ProjectShowcase() {
     // Wait for close animation (1.2s) + 400ms breathing room, then scroll
     setTimeout(() => {
       document.body.style.overflow = '';
-      const estimator = document.getElementById('estimator');
-      if (estimator) {
-        estimator.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const nextSection = document.getElementById('design-showcase');
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
       setIsClosing(false);
     }, 1600);

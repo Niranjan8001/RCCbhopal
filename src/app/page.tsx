@@ -4,7 +4,6 @@ import ProjectShowcase from '@/components/ProjectShowcase';
 import DesignShowcase from '@/components/DesignShowcase';
 import ConsultancyPricing from '@/components/ConsultancyPricing';
 import SiteVisitsMap from '@/components/SiteVisitsMap';
-import CostEstimator from '@/components/CostEstimator';
 import PlanComparison from '@/components/PlanComparison';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import LocationAndReviews from '@/components/LocationAndReviews';
@@ -72,9 +71,6 @@ export default function Home() {
 
       <div className="section-divider" />
       <SiteVisitsMap />
-
-      <div className="section-divider" />
-      <CostEstimator />
 
       <div className="section-divider" />
       <PlanComparison />

@@ -1,6 +1,6 @@
 // Design & consultancy service charges — transcribed from RCC's own
 // "Consultancy Charges" rate card. This is a separate service line from
-// construction execution (see CostEstimator / PlanComparison): these are
+// construction execution (see PlanComparison): these are
 // fees for design/drawing work (floor plans, elevations, structural,
 // working, EPD, and complete civil drawing sets), not construction cost.
 //

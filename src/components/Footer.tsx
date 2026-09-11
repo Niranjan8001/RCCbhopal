@@ -41,6 +41,7 @@ export default function Footer() {
               {[
                 { label: 'Projects', href: '#projects' },
                 { label: '3D Design Visualization', href: '#design-showcase' },
+                { label: 'Consultancy Pricing', href: '#consultancy-pricing' },
                 { label: 'Cost Estimator', href: '#estimator' },
                 { label: 'Our Process', href: '#process' },
                 { label: 'Testimonials', href: '#testimonials' },

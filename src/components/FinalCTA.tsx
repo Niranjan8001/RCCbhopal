@@ -76,7 +76,7 @@ export default function FinalCTA() {
 
           {/* Urgency text */}
           <p className="text-sm text-accent-yellow/80 font-medium mb-12 relative z-10">
-            ✦ Free consultation for projects above ₹50 Lakhs
+            ✦ Transparent, published consultancy pricing — no hidden costs
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 cursor-pointer relative z-10 w-full px-4 sm:px-0">

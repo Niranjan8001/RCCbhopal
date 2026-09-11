@@ -66,6 +66,31 @@ export default function DesignShowcase() {
         <div className="section-divider my-16 md:my-24" />
 
         <DesignDocumentation section={technical} />
+
+        {/* Bridge to consultancy pricing */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 md:mt-24 text-center glass-card p-8 sm:p-10"
+        >
+          <h4 className="text-xl sm:text-2xl font-black text-white mb-2">
+            Curious what design work like this costs?
+          </h4>
+          <p className="text-muted text-sm sm:text-base mb-6 max-w-md mx-auto">
+            Every drawing set above — floor plans, elevations, structurals — is priced on our published
+            consultancy rate card.
+          </p>
+          <a
+            href="#consultancy-pricing"
+            className="btn-secondary min-h-[44px] inline-flex"
+          >
+            View Consultancy Pricing
+            <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <path d="M12 5v14M5 12l7 7 7-7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+        </motion.div>
       </div>
     </section>
   );

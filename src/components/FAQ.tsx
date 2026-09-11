@@ -32,7 +32,12 @@ const FAQS = [
   {
     question: "What's the difference between the Silver and Gold plans?",
     answer:
-      'Both use trusted, approved brands. Silver (₹1,550/sq ft) covers standard premium finishes — RR Kabel wiring, Jaquar/Cera bath fittings, and vitrified tile flooring. Gold (₹1,850/sq ft) steps up to Polycab/Finolex wiring, Kohler/Grohe fittings, and Italian GVT tiles, among other upgrades. See the full comparison table above.',
+      "Both use trusted, approved brands across the same specification categories. Gold (₹1,850/sq ft) adds a false ceiling in the drawing room and bedrooms, stainless-steel railings, a second terrace water tank plus an underground tank, granite door/window framing with designer-laminated shutters, larger flooring tiles in the drawing, dining and passage areas, and a granite kitchen top — full details are in the comparison table above Silver (₹1,550/sq ft).",
+  },
+  {
+    question: 'Is the design consultation free?',
+    answer:
+      'Design and consultancy work — floor plans, elevations, structural, working and EPD drawings — is a paid service with published, upfront rates based on plan type and project size. See our Design & Consultancy Pricing section for the full rate card; there are no hidden charges.',
   },
 ];
 

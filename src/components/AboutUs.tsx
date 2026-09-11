@@ -116,7 +116,7 @@ export default function AboutUs() {
                   <h4 className="text-xl font-bold text-white tracking-wide mb-1">Roshan Saxena</h4>
                   <span className="text-accent-blue text-sm font-semibold mb-4">Managing Director</span>
                   <p className="text-white/60 text-sm leading-relaxed font-light">
-                    Strategic mind driving operational excellence and client relationships, ensuring every project exceeds expectations.
+                    A strategic mind steering RCC&apos;s day-to-day operations and client relationships, Roshan brings the discipline and focus that carries every project from foundation to final handover. As Managing Director, he holds the company&apos;s work to a standard of uncompromising quality and a relentless pursuit of perfection, ensuring that every project consistently exceeds client expectations.
                   </p>
                 </div>
               </div>

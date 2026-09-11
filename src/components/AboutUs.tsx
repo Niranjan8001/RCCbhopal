@@ -81,7 +81,7 @@ export default function AboutUs() {
                   <h4 className="text-xl font-bold text-white tracking-wide mb-1">Sanjay Saxena</h4>
                   <span className="text-accent-yellow text-sm font-semibold mb-4">Founder & CEO</span>
                   <p className="text-white/60 text-sm leading-relaxed font-light">
-                    Visionary leader with 30+ years of experience in transforming urban landscapes through iconic architectural projects.
+                    A visionary leader whose rich experience spans from Executive Engineer (Civil) at BSNL to Central Government Consultant for NESTS — Ministry of Tribal Affairs, Government of India — across Madhya Pradesh and Chhattisgarh, bringing immense technical capacity to the company. His 35 years of rich technical experience have helped the company successfully execute projects with 100% client satisfaction.
                   </p>
                 </div>
               </div>

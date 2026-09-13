@@ -1158,6 +1158,71 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 /* ── Pagination Dots ── */
+.tc-rating-link {
+  text-decoration: none;
+  border-radius: 6px;
+  transition: opacity 0.2s ease;
+}
+.tc-rating-link:hover {
+  opacity: 0.75;
+}
+.tc-rating-link:focus-visible {
+  outline: 2px solid #FFD60A;
+  outline-offset: 3px;
+}
+
+/* Manual navigation. Present so a visitor who has paused the rotation by
+   touching the card can still move between reviews. */
+.tc-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.tc-nav-btn {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.tc-nav-btn:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+}
+.tc-nav-btn:focus-visible {
+  outline: 2px solid #FFD60A;
+  outline-offset: 2px;
+}
+
+.tc-source-link {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.tc-source-link:hover {
+  color: #FFD60A;
+}
+.tc-source-link:focus-visible {
+  outline: 2px solid #FFD60A;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 .tc-dots {
   display: flex;
   gap: 6px;

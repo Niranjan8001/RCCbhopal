@@ -11,6 +11,7 @@ declare global {
 import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import TestimonialCarousel from './TestimonialCarousel';
+import type { ReviewsData } from '@/lib/reviews';
 import { BUSINESS_LOCATION, DIRECTIONS_URL } from '@/data/businessLocation';
 
 
@@ -64,7 +65,7 @@ function TiltCard({ children, className, delay = 0 }: { children: React.ReactNod
   );
 }
 
-export default function LocationAndReviews() {
+export default function LocationAndReviews({ reviews }: { reviews: ReviewsData }) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
 
@@ -164,10 +165,13 @@ export default function LocationAndReviews() {
             </div>
           </TiltCard>
 
-          {/* --- RIGHT: TESTIMONIAL CAROUSEL --- */}
-          <TiltCard className="w-full h-full" delay={1}>
-            <TestimonialCarousel />
-          </TiltCard>
+          {/* --- RIGHT: TESTIMONIAL CAROUSEL ---
+               Deliberately NOT wrapped in TiltCard: long review text is hard
+               to read inside an element that floats continuously and rotates
+               under the cursor. */}
+          <div className="w-full h-full">
+            <TestimonialCarousel initialData={reviews} />
+          </div>
 
         </div>
       </div>

@@ -2,22 +2,14 @@
 
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { ReviewsData } from '@/lib/reviews';
+import { LISTING_URL } from '@/data/businessLocation';
 
-/* ─────────────────── Types ─────────────────── */
-interface ReviewItem {
-  author: string;
-  rating: number;
-  text: string;
-  time: string;
-  avatar: string;
-}
-
-interface ReviewsData {
-  name: string;
-  rating: number;
-  totalReviews: number;
-  reviews: ReviewItem[];
-}
+/* How long each review stays on screen. Google reviews run long — the
+   longest on this listing is ~430 characters, which needs roughly 25s to
+   read — so this is a floor, not a comfortable pace. Any interaction
+   pauses it. */
+const ROTATE_MS = 9000;
 
 /* ─────────────────── Skeleton Shimmer ─────────────────── */
 function SkeletonLoader() {
@@ -110,15 +102,20 @@ function ReviewAvatar({ author, avatarUrl }: { author: string; avatarUrl: string
 }
 
 /* ─────────────────── Main Component ─────────────────── */
-export default function TestimonialCarousel() {
-  const [data, setData] = useState<ReviewsData | null>(null);
-  const [loading, setLoading] = useState(true);
+export default function TestimonialCarousel({ initialData }: { initialData: ReviewsData }) {
+  const hasServerData = initialData.reviews.length > 0;
+  const [data, setData] = useState<ReviewsData | null>(hasServerData ? initialData : null);
+  const [loading, setLoading] = useState(!hasServerData);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  /* ── Load real reviews from Google via our server route ── */
+  /* Reviews normally arrive already rendered from the server. This only runs
+     if that came back empty — a Places API blip at build time, say — so the
+     section can still fill in on the client rather than staying empty for a
+     whole revalidation window. */
   useEffect(() => {
+    if (hasServerData) return;
     let cancelled = false;
     fetch('/api/reviews')
       .then((res) => res.json())
@@ -135,7 +132,7 @@ export default function TestimonialCarousel() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [hasServerData]);
 
   /* ── Auto-slide ── */
   useEffect(() => {
@@ -146,17 +143,27 @@ export default function TestimonialCarousel() {
 
     intervalRef.current = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % data.reviews.length);
-    }, 4000);
+    }, ROTATE_MS);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [data, isPaused]);
 
-  /* ── Dot click ── */
+  /* Any manual navigation stops the rotation — the visitor is reading. */
+  const total = data?.reviews.length ?? 0;
   const goToReview = useCallback((idx: number) => {
+    setIsPaused(true);
     setActiveIndex(idx);
   }, []);
+  const goPrev = useCallback(() => {
+    setIsPaused(true);
+    setActiveIndex((i) => (i - 1 + total) % total);
+  }, [total]);
+  const goNext = useCallback(() => {
+    setIsPaused(true);
+    setActiveIndex((i) => (i + 1) % total);
+  }, [total]);
 
   /* ── Render states ── */
   if (loading) return <SkeletonLoader />;
@@ -179,8 +186,9 @@ export default function TestimonialCarousel() {
       className="tc-card"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      /* Touch pauses for good. Resuming on touchEnd meant tapping to hold a
+         review did nothing — it restarted the moment the finger lifted. */
       onTouchStart={() => setIsPaused(true)}
-      onTouchEnd={() => setIsPaused(false)}
     >
       {/* Ambient glow orbs */}
       <div className="tc-glow-orb tc-glow-orb-1" />
@@ -199,11 +207,17 @@ export default function TestimonialCarousel() {
           </div>
           <div className="tc-header-info">
             <h3 className="tc-business-name">{data.name}</h3>
-            <div className="tc-rating-row">
+            <a
+              className="tc-rating-row tc-rating-link"
+              href={LISTING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${data.rating.toFixed(1)} out of 5 from ${data.totalReviews} Google reviews — open the listing on Google`}
+            >
               <span className="tc-rating-number">{data.rating.toFixed(1)}</span>
               <StarRating rating={data.rating} size={15} />
               <span className="tc-total-reviews">({data.totalReviews})</span>
-            </div>
+            </a>
           </div>
         </div>
       </div>
@@ -250,19 +264,33 @@ export default function TestimonialCarousel() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Pagination dots */}
+        {/* Manual navigation */}
         {data.reviews.length > 1 && (
-          <div className="tc-dots">
-            {data.reviews.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => goToReview(idx)}
-                className={`tc-dot ${idx === activeIndex ? 'tc-dot-active' : ''}`}
-                aria-label={`Go to review ${idx + 1}`}
-              />
-            ))}
+          <div className="tc-nav">
+            <button onClick={goPrev} className="tc-nav-btn" aria-label="Previous review">
+              ←
+            </button>
+            <div className="tc-dots">
+              {data.reviews.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => goToReview(idx)}
+                  className={`tc-dot ${idx === activeIndex ? 'tc-dot-active' : ''}`}
+                  aria-label={`Go to review ${idx + 1}`}
+                  aria-current={idx === activeIndex}
+                />
+              ))}
+            </div>
+            <button onClick={goNext} className="tc-nav-btn" aria-label="Next review">
+              →
+            </button>
           </div>
         )}
+
+        <a className="tc-source-link" href={LISTING_URL} target="_blank" rel="noopener noreferrer">
+          Read all {data.totalReviews} reviews on Google
+          <span aria-hidden="true"> ↗</span>
+        </a>
       </div>
     </div>
   );

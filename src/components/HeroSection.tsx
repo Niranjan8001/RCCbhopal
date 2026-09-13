@@ -4,9 +4,31 @@ import { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import Image from 'next/image';
+import { LISTING_URL } from '@/data/businessLocation';
 
-export default function HeroSection() {
+export default function HeroSection({
+  rating = 0,
+  totalReviews = 0,
+}: {
+  rating?: number;
+  totalReviews?: number;
+}) {
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  /* The Google rating is the only claim up here a visitor can check, so it
+     links to the listing. Omitted entirely when the lookup returns nothing
+     rather than showing a placeholder figure. */
+  const stats: { value: string; label: string; href?: string }[] = [
+    { value: '35+', label: 'Years of Experience' },
+    ...(rating > 0
+      ? [{
+          value: `${rating.toFixed(1)}★`,
+          label: `${totalReviews} Google Reviews`,
+          href: LISTING_URL,
+        }]
+      : []),
+    { value: 'On-Time', label: 'Delivery' },
+  ];
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -97,16 +119,27 @@ export default function HeroSection() {
 
         {/* Social proof stats */}
         <div className="hero-anim flex flex-wrap items-center justify-center gap-8 sm:gap-12 mt-8 pt-6 border-t border-white/10 w-full max-w-lg mx-auto">
-          {[
-            { value: '35+', label: 'Years of Experience' },
-            { value: '100%', label: 'Client Trust' },
-            { value: 'On-Time', label: 'Delivery' },
-          ].map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center gap-1">
-              <span className="text-2xl sm:text-3xl font-black text-[#F5C542] tabular-nums">{stat.value}</span>
-              <span className="text-[10px] uppercase tracking-wider text-white/50 font-semibold">{stat.label}</span>
-            </div>
-          ))}
+          {stats.map((stat) => {
+            const body = (
+              <>
+                <span className="text-2xl sm:text-3xl font-black text-[#F5C542] tabular-nums">{stat.value}</span>
+                <span className="text-[10px] uppercase tracking-wider text-white/50 font-semibold text-center">{stat.label}</span>
+              </>
+            );
+            return stat.href ? (
+              <a
+                key={stat.label}
+                href={stat.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1 rounded-lg transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F5C542]"
+              >
+                {body}
+              </a>
+            ) : (
+              <div key={stat.label} className="flex flex-col items-center gap-1">{body}</div>
+            );
+          })}
         </div>
       </motion.div>
 

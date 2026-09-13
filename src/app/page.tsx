@@ -14,6 +14,7 @@ import Footer from '@/components/Footer';
 import CursorGlow from '@/components/CursorGlow';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import { siteVisits } from '@/data/siteVisits';
+import { getReviews } from '@/lib/reviews';
 
 const siteVisitsJsonLd = {
   '@context': 'https://schema.org',
@@ -46,7 +47,11 @@ const siteVisitsJsonLd = {
   })),
 };
 
-export default function Home() {
+export default async function Home() {
+  // Fetched here so the rating and review text land in the server HTML —
+  // crawlers see them, and they are present on first paint.
+  const reviews = await getReviews();
+
   return (
     <main className="relative selection:bg-accent-yellow/30 selection:text-accent-yellow">
       <script
@@ -58,7 +63,7 @@ export default function Home() {
       <WhatsAppFloat />
 
       {/* Sections structured for cinematic flow */}
-      <HeroSection />
+      <HeroSection rating={reviews.rating} totalReviews={reviews.totalReviews} />
 
       <div className="section-divider" />
       <ProjectShowcase />
@@ -79,7 +84,7 @@ export default function Home() {
       <ProcessTimeline />
 
       <div className="section-divider" />
-      <LocationAndReviews />
+      <LocationAndReviews reviews={reviews} />
 
       <div className="section-divider" />
       <AboutUs />

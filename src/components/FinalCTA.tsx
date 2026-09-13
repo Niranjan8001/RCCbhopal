@@ -41,7 +41,6 @@ export default function FinalCTA() {
     <section ref={sectionRef} className="py-32 px-6 relative overflow-hidden" id="contact">
       {/* Gradient background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-[#080818] to-background" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-[500px] bg-accent-yellow/5 rounded-full blur-[100px]" />
         <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-accent-blue/5 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />

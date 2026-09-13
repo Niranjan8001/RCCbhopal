@@ -52,7 +52,7 @@ export default function ConsultancyPricing() {
   return (
     <section className="section-padding relative overflow-hidden" id="consultancy-pricing">
       <div className="absolute inset-0 pointer-events-none -z-10">
-        <div className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-accent-green/5 rounded-full blur-[140px]" />
+        <div className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-accent-blue/5 rounded-full blur-[140px]" />
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent-yellow/5 rounded-full blur-[120px]" />
       </div>
 

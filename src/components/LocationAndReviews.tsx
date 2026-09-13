@@ -70,14 +70,13 @@ export default function LocationAndReviews() {
 
 
   return (
-    <section ref={sectionRef} className="section-padding relative min-h-screen flex flex-col justify-center overflow-hidden bg-black" id="visit-us">
+    <section ref={sectionRef} className="section-padding relative min-h-screen flex flex-col justify-center overflow-hidden" id="visit-us">
       <div id="testimonials" className="absolute top-0" />
       {/* Cinematic High-Tech Background */}
       <div className="absolute inset-0 pointer-events-none bg-grid-faint opacity-50"></div>
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute top-1/4 -right-1/4 w-[800px] h-[800px] bg-accent-blue/10 rounded-full blur-[160px] pulse-glow"></div>
-        <div className="absolute bottom-1/4 -left-1/4 w-[800px] h-[800px] bg-accent-yellow/10 rounded-full blur-[160px] pulse-glow" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[400px] bg-purple-500/5 rotate-45 blur-[120px]"></div>
+        <div className="absolute top-1/4 -right-1/4 w-[800px] h-[800px] bg-accent-blue/5 rounded-full blur-[160px] pulse-glow"></div>
+        <div className="absolute bottom-1/4 -left-1/4 w-[800px] h-[800px] bg-accent-yellow/5 rounded-full blur-[160px] pulse-glow" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <div className="max-w-screen-2xl mx-auto relative z-10 w-full">

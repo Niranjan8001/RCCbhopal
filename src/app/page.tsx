@@ -48,7 +48,7 @@ const siteVisitsJsonLd = {
 
 export default function Home() {
   return (
-    <main className="relative bg-background selection:bg-accent-yellow/30 selection:text-accent-yellow">
+    <main className="relative selection:bg-accent-yellow/30 selection:text-accent-yellow">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(siteVisitsJsonLd) }}

@@ -200,7 +200,7 @@ export default function DesignShowcase() {
   return (
     <section
       ref={sectionRef}
-      className={`relative w-full bg-background overflow-hidden ${
+      className={`relative w-full overflow-hidden ${
         isMobile ? '' : 'h-screen flex flex-col items-center justify-start pt-16 md:pt-20'
       }`}
       id="design-showcase"
@@ -311,6 +311,7 @@ export default function DesignShowcase() {
           {/* Ambient background glow */}
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/2 right-0 w-[40vw] h-[40vw] bg-accent-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute top-1/4 left-0 w-[30vw] h-[30vw] bg-accent-yellow/5 rounded-full blur-[120px] -translate-x-1/3" />
           </div>
 
           <div className="relative w-full max-w-[1400px] mx-auto flex items-center flex-1 min-h-0 px-6 lg:px-16 z-10">

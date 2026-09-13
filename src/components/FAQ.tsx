@@ -66,6 +66,7 @@ export default function FAQ() {
 
       <div className="absolute inset-0 pointer-events-none -z-10">
         <div className="absolute top-1/4 right-1/3 w-[400px] h-[400px] bg-accent-blue/5 rounded-full blur-[130px]" />
+        <div className="absolute bottom-1/4 left-1/4 w-[350px] h-[350px] bg-accent-yellow/5 rounded-full blur-[130px]" />
       </div>
 
       <div className="max-w-3xl mx-auto">

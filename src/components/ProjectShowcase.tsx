@@ -136,7 +136,7 @@ export default function ProjectShowcase() {
   return (
     <section 
       ref={sectionRef} 
-      className={`relative w-full bg-background overflow-hidden ${isMobile ? '' : 'h-screen flex flex-col items-center justify-start pt-16 md:pt-20'}`}
+      className={`relative w-full overflow-hidden ${isMobile ? '' : 'h-screen flex flex-col items-center justify-start pt-16 md:pt-20'}`}
       id="projects"
     >
       {isMobile ? (
@@ -240,6 +240,7 @@ export default function ProjectShowcase() {
       {/* Ambient background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-0 w-[40vw] h-[40vw] bg-accent-yellow/5 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2" />
+        <div className="absolute top-1/4 right-0 w-[30vw] h-[30vw] bg-accent-blue/5 rounded-full blur-[120px] translate-x-1/3" />
       </div>
 
       {/* Main Layout Container */}

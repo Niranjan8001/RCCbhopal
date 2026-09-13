@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 bg-background/50 backdrop-blur-3xl">
+    <footer className="relative z-10">
       {/* Top gradient border */}
       <div className="w-full h-px bg-gradient-to-r from-transparent via-accent-yellow/20 to-transparent" />
       

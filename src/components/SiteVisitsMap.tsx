@@ -176,7 +176,7 @@ export default function SiteVisitsMap() {
 
   return (
     <section
-      className="section-padding relative bg-background overflow-hidden"
+      className="section-padding relative overflow-hidden"
       id="site-visits"
     >
       <div className="absolute inset-0 pointer-events-none bg-grid-faint opacity-40" />

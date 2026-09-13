@@ -376,36 +376,6 @@ export const RATE_SECTIONS: RateSection[] = [
   },
 ];
 
-// Identical wording in both source PDFs — applies equally to Silver and Gold,
-// so it's presented once rather than duplicated as two equal columns.
-export const TECHNICAL_NOTES: string[] = [
-  'All structural work including foundation work will be done as per drawing.',
-  'Ceiling height - 11 ft from floor to slab (roof) top.',
-  'Height of floor of porch - 2 feet above road level.',
-  'Height of floor of House - 2 feet 6 inch above road level.',
-  'Boundary walls 5 ft. height from floor level with 4 inch thick wall. (included in rates)',
-  "Parapet up to height of 3' is included in the job cost. (included in rates)",
-  'Wall thickness - outer wall 8 inch and inner wall 4 inch thick. (side wall will be 4 inch thick if house is constructed on side)',
-  "Overall filling of upto 2'-6\" is in our scope.",
-  'Stairs - 10" tread and 7" height riser.',
-  "AC's point in master bedroom & Hall.",
-  'Kitchen platform at 32" height & 24" in width.',
-  'Slope Finish waterproofing on terrace with Jeera Gitty.',
-  'Anti Termite treatment included.',
-  'Sand shall be used after proper screening in plaster work.',
-  'Ground floor base gitti / black metal / crushed stone (20mm) to be done with nominal steel as per the Structure drawing.',
-  'Extra work (The rate for elevation moulding work will be separate.)',
-  'Designer elevation will be paid in extra charges between ₹100/- to ₹200/- sqft, depending on the design.',
-  'Ramp with tiles flooring is included in rates.',
-  'Suitable Drainage from Porch will be provided.',
-  'Shuttering shall not be opened before 15 days.',
-  'Curing (Tarai) will be proper and in our scope.',
-  'Use of mixer machines & pin vibrator in over all structure.',
-  'All safety measures will be carried out by contractor during construction of house.',
-  'Watchman provided by contractor.',
-  'Electricity & water to be provided by the owner, consumption of electricity & water bill will be beared by client/owner. (During Construction / Before Possession).',
-];
-
 // Compact, factual summary of the Gold upgrades most worth calling out —
 // every line traces back to a `highlight: true` row above. No claims of
 // "better/stronger/premium" beyond what the source specs literally show.

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RATE_SECTIONS, TECHNICAL_NOTES, WHY_GOLD, type RateSection, type SpecItem } from '@/data/ratePlans';
+import { RATE_SECTIONS, WHY_GOLD, type RateSection, type SpecItem } from '@/data/ratePlans';
 
 /* ─────────────────── Icons (stroke style matches the rest of the site) ─────────────────── */
 const ICONS: Record<RateSection['icon'], React.ReactNode> = {
@@ -298,27 +298,6 @@ export default function RateCard() {
             No specifications match your search.
           </p>
         )}
-      </div>
-
-      {/* Technical Notes */}
-      <div className="mt-14">
-        <h3 className="text-lg sm:text-xl font-black text-white mb-1.5 flex items-center gap-2">
-          <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="text-accent-yellow">
-            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Technical Notes
-        </h3>
-        <p className="text-sm text-muted mb-6">These terms apply equally to both the Silver and Gold plans.</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {TECHNICAL_NOTES.map((note, i) => (
-            <div key={i} className="glass-card p-4 flex gap-3">
-              <span className="shrink-0 w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[11px] font-bold text-accent-yellow">
-                {i + 1}
-              </span>
-              <p className="text-sm text-muted leading-relaxed">{note}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import Image from 'next/image';
 const projects = [
   {
     title: 'Luxury Villa Renovation',
-    sqft: '3,200 sq ft',
+    sqft: '1,250 sq ft',
     category: 'Renovation',
     location: 'Nehru Nagar, Bhopal',
     year: '2026',
@@ -27,7 +27,7 @@ const projects = [
   },
   {
     title: 'Bespoke Residence, Ramayana Colony',
-    sqft: '3,800 sq ft',
+    sqft: '1,400 sq ft',
     category: 'Residential',
     location: 'Ramayana Colony, Bhopal',
     year: '2025',
@@ -37,17 +37,17 @@ const projects = [
   },
   {
     title: 'ICMR Institute Civil Restoration',
-    sqft: '14,000 sq ft',
-    category: 'Government / CPWD',
+    sqft: '3,896 sq ft',
+    category: 'Government Tender',
     location: 'Bhouri, Bhopal',
     year: '2024',
     color: '#007AFF',
-    description: 'CPWD-awarded civil repair contract at the ICMR central government institute, Bhopal — covering full-scale flooring replacement, interior & exterior painting, and miscellaneous structural repair works executed to government specification standards.',
+    description: 'A government tender for maintenance work at ICMR–NIREH — the National Institute for Research in Environmental Health — on its Bhauri campus in Bhopal. The scope covered flooring replacement, interior and exterior painting, and allied civil repairs, carried out to central government specification standards.',
     image: '/proj4.jpeg',
   },
   {
     title: 'Commercial Shop Complex',
-    sqft: '6,800 sq ft',
+    sqft: '1,500 sq ft',
     category: 'Commercial',
     location: 'Bhopal',
     year: '2023',

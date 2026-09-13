@@ -7,7 +7,7 @@ const FAQS = [
   {
     question: 'What construction services does RCC provide?',
     answer:
-      'RCC specialises in luxury residential homes (singlex, duplex, and triplex builds), full home renovations, and government civil works under CPWD contracts. Our portfolio also includes commercial shop complexes built to durable RCC structural standards.',
+      'RCC specialises in luxury residential homes (singlex, duplex, and triplex builds), full home renovations, and government civil works awarded through public tenders. Our portfolio also includes commercial shop complexes built to durable RCC structural standards.',
   },
   {
     question: 'How does the consultation process work?',

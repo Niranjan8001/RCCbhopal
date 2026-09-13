@@ -17,7 +17,7 @@ export default function Footer() {
               <span className="text-xl font-bold tracking-tight">Reliable Construction & Consultancy</span>
             </div>
             <p className="text-sm text-muted leading-relaxed mb-6 max-w-xs">
-              Reliable Construction & Consultancy — Engineering excellence since 1991. Premium construction solutions for those who demand the best.
+              Reliable Construction & Consultancy — founded 2022, built on 35 years of engineering experience in Madhya Pradesh. Premium construction for those who demand the best.
             </p>
             {/* Social icons */}
             <div className="flex items-center gap-3">

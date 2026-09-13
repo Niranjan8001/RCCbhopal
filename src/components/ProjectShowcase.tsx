@@ -236,7 +236,7 @@ export default function ProjectShowcase() {
                         Our portfolio spans residential, commercial, renovation, and government builds across Bhopal — from intimate family homes to large-scale CPWD contracts.
                       </p>
                       <div className="flex items-center justify-center gap-4 text-xs text-muted">
-                        <span>15+ Years</span>
+                        <span>35+ Years</span>
                         <span>•</span>
                         <span>50+ Projects</span>
                         <span>•</span>
@@ -357,7 +357,7 @@ export default function ProjectShowcase() {
                             </p>
                           </div>
                           <div className="grid grid-cols-3 gap-2 border-t border-neutral-200 pt-4 sm:pt-5">
-                            {[['15+', 'Years'], ['50+', 'Projects'], ['Bhopal', '& Beyond']].map(([val, label]) => (
+                            {[['35+', 'Years'], ['50+', 'Projects'], ['Bhopal', '& Beyond']].map(([val, label]) => (
                               <div key={label} className="text-center">
                                 <p className="font-black text-neutral-800 text-base sm:text-xl">{val}</p>
                                 <p className="text-neutral-400 text-[9px] sm:text-[10px] uppercase tracking-widest mt-0.5">{label}</p>

@@ -62,7 +62,7 @@ export default function HeroSection() {
         <div className="hero-anim flex items-center gap-3 mb-7">
           <div className="h-px w-10 bg-[#F5C542]/50 hidden sm:block" />
           <span className="text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#F5C542]">
-            Backed by 30 Years of Engineering Excellence
+            35 Years of Engineering Experience
           </span>
           <div className="h-px w-10 bg-[#F5C542]/50 hidden sm:block" />
         </div>
@@ -76,7 +76,7 @@ export default function HeroSection() {
 
         {/* Subheadline — max-w-2xl keeps line length readable on large screens */}
         <p className="hero-anim text-base sm:text-lg lg:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed mb-10 font-light">
-          Backed by 30 years of structural excellence. We design and build uncompromising luxury homes in Bhopal.
+          Backed by 35 years of structural engineering experience. We design and build uncompromising luxury homes in Bhopal.
         </p>
 
         {/* CTA Buttons — stacked on mobile, side-by-side on md+ */}
@@ -98,7 +98,7 @@ export default function HeroSection() {
         {/* Social proof stats */}
         <div className="hero-anim flex flex-wrap items-center justify-center gap-8 sm:gap-12 mt-8 pt-6 border-t border-white/10 w-full max-w-lg mx-auto">
           {[
-            { value: '30+', label: 'Years of Legacy' },
+            { value: '35+', label: 'Years of Experience' },
             { value: '100%', label: 'Client Trust' },
             { value: 'On-Time', label: 'Delivery' },
           ].map((stat) => (

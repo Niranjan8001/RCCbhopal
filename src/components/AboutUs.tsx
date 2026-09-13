@@ -36,15 +36,15 @@ export default function AboutUs() {
               Engineering <span className="text-muted text-glow-white">Excellence</span> Since 1991.
             </h3>
             <p className="text-lg text-muted leading-relaxed mb-8">
-              RCC is the modern evolution of a three-decade legacy. Our foundational engineering expertise began in 1991, delivering solid structural projects across Madhya Pradesh. In 2022, RCC was established to bring that time-tested expertise into the modern era of luxury residential construction.
+              RCC is the modern evolution of a 35-year engineering legacy. Our foundational engineering expertise began in 1991, delivering solid structural projects across Madhya Pradesh. In 2022, RCC was established to bring that time-tested expertise into the modern era of luxury residential construction.
             </p>
 
             {/* Years badge */}
             <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl glass-card-premium !rounded-full lg:hidden">
-              <span className="text-3xl font-black text-accent-yellow tabular-nums">30+</span>
+              <span className="text-3xl font-black text-accent-yellow tabular-nums">35+</span>
               <div className="flex flex-col">
-                <span className="text-sm font-bold text-white">Years of Excellence</span>
-                <span className="text-xs text-muted">Building Trust Since 1991</span>
+                <span className="text-sm font-bold text-white">Years of Experience</span>
+                <span className="text-xs text-muted">RCC founded 2022</span>
               </div>
             </div>
           </motion.div>

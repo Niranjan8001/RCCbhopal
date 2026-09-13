@@ -113,15 +113,6 @@ export default function PlanComparison() {
               Our standard build plan, designed for durability and budget consciousness. Ideal for families looking for high-structural standards with clean, default finishes and approved brands.
             </p>
             <div className="mb-6">
-              <div className="flex items-center gap-3 mb-1.5">
-                <div className="relative inline-block">
-                  <span className="text-xl font-bold text-neutral-500">₹1,600</span>
-                  <span className="price-strike" />
-                </div>
-                <span className="text-[10px] font-bold text-accent-red uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent-red/10 border border-accent-red/20">
-                  Save ₹50
-                </span>
-              </div>
               <div className="text-3xl font-black text-white">
                 ₹1,550 <span className="text-xs text-muted font-normal">/ sq ft starting rate</span>
               </div>
@@ -149,15 +140,6 @@ export default function PlanComparison() {
               Our premium luxury specification tier. Built for those who desire top-of-the-line internal selections, elegant structural aesthetics, and heavy-duty wear-resistant finishes.
             </p>
             <div className="mb-6">
-              <div className="flex items-center gap-3 mb-1.5">
-                <div className="relative inline-block">
-                  <span className="text-xl font-bold text-neutral-500">₹1,900</span>
-                  <span className="price-strike" style={{ animationDelay: '1.2s' }} />
-                </div>
-                <span className="text-[10px] font-bold text-accent-red uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent-red/10 border border-accent-red/20">
-                  Save ₹50
-                </span>
-              </div>
               <div className="text-3xl font-black text-accent-yellow">
                 ₹1,850 <span className="text-xs text-muted font-normal">/ sq ft starting rate</span>
               </div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import Script from "next/script";
 import AIChatWidget from "@/components/AIChatWidget";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { BUSINESS_LOCATION } from "@/data/businessLocation";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -76,16 +77,16 @@ export default function RootLayout({
               "foundingDate": "2022",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Katara Hills",
-                "addressLocality": "Bhopal",
-                "addressRegion": "MP",
-                "postalCode": "462043",
-                "addressCountry": "IN"
+                "streetAddress": BUSINESS_LOCATION.streetAddress,
+                "addressLocality": BUSINESS_LOCATION.locality,
+                "addressRegion": BUSINESS_LOCATION.region,
+                "postalCode": BUSINESS_LOCATION.postalCode,
+                "addressCountry": BUSINESS_LOCATION.country
               },
               "geo": {
                 "@type": "GeoCoordinates",
-                "latitude": 23.2597,
-                "longitude": 77.4126
+                "latitude": BUSINESS_LOCATION.lat,
+                "longitude": BUSINESS_LOCATION.lng
               },
               "founder": [
                 {

@@ -11,6 +11,7 @@ declare global {
 import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import TestimonialCarousel from './TestimonialCarousel';
+import { BUSINESS_LOCATION, DIRECTIONS_URL } from '@/data/businessLocation';
 
 
 
@@ -145,12 +146,12 @@ export default function LocationAndReviews() {
 
               <div className="px-6 pb-6 relative z-20" style={{ transform: "translateZ(50px)" }}>
                 <p className="text-white/70 font-light text-sm md:text-base leading-relaxed mb-8 pl-1 border-l-2 border-accent-blue/50">
-                  Katara Hills, Bhopal, Madhya Pradesh. <br/>
+                  {BUSINESS_LOCATION.shortAddress}. <br/>
                   Experience the future of construction consultancy at our state-of-the-art facility.
                 </p>
 
                 <a
-                  href="https://www.google.com/maps/dir/?api=1&destination=23.2597,77.4126"
+                  href={DIRECTIONS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-[#0A84FF] to-[#005bb5] text-white font-bold text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(10,132,255,0.6)] hover:scale-[1.02] border border-white/10"

@@ -10,7 +10,7 @@ interface ImageLightboxProps {
   index: number;
   onClose: () => void;
   onNavigate: (index: number) => void;
-  /** Documentation drawings get a zoom toggle; render photos don't need it. */
+  /** Line drawings get a zoom toggle; render photos don't need it. */
   allowZoom?: boolean;
 }
 
@@ -143,8 +143,8 @@ export default function ImageLightbox({ images, index, onClose, onNavigate, allo
       )}
 
       <div className="pb-6 sm:pb-8 pt-2 text-center shrink-0" onClick={(e) => e.stopPropagation()}>
+        <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] mb-1">{current.group}</p>
         <p className="text-white font-bold text-sm sm:text-base">{current.label}</p>
-        {current.caption && <p className="text-white/50 text-xs mt-0.5">{current.caption}</p>}
         {images.length > 1 && (
           <p className="text-white/40 text-xs mt-2 tabular-nums tracking-wider">
             {index + 1} / {images.length}

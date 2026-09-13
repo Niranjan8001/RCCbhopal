@@ -69,8 +69,9 @@ export default function HeroSection() {
 
         {/* Headline — scales text-4xl → text-5xl → text-7xl */}
         <h1 className="hero-anim text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.05] tracking-tight text-white mb-6">
-          Engineering<br />
-          Generational Assets.
+          Reliable<br />
+          Construction &amp;<br />
+          Consultancy
         </h1>
 
         {/* Subheadline — max-w-2xl keeps line length readable on large screens */}

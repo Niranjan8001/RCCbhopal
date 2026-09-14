@@ -34,7 +34,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://www.instagram.com/reliabeconstructionconsultancy"
+                href="https://www.instagram.com/rccbhopal"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="RCC on Instagram"

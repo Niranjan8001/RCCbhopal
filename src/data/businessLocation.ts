@@ -29,6 +29,13 @@ export const BUSINESS_LOCATION = {
 const PLACE_ID = process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID;
 
 /**
+ * The business's Google listing — where the rating and reviews shown on the
+ * site come from. Linked wherever the rating is displayed so a visitor can
+ * verify it at the source.
+ */
+export const LISTING_URL = `https://maps.google.com/?cid=${BUSINESS_LOCATION.cid}`;
+
+/**
  * Google Maps directions link.
  *
  * `destination` must be the business NAME, not coordinates. Passing a bare
@@ -40,13 +47,6 @@ const PLACE_ID = process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID;
  * Falls back to the canonical listing link if the place ID is unavailable at
  * build time.
  */
-/**
- * The business's Google listing — where the rating and reviews shown on the
- * site come from. Linked wherever the rating is displayed so a visitor can
- * verify it at the source.
- */
-export const LISTING_URL = `https://maps.google.com/?cid=${BUSINESS_LOCATION.cid}`;
-
 export const DIRECTIONS_URL = PLACE_ID
   ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
       BUSINESS_LOCATION.listingName

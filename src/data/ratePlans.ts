@@ -375,17 +375,3 @@ export const RATE_SECTIONS: RateSection[] = [
     ],
   },
 ];
-
-// Compact, factual summary of the Gold upgrades most worth calling out —
-// every line traces back to a `highlight: true` row above. No claims of
-// "better/stronger/premium" beyond what the source specs literally show.
-export const WHY_GOLD: string[] = [
-  'False ceiling in the Drawing Room and all Bedrooms — not part of the Silver plan.',
-  'Stairs and front balcony railings specified in Stainless Steel instead of Mild Steel.',
-  'Heavier main gate — M.S. pipes/box section up to 150 kg, instead of Mild Steel up to 100 kg.',
-  'A second terrace water tank (2 x 1000 Ltr instead of 1 x 1000 Ltr).',
-  'Underground water tank included (5000 Ltr, RCC top slab with brick walls) — not part of the Silver plan.',
-  'Granite "jambing work" door and window frames, including a granite photo-frame on front-side windows.',
-  "Larger 2' x 4' vitrified flooring in drawing, dining & passage areas, with a Granite stair tread.",
-  'Kitchen platform/top in Granite with a Quartz / Nirali / Carysil sink, instead of Marble with a single-bowl sink.',
-];

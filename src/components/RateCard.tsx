@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RATE_SECTIONS, WHY_GOLD, type RateSection, type SpecItem } from '@/data/ratePlans';
+import { RATE_SECTIONS, type RateSection, type SpecItem } from '@/data/ratePlans';
 
 /* ─────────────────── Icons (stroke style matches the rest of the site) ─────────────────── */
 const ICONS: Record<RateSection['icon'], React.ReactNode> = {
@@ -73,14 +73,6 @@ function ValueText({ value, emphasize }: { value: string; emphasize?: boolean })
   return <span className={emphasize ? 'text-accent-yellow' : 'text-foreground/90'}>{value}</span>;
 }
 
-function GoldBadge() {
-  return (
-    <span className="inline-block ml-2 align-middle px-2 py-0.5 rounded-full bg-accent-yellow/15 text-accent-yellow text-[9px] font-extrabold uppercase tracking-wider border border-accent-yellow/30 whitespace-nowrap">
-      Gold Advantage
-    </span>
-  );
-}
-
 /* ─────────────────── Row ─────────────────── */
 function SpecRow({ item }: { item: SpecItem }) {
   return (
@@ -102,7 +94,6 @@ function SpecRow({ item }: { item: SpecItem }) {
           Gold
         </span>
         <ValueText value={item.gold} emphasize={item.highlight} />
-        {item.highlight && !isAbsent(item.gold) && <GoldBadge />}
       </div>
     </div>
   );
@@ -207,26 +198,6 @@ export default function RateCard() {
 
   return (
     <div>
-      {/* Why Choose Gold */}
-      <div className="glass-card-premium p-6 sm:p-8 mb-10">
-        <h3 className="text-accent-yellow font-black text-base sm:text-lg mb-5 flex items-center gap-2">
-          <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.952 11.952 0 01-9.618 5.04M12 2.944v18.118" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Why Choose Gold?
-        </h3>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
-          {WHY_GOLD.map((line) => (
-            <li key={line} className="flex items-start gap-2.5 text-sm text-muted leading-relaxed">
-              <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" className="text-accent-yellow shrink-0 mt-0.5">
-                <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span>{line}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
       {/* Controls */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6">
         <div className="flex gap-2" role="group" aria-label="Filter specifications">

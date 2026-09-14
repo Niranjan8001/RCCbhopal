@@ -3,19 +3,19 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import RateCard, { type PlanKey } from './RateCard';
+import PlanBook, { type PlanKey } from './PlanBook';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function PlanComparison() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const tableRef = useRef<HTMLDivElement>(null);
-  const [plan, setPlan] = useState<PlanKey>('both');
+  const [openPlan, setOpenPlan] = useState<PlanKey | null>(null);
+  const [bookPage, setBookPage] = useState(0);
 
-  // Clicking a plan's rate opens that plan's specifications below.
+  // Clicking a plan's rate opens that plan's specification book.
   const showPlan = (next: PlanKey) => {
-    setPlan(next);
-    tableRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setOpenPlan(next);
+    setBookPage(1);
   };
 
   useEffect(() => {
@@ -55,22 +55,6 @@ export default function PlanComparison() {
         }
       );
 
-      // Table animation
-      gsap.fromTo(
-        '.spec-table-container',
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.spec-table-container',
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -131,7 +115,7 @@ export default function PlanComparison() {
                 </span>
                 <span className="text-xs text-muted font-normal"> / sq ft starting rate</span>
                 <span className="block mt-2 text-xs font-bold uppercase tracking-wider text-muted group-hover:text-white transition-colors">
-                  View Silver specifications →
+                  Open Silver specifications ↗
                 </span>
               </button>
             </div>
@@ -168,16 +152,11 @@ export default function PlanComparison() {
                 </span>
                 <span className="text-xs text-muted font-normal"> / sq ft starting rate</span>
                 <span className="block mt-2 text-xs font-bold uppercase tracking-wider text-accent-yellow/70 group-hover:text-accent-yellow transition-colors">
-                  View Gold specifications →
+                  Open Gold specifications ↗
                 </span>
               </button>
             </div>
           </div>
-        </div>
-
-        {/* Full Specification Rate Card */}
-        <div ref={tableRef} className="spec-table-container scroll-mt-24">
-          <RateCard plan={plan} onPlanChange={setPlan} />
         </div>
 
         {/* Action Buttons */}
@@ -199,6 +178,13 @@ export default function PlanComparison() {
         </div>
 
       </div>
+
+      <PlanBook
+        plan={openPlan}
+        page={bookPage}
+        onPageChange={setBookPage}
+        onClose={() => setOpenPlan(null)}
+      />
     </section>
   );
 }

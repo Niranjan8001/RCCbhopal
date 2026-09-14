@@ -64,6 +64,68 @@ SAFETY & SCOPE BOUNDARIES:
 - If asked for legal, medical, financial, or structural-engineering advice beyond general construction guidance, say that's outside what you can responsibly advise on and recommend consulting a qualified professional or the RCC team directly.
 - Never ask for or store sensitive personal information (ID numbers, passwords, payment/card details).`;
 
+/* ─────────────────── Abuse controls ───────────────────
+   This endpoint is public and every call bills our Anthropic key, so it is
+   worth being strict about what reaches the model. Three layers:
+   an origin check, hard limits on the payload, and a per-IP rate limit.
+
+   The rate limit is in-process, so on serverless each instance keeps its own
+   counter and a distributed flood could still get through. It stops the
+   common case — one script hammering the endpoint — but the real backstop is
+   a spend cap set in the Anthropic console. */
+
+const ALLOWED_ORIGINS = [
+  'https://www.rccbhopal.in',
+  'https://rccbhopal.in',
+  'http://localhost:3000',
+];
+
+const MAX_MESSAGES = 20;
+const MAX_CHARS_PER_MESSAGE = 2000;
+const RATE_LIMIT_REQUESTS = 12;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+
+const hits = new Map<string, { count: number; resetAt: number }>();
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+
+  // Opportunistic cleanup so the map cannot grow without bound.
+  if (hits.size > 5000) {
+    for (const [key, v] of hits) if (v.resetAt < now) hits.delete(key);
+  }
+
+  const entry = hits.get(ip);
+  if (!entry || entry.resetAt < now) {
+    hits.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  entry.count += 1;
+  return entry.count > RATE_LIMIT_REQUESTS;
+}
+
+type ChatMessage = { role: 'user' | 'assistant'; content: string };
+
+/** Returns the validated messages, or a reason string if the payload is rejected. */
+function validate(body: unknown): ChatMessage[] | string {
+  if (typeof body !== 'object' || body === null) return 'malformed body';
+  const { messages } = body as { messages?: unknown };
+  if (!Array.isArray(messages)) return 'messages must be an array';
+  if (messages.length === 0) return 'messages is empty';
+  if (messages.length > MAX_MESSAGES) return `too many messages (max ${MAX_MESSAGES})`;
+
+  const clean: ChatMessage[] = [];
+  for (const m of messages) {
+    if (typeof m !== 'object' || m === null) return 'malformed message';
+    const { role, content } = m as { role?: unknown; content?: unknown };
+    if (role !== 'user' && role !== 'assistant') return 'invalid role';
+    if (typeof content !== 'string') return 'content must be a string';
+    if (content.length > MAX_CHARS_PER_MESSAGE) return 'message too long';
+    clean.push({ role, content });
+  }
+  return clean;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -72,8 +134,34 @@ export async function POST(request: NextRequest) {
       return new Response('error', { status: 500 });
     }
 
+    // 1. Only serve our own pages. A forged Origin gets past this, but it
+    //    stops the endpoint being embedded in someone else's site.
+    const origin = request.headers.get('origin');
+    if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+      return new Response('forbidden', { status: 403 });
+    }
+
+    // 2. Per-IP rate limit.
+    const ip =
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      request.headers.get('x-real-ip') ||
+      'unknown';
+    if (rateLimited(ip)) {
+      return new Response('rate limited', {
+        status: 429,
+        headers: { 'Retry-After': String(RATE_LIMIT_WINDOW_MS / 1000) },
+      });
+    }
+
+    // 3. Never forward the client's payload unchecked — it decides what we pay for.
+    const result = validate(await request.json());
+    if (typeof result === 'string') {
+      console.warn('[chat/route] rejected payload:', result);
+      return new Response('bad request', { status: 400 });
+    }
+    const messages = result;
+
     const client = new Anthropic({ apiKey });
-    const { messages } = await request.json();
 
     const stream = await client.messages.create({
       model: 'claude-haiku-4-5',

@@ -91,6 +91,19 @@ export default function AIChatWidget() {
         body: JSON.stringify({ messages: next }),
       });
 
+      if (res.status === 429) {
+        setMessages((m) => {
+          const copy = [...m];
+          copy[copy.length - 1] = {
+            role: 'assistant',
+            content:
+              "That's a lot of questions in a short time — give me a minute to catch up. If it's urgent, message us on WhatsApp at +91 79879 00965.",
+          };
+          return copy;
+        });
+        setStreaming(false);
+        return;
+      }
       if (!res.ok || !res.body) throw new Error('API error');
 
       const reader = res.body.getReader();

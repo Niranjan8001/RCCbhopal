@@ -1,14 +1,22 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import RateCard from './RateCard';
+import RateCard, { type PlanKey } from './RateCard';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function PlanComparison() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
+  const [plan, setPlan] = useState<PlanKey>('both');
+
+  // Clicking a plan's rate opens that plan's specifications below.
+  const showPlan = (next: PlanKey) => {
+    setPlan(next);
+    tableRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -81,7 +89,7 @@ export default function PlanComparison() {
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-24 comparison-heading">
           <span className="text-accent-yellow text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
-            Plan Comparison
+            Our Plans
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-4">
             Silver &amp; Gold
@@ -113,9 +121,19 @@ export default function PlanComparison() {
               Our standard build plan, designed for durability and budget consciousness. Ideal for families looking for high-structural standards with clean, default finishes and approved brands.
             </p>
             <div className="mb-6">
-              <div className="text-3xl font-black text-white">
-                ₹1,550 <span className="text-xs text-muted font-normal">/ sq ft starting rate</span>
-              </div>
+              <button
+                onClick={() => showPlan('silver')}
+                aria-label="View the full Silver plan specification"
+                className="group text-left"
+              >
+                <span className="text-3xl font-black text-white underline decoration-white/30 decoration-2 underline-offset-[6px] group-hover:decoration-white transition-colors">
+                  ₹1,550
+                </span>
+                <span className="text-xs text-muted font-normal"> / sq ft starting rate</span>
+                <span className="block mt-2 text-xs font-bold uppercase tracking-wider text-muted group-hover:text-white transition-colors">
+                  View Silver specifications →
+                </span>
+              </button>
             </div>
           </div>
 
@@ -140,16 +158,26 @@ export default function PlanComparison() {
               Our premium luxury specification tier. Built for those who desire top-of-the-line internal selections, elegant structural aesthetics, and heavy-duty wear-resistant finishes.
             </p>
             <div className="mb-6">
-              <div className="text-3xl font-black text-accent-yellow">
-                ₹1,850 <span className="text-xs text-muted font-normal">/ sq ft starting rate</span>
-              </div>
+              <button
+                onClick={() => showPlan('gold')}
+                aria-label="View the full Gold plan specification"
+                className="group text-left"
+              >
+                <span className="text-3xl font-black text-accent-yellow underline decoration-accent-yellow/30 decoration-2 underline-offset-[6px] group-hover:decoration-accent-yellow transition-colors">
+                  ₹1,850
+                </span>
+                <span className="text-xs text-muted font-normal"> / sq ft starting rate</span>
+                <span className="block mt-2 text-xs font-bold uppercase tracking-wider text-accent-yellow/70 group-hover:text-accent-yellow transition-colors">
+                  View Gold specifications →
+                </span>
+              </button>
             </div>
           </div>
         </div>
 
         {/* Full Specification Rate Card */}
-        <div className="spec-table-container">
-          <RateCard />
+        <div ref={tableRef} className="spec-table-container scroll-mt-24">
+          <RateCard plan={plan} onPlanChange={setPlan} />
         </div>
 
         {/* Action Buttons */}

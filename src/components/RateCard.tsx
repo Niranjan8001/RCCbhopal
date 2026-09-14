@@ -73,11 +73,26 @@ function ValueText({ value, emphasize }: { value: string; emphasize?: boolean })
 }
 
 /* ─────────────────── Main component ─────────────────── */
-type FilterMode = 'all' | 'differences';
+export type PlanKey = 'silver' | 'gold' | 'both';
 
-export default function RateCard() {
-  const [filterMode, setFilterMode] = useState<FilterMode>('all');
+const PLAN_TABS: { key: PlanKey; label: string }[] = [
+  { key: 'silver', label: 'Silver' },
+  { key: 'gold', label: 'Gold' },
+  { key: 'both', label: 'Compare Both' },
+];
+
+export default function RateCard({
+  plan,
+  onPlanChange,
+}: {
+  plan: PlanKey;
+  onPlanChange: (p: PlanKey) => void;
+}) {
+  const [differencesOnly, setDifferencesOnly] = useState(false);
   const [search, setSearch] = useState('');
+
+  // Only meaningful when both columns are on screen.
+  const filterMode: 'all' | 'differences' = plan === 'both' && differencesOnly ? 'differences' : 'all';
 
   const query = search.trim().toLowerCase();
 
@@ -96,30 +111,36 @@ export default function RateCard() {
   }, [filterMode, query]);
 
   const total = visibleSections.reduce((n, s) => n + s.items.length, 0);
+  const showBoth = plan === 'both';
 
   return (
     <div>
       {/* Controls */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6">
-        <div className="flex gap-2" role="group" aria-label="Filter specifications">
-          <button
-            onClick={() => setFilterMode('all')}
-            aria-pressed={filterMode === 'all'}
-            className={`px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors min-h-[44px] ${
-              filterMode === 'all' ? 'bg-accent-yellow text-background' : 'bg-white/5 text-muted border border-white/10 hover:border-white/20'
-            }`}
-          >
-            All Specifications
-          </button>
-          <button
-            onClick={() => setFilterMode('differences')}
-            aria-pressed={filterMode === 'differences'}
-            className={`px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors min-h-[44px] ${
-              filterMode === 'differences' ? 'bg-accent-yellow text-background' : 'bg-white/5 text-muted border border-white/10 hover:border-white/20'
-            }`}
-          >
-            Differences Only
-          </button>
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Choose a plan">
+          {PLAN_TABS.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => onPlanChange(t.key)}
+              aria-pressed={plan === t.key}
+              className={`px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors min-h-[44px] ${
+                plan === t.key ? 'bg-accent-yellow text-background' : 'bg-white/5 text-muted border border-white/10 hover:border-white/20'
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+          {plan === 'both' && (
+            <button
+              onClick={() => setDifferencesOnly((d) => !d)}
+              aria-pressed={differencesOnly}
+              className={`px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors min-h-[44px] ${
+                differencesOnly ? 'bg-white/15 text-white border border-white/25' : 'bg-white/5 text-muted border border-white/10 hover:border-white/20'
+              }`}
+            >
+              Differences Only
+            </button>
+          )}
         </div>
 
         <div className="relative flex-1 sm:flex-none">
@@ -141,18 +162,22 @@ export default function RateCard() {
       {/* Specification table — same construction as the consultancy rate table */}
       <div className="glass-card-premium rounded-3xl overflow-hidden border border-white/5">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[640px]">
+          <table className={`w-full text-left border-collapse ${showBoth ? 'min-w-[640px]' : 'min-w-[420px]'}`}>
             <thead>
               <tr className="border-b border-white/10 bg-white/[0.04]">
-                <th scope="col" className="py-5 px-5 sm:px-6 w-[34%] text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                <th scope="col" className={`py-5 px-5 sm:px-6 ${showBoth ? 'w-[34%]' : 'w-[40%]'} text-xs sm:text-sm font-bold text-white uppercase tracking-wider`}>
                   Specification
                 </th>
-                <th scope="col" className="py-5 px-5 sm:px-6 w-[33%] text-xs sm:text-sm font-bold text-muted uppercase tracking-wider">
-                  Silver
-                </th>
-                <th scope="col" className="py-5 px-5 sm:px-6 w-[33%] text-xs sm:text-sm font-bold text-accent-yellow uppercase tracking-wider">
-                  Gold
-                </th>
+                {(plan === 'silver' || showBoth) && (
+                  <th scope="col" className={`py-5 px-5 sm:px-6 ${showBoth ? 'w-[33%]' : 'w-[60%]'} text-xs sm:text-sm font-bold text-muted uppercase tracking-wider`}>
+                    Silver
+                  </th>
+                )}
+                {(plan === 'gold' || showBoth) && (
+                  <th scope="col" className={`py-5 px-5 sm:px-6 ${showBoth ? 'w-[33%]' : 'w-[60%]'} text-xs sm:text-sm font-bold text-accent-yellow uppercase tracking-wider`}>
+                    Gold
+                  </th>
+                )}
               </tr>
             </thead>
 
@@ -161,7 +186,7 @@ export default function RateCard() {
                 <tr className="bg-white/[0.02]">
                   <th
                     scope="colgroup"
-                    colSpan={3}
+                    colSpan={showBoth ? 3 : 2}
                     className="py-3 px-5 sm:px-6 text-left font-bold text-white text-sm"
                   >
                     <span className="inline-flex items-center gap-2.5 text-accent-yellow">
@@ -177,12 +202,16 @@ export default function RateCard() {
                       <p className="text-sm font-semibold text-white leading-snug">{item.name}</p>
                       {item.note && <p className="text-xs text-muted/70 mt-1 leading-relaxed">{item.note}</p>}
                     </td>
-                    <td className="py-4 px-5 sm:px-6 text-sm leading-relaxed">
-                      <ValueText value={item.silver} />
-                    </td>
-                    <td className="py-4 px-5 sm:px-6 text-sm leading-relaxed">
-                      <ValueText value={item.gold} emphasize={item.highlight} />
-                    </td>
+                    {(plan === 'silver' || showBoth) && (
+                      <td className="py-4 px-5 sm:px-6 text-sm leading-relaxed">
+                        <ValueText value={item.silver} />
+                      </td>
+                    )}
+                    {(plan === 'gold' || showBoth) && (
+                      <td className="py-4 px-5 sm:px-6 text-sm leading-relaxed">
+                        <ValueText value={item.gold} emphasize={showBoth && item.highlight} />
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

@@ -18,13 +18,14 @@ export default function HeroSection({
   /* The Google rating is the only claim up here a visitor can check, so it
      links to the listing. Omitted entirely when the lookup returns nothing
      rather than showing a placeholder figure. */
-  const stats: { value: string; label: string; href?: string }[] = [
+  const stats: { value: string; label: string; href?: string; ariaLabel?: string }[] = [
     { value: '35+', label: 'Years of Experience' },
     ...(rating > 0
       ? [{
           value: `${rating.toFixed(1)}★`,
-          label: `${totalReviews} Google Reviews`,
+          label: 'Google Reviews',
           href: LISTING_URL,
+          ariaLabel: `${rating.toFixed(1)} out of 5 from ${totalReviews} Google reviews — open the listing on Google`,
         }]
       : []),
     { value: 'On-Time', label: 'Delivery' },
@@ -130,6 +131,7 @@ export default function HeroSection({
               <a
                 key={stat.label}
                 href={stat.href}
+                aria-label={stat.ariaLabel}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex flex-col items-center gap-1 rounded-lg transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FFD60A]"

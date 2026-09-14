@@ -98,7 +98,7 @@ export default function HeroSection({
 
         {/* Subheadline — max-w-2xl keeps line length readable on large screens */}
         <p className="hero-anim text-base sm:text-lg lg:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed mb-10 font-light">
-          Backed by 35 years of structural engineering experience. We design and build uncompromising luxury homes in Bhopal.
+          We design and build uncompromising luxury homes in Bhopal — with every rate published upfront.
         </p>
 
         {/* CTA Buttons — stacked on mobile, side-by-side on md+ */}

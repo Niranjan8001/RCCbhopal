@@ -1,8 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { RATE_SECTIONS, type RateSection, type SpecItem } from '@/data/ratePlans';
+import { RATE_SECTIONS, type RateSection } from '@/data/ratePlans';
 
 /* ─────────────────── Icons (stroke style matches the rest of the site) ─────────────────── */
 const ICONS: Record<RateSection['icon'], React.ReactNode> = {
@@ -73,114 +72,14 @@ function ValueText({ value, emphasize }: { value: string; emphasize?: boolean })
   return <span className={emphasize ? 'text-white font-medium' : 'text-foreground/80'}>{value}</span>;
 }
 
-/* ─────────────────── Row ─────────────────── */
-function SpecRow({ item }: { item: SpecItem }) {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] items-start gap-x-6 gap-y-3 px-5 sm:px-6 py-4 sm:py-5">
-      <div>
-        <p className="text-sm font-bold text-white leading-snug">{item.name}</p>
-        {item.note && <p className="text-xs text-muted/70 mt-1 leading-relaxed">{item.note}</p>}
-      </div>
-
-      <div className="text-sm leading-relaxed">
-        <span className="md:hidden text-[10px] uppercase tracking-wider text-muted/60 font-bold block mb-1">
-          Silver
-        </span>
-        <ValueText value={item.silver} />
-      </div>
-
-      <div className="text-sm leading-relaxed">
-        <span className="md:hidden text-[10px] uppercase tracking-wider text-accent-yellow/70 font-bold block mb-1">
-          Gold
-        </span>
-        <ValueText value={item.gold} emphasize={item.highlight} />
-      </div>
-    </div>
-  );
-}
-
-/* ─────────────────── Category panel ─────────────────── */
-function CategoryPanel({
-  section,
-  isOpen,
-  onToggle,
-}: {
-  section: RateSection;
-  isOpen: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <div className="rounded-2xl border border-white/10 overflow-hidden bg-white/[0.015]">
-      <button
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        aria-controls={`rate-panel-${section.id}`}
-        className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left hover:bg-white/[0.02] transition-colors min-h-[44px]"
-      >
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="w-9 h-9 rounded-lg bg-white/[0.04] text-accent-yellow flex items-center justify-center shrink-0">
-            <CategoryIcon name={section.icon} />
-          </div>
-          <div className="min-w-0">
-            <h4 className="font-bold text-white text-sm sm:text-base truncate">{section.title}</h4>
-            <p className="text-xs text-muted">{section.items.length} specification{section.items.length > 1 ? 's' : ''}</p>
-          </div>
-        </div>
-        <span
-          className={`shrink-0 w-7 h-7 rounded-full border border-white/10 flex items-center justify-center text-accent-yellow transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
-          aria-hidden="true"
-        >
-          +
-        </span>
-      </button>
-
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            id={`rate-panel-${section.id}`}
-            role="region"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="overflow-hidden"
-          >
-            <div className="hidden md:grid grid-cols-[1.3fr_1fr_1fr] items-center gap-x-6 px-5 sm:px-6 py-3 bg-white/[0.04] border-y border-white/5">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-muted">Specification</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-muted">Silver</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-accent-yellow">Gold</span>
-            </div>
-            <div className="divide-y divide-white/5 border-t border-white/5 md:border-t-0">
-              {section.items.map((item) => (
-                <SpecRow key={item.name} item={item} />
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
 /* ─────────────────── Main component ─────────────────── */
 type FilterMode = 'all' | 'differences';
 
 export default function RateCard() {
-  const [openIds, setOpenIds] = useState<Set<string>>(() => new Set([RATE_SECTIONS[0].id]));
   const [filterMode, setFilterMode] = useState<FilterMode>('all');
   const [search, setSearch] = useState('');
 
-  const toggle = (id: string) => {
-    setOpenIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
   const query = search.trim().toLowerCase();
-  const isFiltering = filterMode === 'differences' || query.length > 0;
 
   const visibleSections = useMemo(() => {
     return RATE_SECTIONS.map((section) => {
@@ -196,6 +95,8 @@ export default function RateCard() {
     }).filter((section) => section.items.length > 0);
   }, [filterMode, query]);
 
+  const total = visibleSections.reduce((n, s) => n + s.items.length, 0);
+
   return (
     <div>
       {/* Controls */}
@@ -204,7 +105,7 @@ export default function RateCard() {
           <button
             onClick={() => setFilterMode('all')}
             aria-pressed={filterMode === 'all'}
-            className={`px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors min-h-[40px] ${
+            className={`px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors min-h-[44px] ${
               filterMode === 'all' ? 'bg-accent-yellow text-background' : 'bg-white/5 text-muted border border-white/10 hover:border-white/20'
             }`}
           >
@@ -213,7 +114,7 @@ export default function RateCard() {
           <button
             onClick={() => setFilterMode('differences')}
             aria-pressed={filterMode === 'differences'}
-            className={`px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors min-h-[40px] ${
+            className={`px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors min-h-[44px] ${
               filterMode === 'differences' ? 'bg-accent-yellow text-background' : 'bg-white/5 text-muted border border-white/10 hover:border-white/20'
             }`}
           >
@@ -221,55 +122,84 @@ export default function RateCard() {
           </button>
         </div>
 
-        <div className="flex gap-2">
-          <div className="relative flex-1 sm:flex-none">
-            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted/60 pointer-events-none">
-              <circle cx="11" cy="11" r="7" />
-              <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
-            </svg>
-            <input
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search specifications…"
-              aria-label="Search specifications"
-              className="w-full sm:w-56 pl-9 pr-3 py-2.5 rounded-full bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 outline-none focus:border-accent-yellow/50 transition-colors min-h-[40px]"
-            />
-          </div>
+        <div className="relative flex-1 sm:flex-none">
+          <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted/60 pointer-events-none">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
+          </svg>
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search specifications…"
+            aria-label="Search specifications"
+            className="w-full sm:w-64 pl-9 pr-3 py-2.5 rounded-full bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 outline-none focus:border-accent-yellow/50 transition-colors min-h-[44px]"
+          />
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-4 mb-4">
-        <button
-          onClick={() => setOpenIds(new Set(RATE_SECTIONS.map((s) => s.id)))}
-          className="text-xs font-semibold text-muted hover:text-white transition-colors"
-        >
-          Expand All
-        </button>
-        <button
-          onClick={() => setOpenIds(new Set())}
-          className="text-xs font-semibold text-muted hover:text-white transition-colors"
-        >
-          Collapse All
-        </button>
-      </div>
+      {/* Specification table — same construction as the consultancy rate table */}
+      <div className="glass-card-premium rounded-3xl overflow-hidden border border-white/5">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[640px]">
+            <thead>
+              <tr className="border-b border-white/10 bg-white/[0.04]">
+                <th scope="col" className="py-5 px-5 sm:px-6 w-[34%] text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                  Specification
+                </th>
+                <th scope="col" className="py-5 px-5 sm:px-6 w-[33%] text-xs sm:text-sm font-bold text-muted uppercase tracking-wider">
+                  Silver
+                </th>
+                <th scope="col" className="py-5 px-5 sm:px-6 w-[33%] text-xs sm:text-sm font-bold text-accent-yellow uppercase tracking-wider">
+                  Gold
+                </th>
+              </tr>
+            </thead>
 
-      {/* Category panels */}
-      <div className="space-y-3">
-        {visibleSections.map((section) => (
-          <CategoryPanel
-            key={section.id}
-            section={section}
-            isOpen={isFiltering || openIds.has(section.id)}
-            onToggle={() => toggle(section.id)}
-          />
-        ))}
-        {visibleSections.length === 0 && (
-          <p className="text-center text-sm text-muted py-12">
+            {visibleSections.map((section) => (
+              <tbody key={section.id} className="divide-y divide-white/5 border-t border-white/5">
+                <tr className="bg-white/[0.02]">
+                  <th
+                    scope="colgroup"
+                    colSpan={3}
+                    className="py-3 px-5 sm:px-6 text-left font-bold text-white text-sm"
+                  >
+                    <span className="inline-flex items-center gap-2.5 text-accent-yellow">
+                      <CategoryIcon name={section.icon} />
+                      <span className="text-white">{section.title}</span>
+                    </span>
+                  </th>
+                </tr>
+
+                {section.items.map((item) => (
+                  <tr key={item.name} className="transition-colors duration-200 hover:bg-white/[0.015] align-top">
+                    <td className="py-4 px-5 sm:px-6">
+                      <p className="text-sm font-semibold text-white leading-snug">{item.name}</p>
+                      {item.note && <p className="text-xs text-muted/70 mt-1 leading-relaxed">{item.note}</p>}
+                    </td>
+                    <td className="py-4 px-5 sm:px-6 text-sm leading-relaxed">
+                      <ValueText value={item.silver} />
+                    </td>
+                    <td className="py-4 px-5 sm:px-6 text-sm leading-relaxed">
+                      <ValueText value={item.gold} emphasize={item.highlight} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            ))}
+          </table>
+        </div>
+
+        {total === 0 && (
+          <p className="text-center text-sm text-muted py-12 px-6">
             No specifications match your search.
           </p>
         )}
       </div>
+
+      <p className="text-xs text-muted mt-3 text-center">
+        Showing {total} of {RATE_SECTIONS.reduce((n, s) => n + s.items.length, 0)} specifications.
+      </p>
     </div>
   );
 }

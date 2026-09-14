@@ -110,7 +110,7 @@ export default function ConsultancyPricing() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[520px]">
                 <thead>
-                  <tr className="border-b border-white/10 bg-[#0D0D0D]">
+                  <tr className="border-b border-white/10 bg-white/[0.04]">
                     <th className="py-5 px-5 sm:px-6 text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
                       Service
                     </th>

@@ -84,9 +84,9 @@ export default function PlanComparison() {
             Plan Comparison
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-4">
-            Silver vs. Gold
+            Silver &amp; Gold
             <br />
-            <span className="text-muted">Material Packages</span>
+            <span className="text-muted">Plans</span>
           </h2>
           <p className="text-muted max-w-xl mx-auto text-sm md:text-base leading-relaxed">
             Understand the visual, tactile, and grade differences between our two custom-tailored residential building plans.

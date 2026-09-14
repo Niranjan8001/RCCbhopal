@@ -247,6 +247,9 @@ export default function DesignShowcase() {
           <AnimatePresence>
             {mobileModalOpen && (
               <motion.div
+                role="dialog"
+                aria-modal="true"
+                aria-label="Design Gallery"
                 className="fixed inset-0 z-[100] bg-background/[0.98] backdrop-blur-xl overflow-y-auto"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -324,7 +327,7 @@ export default function DesignShowcase() {
               <span className="text-accent-yellow text-xs md:text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
                 3D Design Visualization
               </span>
-              <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-tight mb-6">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6">
                 From Plan to a
                 <br />
                 <span className="text-muted">Visual Experience</span>
@@ -342,7 +345,7 @@ export default function DesignShowcase() {
                   <span className="inline-block">↗</span>
                 </button>
                 <a href="#consultancy-pricing" className="btn-secondary !text-sm min-h-[44px] !px-5 !py-2.5">
-                  Consultancy Pricing
+                  View Consultancy Pricing
                 </a>
               </div>
             </div>

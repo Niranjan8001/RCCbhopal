@@ -29,12 +29,12 @@ export default function AboutUs() {
             {/* Accent line */}
             <div className="w-12 h-1 bg-accent-yellow rounded-full mb-6" />
             
-            <h2 className="text-sm font-bold tracking-[0.2em] text-accent-yellow uppercase mb-4">
+            <span className="text-accent-yellow text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
               Our Vision
-            </h2>
-            <h3 className="text-4xl md:text-5xl font-black mb-6 leading-tight">
+            </span>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6 leading-tight tracking-tight">
               Engineering <span className="text-muted text-glow-white">Excellence</span> Since 1991.
-            </h3>
+            </h2>
             <p className="text-lg text-muted leading-relaxed mb-8">
               RCC is the modern evolution of a 35-year engineering legacy. Our foundational engineering expertise began in 1991, delivering solid structural projects across Madhya Pradesh. In 2022, RCC was established to bring that time-tested expertise into the modern era of luxury residential construction.
             </p>
@@ -114,7 +114,7 @@ export default function AboutUs() {
                 {/* Content */}
                 <div className="p-6 flex flex-col flex-grow relative z-10">
                   <h4 className="text-xl font-bold text-white tracking-wide mb-1">Roshan Saxena</h4>
-                  <span className="text-accent-blue text-sm font-semibold mb-4">Managing Director</span>
+                  <span className="text-accent-blue text-sm font-semibold mb-4">Founder &amp; Managing Director</span>
                   <p className="text-white/60 text-sm leading-relaxed font-light">
                     A strategic mind steering RCC&apos;s day-to-day operations and client relationships, Roshan brings the discipline and focus that carries every project from foundation to final handover. As Managing Director, he holds the company&apos;s work to a standard of uncompromising quality and a relentless pursuit of perfection, ensuring that every project consistently exceeds client expectations.
                   </p>

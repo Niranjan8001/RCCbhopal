@@ -1180,8 +1180,8 @@ input[type="range"]::-moz-range-thumb:hover {
   gap: 14px;
 }
 .tc-nav-btn {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -1239,6 +1239,18 @@ input[type="range"]::-moz-range-thumb:hover {
   cursor: pointer;
   padding: 0;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  /* 8x6px is the mark, not the target — extend the hit area to 44px without
+     changing how it looks. */
+  position: relative;
+}
+.tc-dot::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
 }
 
 .tc-dot:hover {

@@ -36,6 +36,14 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    if (isOpen) window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen]);
+
+  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -62,7 +70,7 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5 z-10 flex-shrink-0">
+          <a href="#hero" className="flex items-center gap-2.5 z-10 flex-shrink-0">
             <Image src="/logo.png" alt="RCC Logo" width={28} height={28} className="rounded-full bg-white object-cover" />
             <span className="text-sm font-black tracking-wider text-white">RCC</span>
           </a>
@@ -73,10 +81,10 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                className="group text-[10px] font-bold uppercase tracking-wider text-white/70 hover:text-[#F5C542] transition-colors duration-300 relative py-1"
+                className="group text-[10px] font-bold uppercase tracking-wider text-white/70 hover:text-[#FFD60A] transition-colors duration-300 relative py-1"
               >
                 {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F5C542] transition-all duration-300 group-hover:w-full" />
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#FFD60A] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </div>
@@ -107,6 +115,9 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
             className="fixed inset-0 z-40 bg-[#070707]/98 backdrop-blur-3xl flex flex-col items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -118,7 +129,7 @@ export default function Navbar() {
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  className="text-xl font-bold uppercase tracking-wider text-white hover:text-[#F5C542] transition-colors flex items-center justify-center min-h-[44px] py-2 w-full"
+                  className="text-xl font-bold uppercase tracking-wider text-white hover:text-[#FFD60A] transition-colors flex items-center justify-center min-h-[44px] py-2 w-full"
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 50 }}
@@ -132,7 +143,7 @@ export default function Navbar() {
                 href="https://wa.me/917987900965?text=Hello%20RCC,%20I%20want%20to%20know%20about%20your%20services"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary mt-6 min-h-[44px] w-[80vw] mx-auto text-center justify-center bg-[#F5C542] text-[#070707]"
+                className="btn-primary mt-6 min-h-[44px] w-[80vw] mx-auto text-center justify-center bg-[#FFD60A] text-[#070707]"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 30 }}

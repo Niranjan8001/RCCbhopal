@@ -80,7 +80,7 @@ export default function PlanComparison() {
         
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-24 comparison-heading">
-          <span className="text-accent-yellow text-sm font-semibold uppercase tracking-[0.25em] mb-4 block">
+          <span className="text-accent-yellow text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
             Plan Comparison
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-4">
@@ -154,14 +154,19 @@ export default function PlanComparison() {
 
         {/* Action Buttons */}
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#contact" className="btn-primary w-full sm:w-auto min-h-[44px] justify-center">
-            <span>Get Quote</span>
+          <a
+            href="https://wa.me/917987900965?text=Hi%2C%20I%20want%20to%20know%20more%20about%20your%20Silver%20and%20Gold%20plans"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary w-full sm:w-auto min-h-[44px] justify-center"
+          >
+            <span>Ask About These Plans on WhatsApp</span>
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
-          <a href="https://wa.me/917987900965?text=Hi%2C%20I%20want%20to%20know%20more%20about%20your%20Silver%20and%20Gold%20plans" target="_blank" rel="noopener noreferrer" className="btn-secondary w-full sm:w-auto min-h-[44px] justify-center">
-            Contact Us
+          <a href="#contact" className="btn-secondary w-full sm:w-auto min-h-[44px] justify-center">
+            Other ways to reach us
           </a>
         </div>
 

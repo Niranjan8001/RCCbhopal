@@ -82,11 +82,11 @@ export default function HeroSection({
       >
         {/* Eyebrow badge */}
         <div className="hero-anim flex items-center gap-3 mb-7">
-          <div className="h-px w-10 bg-[#F5C542]/50 hidden sm:block" />
-          <span className="text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#F5C542]">
+          <div className="h-px w-10 bg-[#FFD60A]/50 hidden sm:block" />
+          <span className="text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#FFD60A]">
             35 Years of Engineering Experience
           </span>
-          <div className="h-px w-10 bg-[#F5C542]/50 hidden sm:block" />
+          <div className="h-px w-10 bg-[#FFD60A]/50 hidden sm:block" />
         </div>
 
         {/* Headline — scales text-4xl → text-5xl → text-7xl */}
@@ -105,7 +105,7 @@ export default function HeroSection({
         <div className="hero-anim flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <a
             href="#pricing"
-            className="w-full md:w-auto flex items-center justify-center px-8 py-4 rounded-full bg-[#F5C542] text-[#070707] font-bold text-sm uppercase tracking-wider transition-all duration-300 hover:bg-[#FFD86B] hover:shadow-[0_0_35px_rgba(245,197,66,0.45)] active:scale-[0.98]"
+            className="w-full md:w-auto flex items-center justify-center px-8 py-4 rounded-full bg-[#FFD60A] text-[#070707] font-bold text-sm uppercase tracking-wider transition-all duration-300 hover:bg-[#FFD86B] hover:shadow-[0_0_35px_rgba(245,197,66,0.45)] active:scale-[0.98]"
           >
             View Plans &amp; Pricing
           </a>
@@ -122,7 +122,7 @@ export default function HeroSection({
           {stats.map((stat) => {
             const body = (
               <>
-                <span className="text-2xl sm:text-3xl font-black text-[#F5C542] tabular-nums">{stat.value}</span>
+                <span className="text-2xl sm:text-3xl font-black text-[#FFD60A] tabular-nums">{stat.value}</span>
                 <span className="text-[10px] uppercase tracking-wider text-white/50 font-semibold text-center">{stat.label}</span>
               </>
             );
@@ -132,7 +132,7 @@ export default function HeroSection({
                 href={stat.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center gap-1 rounded-lg transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F5C542]"
+                className="flex flex-col items-center gap-1 rounded-lg transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FFD60A]"
               >
                 {body}
               </a>
@@ -145,8 +145,8 @@ export default function HeroSection({
 
       {/* Scroll indicator — centered at bottom */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 text-[9px] font-bold uppercase tracking-[0.25em] pointer-events-none z-20">
-        <div className="w-[1px] h-7 bg-gradient-to-b from-[#F5C542] to-transparent relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#F5C542] animate-bounce" />
+        <div className="w-[1px] h-7 bg-gradient-to-b from-[#FFD60A] to-transparent relative">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#FFD60A] animate-bounce" />
         </div>
         <span>Scroll to explore</span>
       </div>

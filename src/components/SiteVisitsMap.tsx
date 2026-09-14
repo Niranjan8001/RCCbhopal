@@ -144,7 +144,6 @@ export default function SiteVisitsMap() {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openVisit]);
 
   // Modal: scroll lock + Escape to close
@@ -187,7 +186,7 @@ export default function SiteVisitsMap() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-accent-yellow text-sm font-semibold uppercase tracking-[0.3em] mb-4 block"
+            className="text-accent-yellow text-sm font-semibold uppercase tracking-[0.2em] mb-4 block"
           >
             On The Ground
           </motion.span>
@@ -240,7 +239,10 @@ export default function SiteVisitsMap() {
       <AnimatePresence>
         {activeVisit && (
           <motion.div
-            className="fixed inset-0 z-[100] bg-background/[0.98] backdrop-blur-xl overflow-y-auto"
+            role="dialog"
+                aria-modal="true"
+                aria-label="Site Visit Details"
+                className="fixed inset-0 z-[100] bg-background/[0.98] backdrop-blur-xl overflow-y-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

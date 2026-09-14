@@ -128,7 +128,7 @@ export default function ProcessTimeline() {
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-20 process-heading">
-          <span className="text-accent-green text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
+          <span className="text-accent-yellow text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
             Our Process
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-4">

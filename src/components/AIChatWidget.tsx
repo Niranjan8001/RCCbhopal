@@ -63,6 +63,17 @@ export default function AIChatWidget() {
     if (isOpen) setTimeout(() => inputRef.current?.focus(), 300);
   }, [isOpen]);
 
+  // Match the other overlays on the site: Escape closes, and the page behind
+  // does not scroll while the panel is open on small screens.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen]);
+
   const sendMessage = useCallback(async () => {
     const text = input.trim();
     if (!text || streaming) return;
@@ -132,6 +143,9 @@ export default function AIChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.97 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            role="dialog"
+            aria-modal="false"
+            aria-label="RCC AI Advisor chat"
             className="fixed bottom-[5.5rem] left-4 sm:left-6 z-[65] w-[calc(100vw-2rem)] sm:w-[360px] flex flex-col rounded-2xl overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.6)] border border-white/10"
             style={{
               backgroundColor: 'rgba(10, 10, 10, 0.92)',
@@ -145,7 +159,7 @@ export default function AIChatWidget() {
               className="flex items-center gap-3 px-4 py-3 border-b border-white/10 shrink-0"
               style={{ background: 'rgba(255,255,255,0.03)' }}
             >
-              <div className="w-8 h-8 rounded-full bg-[#F5C542]/10 border border-[#F5C542]/30 flex items-center justify-center text-[#F5C542] text-sm font-black shrink-0">
+              <div className="w-8 h-8 rounded-full bg-[#FFD60A]/10 border border-[#FFD60A]/30 flex items-center justify-center text-[#FFD60A] text-sm font-black shrink-0">
                 ✦
               </div>
               <div className="flex-1 min-w-0">
@@ -179,7 +193,7 @@ export default function AIChatWidget() {
                 return (
                   <div key={idx} className={`flex gap-2.5 ${isAI ? '' : 'flex-row-reverse'}`}>
                     {isAI && (
-                      <div className="w-6 h-6 rounded-full bg-[#F5C542]/10 border border-[#F5C542]/30 flex items-center justify-center text-[#F5C542] text-[10px] font-black shrink-0 mt-0.5">
+                      <div className="w-6 h-6 rounded-full bg-[#FFD60A]/10 border border-[#FFD60A]/30 flex items-center justify-center text-[#FFD60A] text-[10px] font-black shrink-0 mt-0.5">
                         ✦
                       </div>
                     )}
@@ -188,12 +202,12 @@ export default function AIChatWidget() {
                         className={`px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
                           isAI
                             ? 'bg-white/5 border border-white/8 text-white/90 rounded-tl-sm'
-                            : 'bg-[#F5C542] text-[#070707] font-medium rounded-tr-sm'
+                            : 'bg-[#FFD60A] text-[#070707] font-medium rounded-tr-sm'
                         }`}
                       >
                         {renderContent(msg.content)}
                         {isStreaming && msg.content === '' && (
-                          <span className="inline-block w-2 h-4 bg-[#F5C542]/70 rounded-sm animate-pulse ml-0.5" />
+                          <span className="inline-block w-2 h-4 bg-[#FFD60A]/70 rounded-sm animate-pulse ml-0.5" />
                         )}
                         {isStreaming && msg.content !== '' && (
                           <span className="inline-block w-0.5 h-3.5 bg-white/50 animate-pulse ml-0.5 align-middle" />
@@ -224,7 +238,7 @@ export default function AIChatWidget() {
 
             {/* Input */}
             <div className="px-3 py-3 border-t border-white/10 shrink-0">
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-2 focus-within:border-[#F5C542]/40 transition-colors">
+              <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-2 focus-within:border-[#FFD60A]/40 transition-colors">
                 <input
                   ref={inputRef}
                   type="text"
@@ -233,12 +247,12 @@ export default function AIChatWidget() {
                   onKeyDown={handleKeyDown}
                   placeholder="Ask about construction or get an estimate…"
                   disabled={streaming}
-                  className="flex-1 bg-transparent text-white text-sm placeholder-white/30 outline-none disabled:opacity-50"
+                  className="flex-1 bg-transparent text-white text-sm placeholder-white/30 outline-none focus-visible:outline-none disabled:opacity-50 min-h-[44px]"
                 />
                 <button
                   onClick={sendMessage}
                   disabled={!input.trim() || streaming}
-                  className="w-7 h-7 rounded-lg bg-[#F5C542] text-[#070707] flex items-center justify-center hover:bg-[#FFD86B] transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                  className="w-7 h-7 rounded-lg bg-[#FFD60A] text-[#070707] flex items-center justify-center hover:bg-[#FFD86B] transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
                   aria-label="Send"
                 >
                   <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -254,11 +268,12 @@ export default function AIChatWidget() {
       {/* Toggle Button */}
       <motion.button
         onClick={() => setIsOpen((o) => !o)}
-        className="fixed bottom-6 left-4 sm:left-6 z-[65] w-14 h-14 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(245,197,66,0.35)] border border-[#F5C542]/30"
+        className="fixed bottom-6 left-4 sm:left-6 z-[65] w-14 h-14 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(245,197,66,0.35)] border border-[#FFD60A]/30"
         style={{ backgroundColor: 'rgba(10,10,10,0.92)', backdropFilter: 'blur(16px)' }}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}
-        aria-label="Open AI chat"
+        aria-label={isOpen ? 'Close AI chat' : 'Open AI chat'}
+        aria-expanded={isOpen}
       >
         <AnimatePresence mode="wait">
           {isOpen ? (
@@ -279,7 +294,7 @@ export default function AIChatWidget() {
               animate={{ opacity: 1, rotate: 0 }}
               exit={{ opacity: 0, rotate: -90 }}
               transition={{ duration: 0.2 }}
-              className="text-[#F5C542] text-xl"
+              className="text-[#FFD60A] text-xl"
             >
               ✦
             </motion.span>

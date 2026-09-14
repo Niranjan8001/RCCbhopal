@@ -49,7 +49,7 @@ export default function Footer() {
 
           {/* Navigation Column */}
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-[0.15em] mb-6">Navigation</h4>
+            <h2 className="text-sm font-bold text-white uppercase tracking-[0.15em] mb-6">Navigation</h2>
             <ul className="space-y-3">
               {[
                 { label: 'Projects', href: '#projects' },
@@ -71,7 +71,7 @@ export default function Footer() {
 
           {/* Contact Column */}
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-[0.15em] mb-6">Contact</h4>
+            <h2 className="text-sm font-bold text-white uppercase tracking-[0.15em] mb-6">Contact</h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="text-muted mt-0.5 flex-shrink-0">
@@ -97,7 +97,7 @@ export default function Footer() {
 
           {/* Legal Column */}
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-[0.15em] mb-6">Legal</h4>
+            <h2 className="text-sm font-bold text-white uppercase tracking-[0.15em] mb-6">Legal</h2>
             <ul className="space-y-3">
               <li><Link href="/privacy-policy" className="text-sm text-muted hover:text-foreground transition-colors">Privacy Policy</Link></li>
             </ul>

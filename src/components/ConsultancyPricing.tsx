@@ -63,7 +63,7 @@ export default function ConsultancyPricing() {
           viewport={{ once: true }}
           className="text-center mb-12 md:mb-16"
         >
-          <span className="text-accent-yellow text-sm font-semibold uppercase tracking-[0.25em] mb-4 block">
+          <span className="text-accent-yellow text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
             Design &amp; Consultancy
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-5">

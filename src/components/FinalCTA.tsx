@@ -63,14 +63,14 @@ export default function FinalCTA() {
             Start Your Project
           </span>
 
-          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-6 relative z-10">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-6 relative z-10">
             Ready to Build
             <br />
             <span className="text-muted">Your Legacy?</span>
           </h2>
 
           <p className="text-lg text-muted max-w-xl mx-auto mb-4 relative z-10">
-            Schedule a confidential consultation with our lead architects and engineers today.
+            Talk directly to the engineers and architects who will run your project.
           </p>
 
           {/* Urgency text */}
@@ -96,7 +96,7 @@ export default function FinalCTA() {
               <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span>Response within 24 hours</span>
+              <span>Published rates, no hidden costs</span>
             </div>
             <div className="flex items-center gap-2">
               <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -108,7 +108,7 @@ export default function FinalCTA() {
               <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span>No obligation estimate</span>
+              <span>Milestone-linked payments</span>
             </div>
           </div>
         </div>

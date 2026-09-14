@@ -87,7 +87,7 @@ export default function LocationAndReviews({ reviews }: { reviews: ReviewsData }
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-accent-blue text-sm font-semibold uppercase tracking-[0.3em] mb-4 block glow-text"
+            className="text-accent-yellow text-sm font-semibold uppercase tracking-[0.2em] mb-4 block glow-text"
           >
             Our Presence
           </motion.span>
@@ -96,7 +96,7 @@ export default function LocationAndReviews({ reviews }: { reviews: ReviewsData }
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-5 text-white drop-shadow-2xl"
+            className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-5 text-white drop-shadow-2xl"
           >
             Visit Us &amp;
             <br />

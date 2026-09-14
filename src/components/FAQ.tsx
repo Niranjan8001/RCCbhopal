@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const FAQS = [
   {
@@ -88,7 +88,7 @@ export default function FAQ() {
               <div key={faq.question} className="glass-card overflow-hidden">
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
+                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left min-h-[44px]"
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${idx}`}
                 >
@@ -101,8 +101,9 @@ export default function FAQ() {
                     +
                   </span>
                 </button>
-                {isOpen && (
-                  <motion.div
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
                     id={`faq-answer-${idx}`}
                     role="region"
                     initial={{ opacity: 0, height: 0 }}
@@ -110,9 +111,10 @@ export default function FAQ() {
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
                   >
-                    <p className="px-6 pb-5 text-sm text-muted leading-relaxed">{faq.answer}</p>
-                  </motion.div>
-                )}
+                      <p className="px-6 pb-5 text-sm text-muted leading-relaxed">{faq.answer}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             );
           })}

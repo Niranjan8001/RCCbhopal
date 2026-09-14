@@ -62,7 +62,7 @@ function ValueText({ value, emphasize }: { value: string; emphasize?: boolean })
     return (
       <ul className="space-y-1">
         {steps.map((step, i) => (
-          <li key={i} className={`flex gap-1.5 ${emphasize ? 'text-accent-yellow' : 'text-foreground/90'}`}>
+          <li key={i} className={`flex gap-1.5 ${emphasize ? 'text-white font-medium' : 'text-foreground/80'}`}>
             <span className="opacity-50 shrink-0">{i + 1}.</span>
             <span>{step}</span>
           </li>
@@ -70,13 +70,13 @@ function ValueText({ value, emphasize }: { value: string; emphasize?: boolean })
       </ul>
     );
   }
-  return <span className={emphasize ? 'text-accent-yellow' : 'text-foreground/90'}>{value}</span>;
+  return <span className={emphasize ? 'text-white font-medium' : 'text-foreground/80'}>{value}</span>;
 }
 
 /* ─────────────────── Row ─────────────────── */
 function SpecRow({ item }: { item: SpecItem }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] gap-3 md:gap-4 px-5 sm:px-6 py-4 sm:py-5">
+    <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] items-start gap-x-6 gap-y-3 px-5 sm:px-6 py-4 sm:py-5">
       <div>
         <p className="text-sm font-bold text-white leading-snug">{item.name}</p>
         {item.note && <p className="text-xs text-muted/70 mt-1 leading-relaxed">{item.note}</p>}
@@ -145,7 +145,7 @@ function CategoryPanel({
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="overflow-hidden"
           >
-            <div className="hidden md:grid grid-cols-[1.3fr_1fr_1fr] gap-4 px-6 py-2.5 sticky top-[72px] z-10 bg-[#0d0d0d] border-y border-white/5">
+            <div className="hidden md:grid grid-cols-[1.3fr_1fr_1fr] items-center gap-x-6 px-5 sm:px-6 py-3 bg-white/[0.04] border-y border-white/5">
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted">Specification</span>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted">Silver</span>
               <span className="text-[10px] font-bold uppercase tracking-widest text-accent-yellow">Gold</span>

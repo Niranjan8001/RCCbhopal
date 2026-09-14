@@ -198,7 +198,7 @@ export default function SiteVisitsMap() {
             transition={{ delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-5 text-white"
           >
-            Site Visits Across India
+            Our Previous Projects
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

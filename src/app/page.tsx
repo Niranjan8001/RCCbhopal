@@ -19,7 +19,7 @@ import { getReviews } from '@/lib/reviews';
 const siteVisitsJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'RCC Site Visits — Madhya Pradesh',
+  name: 'RCC Previous Projects — Madhya Pradesh',
   itemListElement: siteVisits.map((visit, index) => ({
     '@type': 'ListItem',
     position: index + 1,

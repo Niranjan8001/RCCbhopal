@@ -72,7 +72,7 @@ export default function Navbar() {
           {/* Logo */}
           <a href="#hero" className="flex items-center gap-2.5 z-10 flex-shrink-0">
             <Image src="/logo.png" alt="RCC Logo" width={28} height={28} className="rounded-full bg-white object-cover" />
-            <span className="text-sm font-black tracking-wider text-white">RCC</span>
+            <span className="text-base font-black tracking-wider text-white">RCC</span>
           </a>
 
           {/* Desktop Nav Links */}

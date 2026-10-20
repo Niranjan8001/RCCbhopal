@@ -85,7 +85,7 @@ export default function HeroSection({
         <div className="hero-anim flex items-center gap-3 mb-7">
           <div className="h-px w-10 bg-[#FFD60A]/50 hidden sm:block" />
           <span className="text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#FFD60A]">
-            35 Years of Engineering Experience
+            35 Years of Engineering Excellence
           </span>
           <div className="h-px w-10 bg-[#FFD60A]/50 hidden sm:block" />
         </div>

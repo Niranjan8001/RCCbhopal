@@ -11,8 +11,8 @@ import Image from 'next/image';
  * Scrolling down walks the load path into the ground, so the section closes
  * on the same date its heading opens with.
  *
- * Bios are third-person throughout; quotes belong to the two founders only,
- * which is the distinction rather than an omission.
+ * Bios are third-person throughout; each level then speaks for itself in a
+ * quote, so the voice changes but the structure does not.
  */
 type Member = {
   level: string;
@@ -32,6 +32,8 @@ const TEAM: Member[] = [
     accent: '#30D158',
     photo: '/developer.png',
     bio: "Overseeing RCC's digital operations, technology initiatives and online presence, Niranjan focuses on improving efficiency, communication and client experience through modern digital solutions. A Computer Science student specialising in Artificial Intelligence, he brings a technology-driven approach to building and strengthening RCC's digital ecosystem.",
+    quote:
+      'Thirty-five years of site knowledge is only worth as much as the hands it reaches. My work is putting that experience in front of a client clearly — so the quality is visible long before anyone sets foot on site.',
   },
   {
     level: 'LVL +1',

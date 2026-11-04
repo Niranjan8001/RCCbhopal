@@ -7,7 +7,7 @@ import Image from 'next/image';
 const projects = [
   {
     title: 'Luxury Villa Renovation',
-    sqft: '1,250 sq ft',
+    sqft: '1,550 sq ft',
     category: 'Renovation',
     location: 'Nehru Nagar, Bhopal',
     year: '2026',
@@ -17,7 +17,7 @@ const projects = [
   },
   {
     title: 'Premium Duplex Construction',
-    sqft: '4,500 sq ft',
+    sqft: '1,750 sq ft',
     category: 'Construction',
     location: 'Aakriti Aqua City, Bhopal',
     year: '2025',
@@ -26,13 +26,13 @@ const projects = [
     image: '/proj2.jpeg',
   },
   {
-    title: 'Bespoke Residence, Ramayana Colony',
+    title: 'Private Clinic, Ramayana Colony',
     sqft: '1,400 sq ft',
-    category: 'Residential',
+    category: 'Commercial',
     location: 'Ramayana Colony, Bhopal',
     year: '2025',
     color: '#FF9F0A',
-    description: 'A bespoke residential build in the heart of Ramayana Colony, Bhopal — crafted with precision-engineered RCC framing, premium brick masonry, and bespoke interior-finish detailing that blends timeless design with modern structural standards.',
+    description: 'A clinic in the heart of Ramayana Colony, Bhopal — built on precision-engineered RCC framing and premium brick masonry, with interior-finish detailing specified for a working healthcare space rather than a home.',
     image: '/proj3.jpeg',
   },
   {

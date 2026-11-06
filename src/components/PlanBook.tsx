@@ -166,7 +166,7 @@ function Cover({ plan, isClosed }: { plan: PlanKey; isClosed: boolean }) {
 
       <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
         <div className="w-20 h-20 sm:w-28 sm:h-28 relative opacity-70 mix-blend-overlay drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
-          <Image src="/logo.png" alt="RCC" fill className="object-contain" />
+          <Image src="/logo.png" alt="RCC" fill sizes="(max-width: 640px) 80px, 112px" className="object-contain" />
         </div>
         <p
           className="mt-5 text-[#d4af37] text-xl sm:text-3xl font-black tracking-tight"

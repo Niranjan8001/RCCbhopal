@@ -414,7 +414,7 @@ export default function DesignShowcase() {
 
                               <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
                                 <div className="w-28 h-28 sm:w-40 sm:h-40 relative opacity-70 mix-blend-overlay drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
-                                  <Image src="/logo.png" alt="RCC" fill className="object-contain" />
+                                  <Image src="/logo.png" alt="RCC" fill sizes="(max-width: 640px) 112px, 160px" className="object-contain" />
                                 </div>
                                 <p
                                   className="mt-5 text-[#d4af37]/70 text-[10px] sm:text-xs uppercase tracking-[0.35em] font-bold"

@@ -196,7 +196,7 @@ export default function ProjectShowcase() {
                       >
                         {/* Project Image */}
                         <div className="relative w-full aspect-[16/10] overflow-hidden">
-                          <Image src={project.image} alt={project.title} fill className="object-cover" />
+                          <Image src={project.image} alt={project.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 420px" className="object-cover" />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                           <span
                             className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase backdrop-blur-sm"
@@ -336,7 +336,7 @@ export default function ProjectShowcase() {
                           {/* Cover Content */}
                           <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
                             <div className="w-32 h-32 sm:w-48 sm:h-48 relative opacity-70 mix-blend-overlay drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
-                              <Image src="/logo.png" alt="RCC" fill className="object-contain" />
+                              <Image src="/logo.png" alt="RCC" fill sizes="(max-width: 640px) 128px, 192px" className="object-contain" />
                             </div>
                           </div>
 
@@ -438,6 +438,7 @@ export default function ProjectShowcase() {
                               src={projects[i].image} 
                               alt={projects[i].title} 
                               fill 
+                              sizes="(max-width: 768px) 100vw, 50vw"
                               className="object-cover transition-transform duration-1000 hover:scale-105" 
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;

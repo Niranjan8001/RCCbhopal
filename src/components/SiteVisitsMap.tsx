@@ -281,6 +281,7 @@ export default function SiteVisitsMap() {
                         src={activeVisit.photos[activePhotoIndex]}
                         alt={`${activeVisit.title} — ${activeVisit.locality}`}
                         fill
+                        sizes="(max-width: 768px) 100vw, 640px"
                         className="object-cover"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;

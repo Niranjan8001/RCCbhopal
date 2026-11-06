@@ -13,6 +13,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import TestimonialCarousel from './TestimonialCarousel';
 import type { ReviewsData } from '@/lib/reviews';
 import { BUSINESS_LOCATION, DIRECTIONS_URL } from '@/data/businessLocation';
+import Image from 'next/image';
 
 
 
@@ -122,11 +123,12 @@ export default function LocationAndReviews({ reviews }: { reviews: ReviewsData }
               
               <div className="relative h-[250px] md:h-[300px] w-full rounded-[2rem] overflow-hidden mb-6">
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src="/images/rcc_headquarters.jpeg" 
-                  alt="RCC Headquarters" 
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 filter contrast-125 saturate-110"
+                <Image
+                  src="/images/rcc_headquarters.jpeg"
+                  alt="RCC Headquarters"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 560px"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-105 filter contrast-125 saturate-110"
                 />
                 
                 <div className="absolute bottom-4 left-6 z-20" style={{ transform: "translateZ(40px)" }}>

@@ -230,7 +230,7 @@ export default function DesignShowcase() {
 
           {/* Bridge to consultancy pricing */}
           <div className="glass-card p-6 text-center">
-            <h4 className="text-lg font-black text-white mb-2">Curious what design work like this costs?</h4>
+            <h3 className="text-lg font-black text-white mb-2">Curious what design work like this costs?</h3>
             <p className="text-muted text-sm mb-5">
               Every drawing in the gallery — floor plans, elevations, structurals — is priced on our
               published consultancy rate card.

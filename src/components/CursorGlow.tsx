@@ -57,24 +57,29 @@ export default function CursorGlow() {
 
   if (!isVisible) return null;
 
+  /* No mix-blend-screen on either layer. Blending composites against the
+     backdrop, and over an element with its own backdrop-filter — every
+     glass card on the page — the browser resolves that against the card's
+     backdrop root, so the glow's own box edge shows up as a hard seam
+     across the card. Plain alpha has no backdrop to resolve against. */
   return (
     <>
       {/* Core glow */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[100] mix-blend-screen"
+        className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[100]"
         animate={{
           x: mousePosition.x - 16,
           y: mousePosition.y - 16,
         }}
         transition={{ type: 'tween', duration: 0 }}
         style={{
-          background: 'radial-gradient(circle, rgba(255,214,10,0.8) 0%, rgba(255,214,10,0) 70%)',
+          background: 'radial-gradient(circle, rgba(255,214,10,0.33) 0%, rgba(255,214,10,0) 70%)',
           filter: 'blur(4px)',
         }}
       />
       {/* Large ambient glow following behind */}
       <motion.div
-        className="fixed top-0 left-0 w-64 h-64 rounded-full pointer-events-none z-[99] mix-blend-screen opacity-30"
+        className="fixed top-0 left-0 w-64 h-64 rounded-full pointer-events-none z-[99] opacity-25"
         animate={{
           x: mousePosition.x - 128,
           y: mousePosition.y - 128,

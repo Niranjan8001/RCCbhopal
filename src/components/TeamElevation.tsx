@@ -3,17 +3,15 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Seal from './Seal';
-import { GSTIN, REGISTRATIONS } from '@/data/registrations';
 
 /**
- * The team as a front elevation: three bays side by side, standing on one
- * foundation. (It read as stacked levels before, which put the people in a
- * hierarchy the row does not.)
+ * The team as a front elevation: three bays side by side. (It read as stacked
+ * levels before, which put the people in a hierarchy the row does not.)
  *
  * Each person carries a seal — the round stamp a registered professional
- * presses onto a drawing. The ring names the role, not a licence number:
- * the registrations on RCC's letterhead belong to the firm, so they sit in
- * the foundation band rather than under any one name.
+ * presses onto a drawing. The ring names the role, not a licence number: the
+ * registrations on RCC's letterhead belong to the firm, and are shown on the
+ * credentials card opened from the hero rather than under any one name.
  *
  * Bios are third-person throughout; each bay then speaks for itself in a
  * quote.
@@ -132,51 +130,6 @@ export default function TeamElevation() {
           <Bay key={member.name} member={member} index={i} />
         ))}
       </div>
-
-      {/* Foundation — three bays on one base, carrying the firm's registrations
-          and closing on the date the section's heading opens with. */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6 }}
-        className="relative mt-10 md:mt-12"
-      >
-        <div className="h-px bg-white/15 mb-2" />
-        <div
-          className="relative rounded-b-lg border-x border-b border-white/10 overflow-hidden px-6 py-8"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 7px)',
-          }}
-        >
-          <div className="text-center mb-7">
-            <p className="font-mono text-[11px] font-bold tracking-[0.3em] text-white/55 uppercase">
-              Foundation
-            </p>
-            <p className="font-mono text-[11px] tracking-[0.2em] text-accent-yellow/80 mt-1">
-              EST. 1991
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 max-w-4xl mx-auto">
-            {REGISTRATIONS.map((reg) => (
-              <div key={reg.label} className="text-center">
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/55 leading-snug">
-                  {reg.label}
-                </p>
-                <p className="font-mono text-[11px] text-white/75 mt-1.5 break-words">
-                  {reg.body} {reg.no}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-center font-mono text-[11px] tracking-[0.18em] text-white/55 mt-7">
-            GSTIN {GSTIN}
-          </p>
-        </div>
-      </motion.div>
     </div>
   );
 }

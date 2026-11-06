@@ -1,50 +1,56 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Every stage carries a real RCC image rather than a stroke icon: the first
+ * two from the drawing sets in DESIGN_GALLERY, the last two from the logged
+ * site visits in src/data/siteVisits.ts, captioned with the locality and
+ * month they were actually taken.
+ *
+ * Line drawings are framed 'contain' so nothing is cropped off a sheet, the
+ * same distinction DESIGN_GALLERY draws.
+ */
 const steps = [
   {
     title: 'Plan',
     description: 'In-depth consultation to understand your vision, requirements, and budget.',
-    icon: (
-      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    image: '/images/3d-design/plan-ground-floor.png',
+    alt: 'Ground floor plan showing bedrooms, dining, hall, kitchen, lobby, porch and parking',
+    caption: 'Ground floor plan — residential drawing set',
+    fit: 'contain' as const,
     color: '#FFD60A',
   },
   {
     title: 'Design',
     description: 'Architectural blueprints and 3D visualizations crafted by world-class designers.',
-    icon: (
-      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    image: '/images/3d-design/exterior-1.jpg',
+    alt: '3D exterior elevation render of a three-storey corner residence with grey and wood cladding',
+    caption: '3D exterior elevation render',
+    fit: 'cover' as const,
     color: '#0A84FF',
   },
   {
     title: 'Build',
     description: 'Premium materials and expert craftsmanship bring your blueprint to reality.',
-    icon: (
-      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    image: '/images/site-visits/padariya-ryt/visit-1.jpeg',
+    alt: 'Multi-storey RCC frame at an open framing stage, columns and slab cast ahead of walling',
+    caption: 'Padariya Ryt. · December 2023',
+    fit: 'cover' as const,
     color: '#30D158',
   },
   {
     title: 'Deliver',
     description: 'Final walkthrough, quality assurance, and keys to your dream handed over.',
-    icon: (
-      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    image: '/images/site-visits/singhodi-basti/visit-1.jpeg',
+    alt: 'Exterior plaster and window-frame finishing under review on a completed facade',
+    caption: 'Singhodi Basti · July 2023',
+    fit: 'cover' as const,
     color: '#FF3B30',
   },
 ];
@@ -187,7 +193,7 @@ export default function ProcessTimeline() {
               >
                 {/* Content card */}
                 <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                  <div className="glass-card p-8 md:p-10 relative overflow-hidden group transition-all duration-500 hover:-translate-y-1"
+                  <div className="glass-card relative overflow-hidden group transition-all duration-500 hover:-translate-y-1"
                     style={{
                       boxShadow: 'none',
                       transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -199,11 +205,36 @@ export default function ProcessTimeline() {
                       (e.currentTarget as HTMLElement).style.boxShadow = 'none';
                     }}
                   >
+                    {/* The stage, photographed or drawn */}
+                    <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#0C0C0C]">
+                      {step.fit === 'contain' && (
+                        <div
+                          aria-hidden="true"
+                          className="absolute inset-0 opacity-50"
+                          style={{
+                            backgroundImage:
+                              'repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 7px)',
+                          }}
+                        />
+                      )}
+                      <Image
+                        src={step.image}
+                        alt={step.alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 480px"
+                        className={`${step.fit === 'contain' ? 'object-contain p-3' : 'object-cover'} transition-transform duration-700 group-hover:scale-[1.04]`}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
+                      <p className="absolute bottom-2.5 left-4 right-4 font-mono text-[10px] tracking-[0.12em] text-white/70 text-left">
+                        {step.caption}
+                      </p>
+                    </div>
+
                     <div
-                      className="absolute inset-0 opacity-5"
+                      className="absolute inset-0 opacity-5 pointer-events-none"
                       style={{ background: `radial-gradient(circle at ${i % 2 === 0 ? 'right' : 'left'} center, ${step.color}, transparent 70%)` }}
                     />
-                    <div className="relative z-10">
+                    <div className="relative z-10 p-8 md:p-10">
                       <span
                         className="text-xs font-bold uppercase tracking-[0.2em] mb-3 block"
                         style={{ color: step.color }}
@@ -212,25 +243,13 @@ export default function ProcessTimeline() {
                       </span>
                       <h3 className="text-2xl sm:text-3xl font-bold mb-3">{step.title}</h3>
                       <p className="text-muted text-sm leading-relaxed">{step.description}</p>
-                      {/* Mobile-only icon — inside the card at bottom */}
-                      <div
-                        className="mt-4 w-11 h-11 rounded-xl flex items-center justify-center md:hidden mx-auto"
-                        style={{
-                          background: `${step.color}15`,
-                          border: `1px solid ${step.color}30`,
-                          color: step.color,
-                          boxShadow: `0 0 20px ${step.color}10`,
-                        }}
-                      >
-                        {step.icon}
-                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Center icon */}
+                {/* Centre node — the icon it replaces is now the card's image */}
                 <div
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-2xl hidden md:flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-500 hover:scale-110"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-2xl hidden md:flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-500 hover:scale-110 font-black text-2xl tabular-nums"
                   style={{
                     background: `${step.color}15`,
                     border: `1px solid ${step.color}30`,
@@ -238,7 +257,7 @@ export default function ProcessTimeline() {
                     boxShadow: `0 0 30px ${step.color}15`,
                   }}
                 >
-                  {step.icon}
+                  {String(i + 1).padStart(2, '0')}
                 </div>
 
                 {/* Empty space for alternating layout */}

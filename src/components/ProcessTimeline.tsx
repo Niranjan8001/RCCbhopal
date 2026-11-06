@@ -28,7 +28,7 @@ const steps = [
   },
   {
     title: 'Design',
-    description: 'Architectural blueprints and 3D visualizations crafted by world-class designers.',
+    description: 'Architectural blueprints and 3D visualizations crafted by experienced designers.',
     image: '/images/3d-design/exterior-1.jpg',
     alt: '3D exterior elevation render of a three-storey corner residence with grey and wood cladding',
     caption: '3D exterior elevation render',

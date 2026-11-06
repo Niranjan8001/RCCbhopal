@@ -47,9 +47,9 @@ const steps = [
   {
     title: 'Deliver',
     description: 'Final walkthrough, quality assurance, and keys to your dream handed over.',
-    image: '/images/site-visits/singhodi-basti/visit-1.jpeg',
-    alt: 'Exterior plaster and window-frame finishing under review on a completed facade',
-    caption: 'Singhodi Basti · July 2023',
+    image: '/proj2.jpeg',
+    alt: 'Completed premium duplex at Aakriti Aqua City, Bhopal',
+    caption: 'Premium Duplex, Aakriti Aqua City · 2025',
     fit: 'cover' as const,
     color: '#FF3B30',
   },

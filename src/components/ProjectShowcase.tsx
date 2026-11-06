@@ -360,18 +360,18 @@ export default function ProjectShowcase() {
                         {/* Content Wrapper */}
                         <div className="relative z-10 w-full h-full p-5 sm:p-8 lg:p-10 flex flex-col text-neutral-900 border-[1px] border-[rgba(0,0,0,0.03)] m-2 sm:m-4 rounded-sm" style={{ width: 'calc(100% - 1rem)', height: 'calc(100% - 1rem)' }}>
                           <span 
-                            className="absolute top-4 right-4 sm:top-8 sm:right-8 text-neutral-300 font-bold text-xl sm:text-2xl"
+                            className="absolute top-4 right-4 sm:top-8 sm:right-8 text-neutral-500 font-bold text-xl sm:text-2xl"
                             style={{ fontFamily: 'var(--font-serif)' }}
                           >
                             0{i}
                           </span>
                           
-                          <h4 
-                            className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] mb-4" 
+                          <p
+                            className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] mb-4"
                             style={{ color: projects[i-1].color }}
                           >
                             Project Insight
-                          </h4>
+                          </p>
                           
                           <h3 
                             className="text-xl sm:text-3xl lg:text-4xl font-black text-neutral-900 mb-3 sm:mb-5 leading-[1.1] tracking-tight"

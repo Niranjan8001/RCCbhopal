@@ -1,59 +1,65 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
+/**
+ * A glow that follows the pointer.
+ *
+ * Position is held in motion values, not React state. The earlier version ran
+ * a requestAnimationFrame loop calling setState every frame, which re-rendered
+ * the component ~60 times a second and showed up in DevTools as forced reflow.
+ * Motion values write the transform straight to the DOM, so the lag is a
+ * spring rather than a render loop and React is not involved after mount.
+ */
 export default function CursorGlow() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  // Read inside the listener so the effect does not resubscribe on every show.
+  const visibleRef = useRef(false);
+
+  const x = useMotionValue(-500);
+  const y = useMotionValue(-500);
+
+  // The ambient layer trails the core, as the eased follow used to.
+  const ambientX = useSpring(x, { stiffness: 160, damping: 22, mass: 0.6 });
+  const ambientY = useSpring(y, { stiffness: 160, damping: 22, mass: 0.6 });
+
+  const coreLeft = useTransform(x, (v) => v - 16);
+  const coreTop = useTransform(y, (v) => v - 16);
+  const ambientLeft = useTransform(ambientX, (v) => v - 128);
+  const ambientTop = useTransform(ambientY, (v) => v - 128);
 
   useEffect(() => {
-    // Check if device supports hover (ignore touch devices)
+    // Pointer glow means nothing on a touch device.
     if (window.matchMedia('(hover: none)').matches) return;
 
-    let rafId: number;
-    let targetX = 0;
-    let targetY = 0;
+    const show = () => {
+      if (!visibleRef.current) {
+        visibleRef.current = true;
+        setIsVisible(true);
+      }
+    };
+    const hide = () => {
+      visibleRef.current = false;
+      setIsVisible(false);
+    };
 
     const handleMouseMove = (e: MouseEvent) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      if (!isVisible) setIsVisible(true);
+      x.set(e.clientX);
+      y.set(e.clientY);
+      show();
     };
 
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
-
-    const animate = () => {
-      setMousePosition((prev) => ({
-        x: prev.x + (targetX - prev.x) * 0.15, // Smooth ease out follow
-        y: prev.y + (targetY - prev.y) * 0.15,
-      }));
-      rafId = requestAnimationFrame(animate);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('mouseenter', handleMouseEnter);
-    
-    // Set initial position immediately if already inside window
-    const firstMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      targetX = e.clientX;
-      targetY = e.clientY;
-      window.removeEventListener('mousemove', firstMove);
-      rafId = requestAnimationFrame(animate);
-    };
-    window.addEventListener('mousemove', firstMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('mouseleave', hide);
+    document.addEventListener('mouseenter', show);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mousemove', firstMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      cancelAnimationFrame(rafId);
+      document.removeEventListener('mouseleave', hide);
+      document.removeEventListener('mouseenter', show);
     };
-  }, [isVisible]);
+  }, [x, y]);
 
   if (!isVisible) return null;
 
@@ -67,12 +73,9 @@ export default function CursorGlow() {
       {/* Core glow */}
       <motion.div
         className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[100]"
-        animate={{
-          x: mousePosition.x - 16,
-          y: mousePosition.y - 16,
-        }}
-        transition={{ type: 'tween', duration: 0 }}
         style={{
+          x: coreLeft,
+          y: coreTop,
           background: 'radial-gradient(circle, rgba(255,214,10,0.33) 0%, rgba(255,214,10,0) 70%)',
           filter: 'blur(4px)',
         }}
@@ -80,12 +83,9 @@ export default function CursorGlow() {
       {/* Large ambient glow following behind */}
       <motion.div
         className="fixed top-0 left-0 w-64 h-64 rounded-full pointer-events-none z-[99] opacity-25"
-        animate={{
-          x: mousePosition.x - 128,
-          y: mousePosition.y - 128,
-        }}
-        transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
         style={{
+          x: ambientLeft,
+          y: ambientTop,
           background: 'radial-gradient(circle, rgba(10,132,255,0.4) 0%, rgba(10,132,255,0) 70%)',
           filter: 'blur(20px)',
         }}

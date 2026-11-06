@@ -1225,39 +1225,43 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .tc-dots {
   display: flex;
-  gap: 6px;
+  /* The buttons carry their own spacing now, so the row needs none. */
+  gap: 0;
   justify-content: center;
   align-items: center;
 }
 
+/* The button is the touch target and the ::before is the mark it draws.
+   A hit area grown with a pseudo-element reads as 8x6px to an auditor,
+   because the target is measured from the element's own box — so the box
+   itself has to be big enough. 32x24 clears the 24x24 minimum and keeps
+   adjacent centres 32px apart. */
 .tc-dot {
+  width: 32px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tc-dot::before {
+  content: "";
   width: 8px;
   height: 6px;
   border-radius: 100px;
-  border: none;
   background: rgba(255, 255, 255, 0.15);
-  cursor: pointer;
-  padding: 0;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  /* 8x6px is the mark, not the target — extend the hit area to 44px without
-     changing how it looks. */
-  position: relative;
-}
-.tc-dot::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 44px;
-  height: 44px;
 }
 
-.tc-dot:hover {
+.tc-dot:hover::before {
   background: rgba(255, 255, 255, 0.35);
 }
 
-.tc-dot-active {
+.tc-dot-active::before {
   width: 28px;
   background: #FFD60A;
   box-shadow: 0 0 12px rgba(255, 214, 10, 0.7), 0 0 4px rgba(255, 214, 10, 0.4);
@@ -1646,27 +1650,39 @@ input[type="range"]::-moz-range-thumb:hover {
 /* ── Gallery Pagination Dots (mirrors .tc-dot) ── */
 .sv-dots {
   display: flex;
-  gap: 6px;
+  gap: 0;
   justify-content: center;
   align-items: center;
 }
 
+/* Same arrangement as .tc-dot: the button is the 32x24 target, the ::before
+   is the 8x6 mark. */
 .sv-dot {
+  width: 32px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sv-dot::before {
+  content: "";
   width: 8px;
   height: 6px;
   border-radius: 100px;
-  border: none;
   background: rgba(255, 255, 255, 0.15);
-  cursor: pointer;
-  padding: 0;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.sv-dot:hover {
+.sv-dot:hover::before {
   background: rgba(255, 255, 255, 0.35);
 }
 
-.sv-dot-active {
+.sv-dot-active::before {
   width: 28px;
   background: #0A84FF;
   box-shadow: 0 0 12px rgba(10, 132, 255, 0.7), 0 0 4px rgba(10, 132, 255, 0.4);

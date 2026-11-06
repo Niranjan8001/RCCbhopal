@@ -129,7 +129,7 @@ function SpecPage({
             </h3>
           </div>
           <span
-            className="shrink-0 text-neutral-300 font-bold text-base sm:text-xl"
+            className="shrink-0 text-neutral-600 font-bold text-base sm:text-xl"
             style={{ fontFamily: 'var(--font-serif)' }}
           >
             {String(pageNumber).padStart(2, '0')}

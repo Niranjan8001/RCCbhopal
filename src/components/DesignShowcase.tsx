@@ -90,7 +90,7 @@ function GalleryPage({
             </p>
           </div>
           <span
-            className="shrink-0 text-neutral-300 font-bold text-base sm:text-xl"
+            className="shrink-0 text-neutral-600 font-bold text-base sm:text-xl"
             style={{ fontFamily: 'var(--font-serif)' }}
           >
             {String(pageNumber).padStart(2, '0')}
@@ -110,7 +110,7 @@ function BlankPage({ side }: { side: 'left' | 'right' }) {
       }`}
     >
       <p
-        className="text-neutral-300 text-4xl sm:text-5xl font-black tracking-tight select-none"
+        className="text-neutral-500 text-4xl sm:text-5xl font-black tracking-tight select-none"
         style={{
           fontFamily: 'var(--font-serif)',
           writingMode: 'vertical-rl',

@@ -117,7 +117,8 @@ export default function TestimonialCarousel({ initialData }: { initialData: Revi
   useEffect(() => {
     if (hasServerData) return;
     let cancelled = false;
-    fetch('/api/reviews')
+    // Trailing slash: trailingSlash is on, so '/api/reviews' costs a 308.
+    fetch('/api/reviews/')
       .then((res) => res.json())
       .then((json: ReviewsData) => {
         if (cancelled) return;

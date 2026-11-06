@@ -85,7 +85,9 @@ export default function AIChatWidget() {
     setStreaming(true);
 
     try {
-      const res = await fetch('/api/chat', {
+      // Trailing slash is required: next.config.ts sets trailingSlash,
+      // so '/api/chat' answers 308 and the POST is sent twice.
+      const res = await fetch('/api/chat/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: next }),
@@ -112,7 +114,9 @@ export default function AIChatWidget() {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        const chunk = decoder.decode(value);
+        // stream: true, or a multi-byte character split across two network
+        // chunks decodes as replacement characters — a rupee sign is 3 bytes.
+        const chunk = decoder.decode(value, { stream: true });
         setMessages((m) => {
           const copy = [...m];
           copy[copy.length - 1] = {

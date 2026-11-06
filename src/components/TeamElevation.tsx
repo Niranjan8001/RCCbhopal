@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Seal from './Seal';
+import { GSTIN, REGISTRATIONS } from '@/data/registrations';
 
 /**
  * The team as a front elevation: three bays side by side, standing on one
@@ -66,72 +68,6 @@ const TEAM: Member[] = [
   },
 ];
 
-/**
- * Transcribed from RCC's letterhead. Who personally holds which licence is
- * not recorded there, so none of these is attributed to a named person —
- * they are the firm's, and they sit on the foundation.
- */
-const REGISTRATIONS = [
-  { label: 'Architect', body: 'MP PWD', no: '4/CA/EDC/EMP/2024/2937' },
-  { label: 'Supervision & Quality Control', body: 'MP PWD', no: '4/CA/EDC/EMP/2021/3946' },
-  { label: 'Structural Engineer', body: 'BMC', no: 'BHO/0269/STR/2026/00018' },
-  { label: 'Contractor', body: 'MP PWD Reg.', no: '230065044' },
-];
-
-const GSTIN = '23ABEFR0366H1ZE';
-
-/**
- * Both arcs are drawn left point to right point so the tangent runs with the
- * reading direction at the top and at the bottom of the circle — sweep 1 goes
- * over the top, sweep 0 under the bottom, and the glyphs stay upright on both.
- */
-function Seal({ member }: { member: Member }) {
-  const topArc = `seal-${member.initials}-top`;
-  const bottomArc = `seal-${member.initials}-bottom`;
-
-  return (
-    <svg viewBox="0 0 120 120" aria-hidden="true" className="w-full h-full">
-      <defs>
-        <path id={topArc} d="M 15.5,60 A 44.5,44.5 0 0 1 104.5,60" fill="none" />
-        <path id={bottomArc} d="M 19,60 A 41,41 0 0 0 101,60" fill="none" />
-      </defs>
-
-      <circle cx="60" cy="60" r="57" fill="rgba(7,7,7,0.82)" />
-      <circle cx="60" cy="60" r="57" fill="none" stroke={member.accent} strokeOpacity="0.6" strokeWidth="2" />
-      <circle cx="60" cy="60" r="50" fill="none" stroke={member.accent} strokeOpacity="0.3" strokeWidth="1" />
-      <circle cx="60" cy="60" r="34" fill="none" stroke={member.accent} strokeOpacity="0.35" strokeWidth="1" />
-
-      <text fill={member.accent} fillOpacity="0.9" fontSize="9" fontWeight="700" letterSpacing="1.1">
-        <textPath href={`#${topArc}`} startOffset="50%" textAnchor="middle">
-          {member.sealRole}
-        </textPath>
-      </text>
-      <text fill={member.accent} fillOpacity="0.6" fontSize="7.5" fontWeight="700" letterSpacing="1.4">
-        <textPath href={`#${bottomArc}`} startOffset="50%" textAnchor="middle">
-          RCC · BHOPAL
-        </textPath>
-      </text>
-
-      {/* Pips where the two arcs meet, as on a pressed stamp */}
-      <circle cx="12.5" cy="60" r="1.6" fill={member.accent} fillOpacity="0.55" />
-      <circle cx="107.5" cy="60" r="1.6" fill={member.accent} fillOpacity="0.55" />
-
-      <text
-        x="60"
-        y="60"
-        textAnchor="middle"
-        dominantBaseline="central"
-        fill={member.accent}
-        fontSize="23"
-        fontWeight="800"
-        letterSpacing="1.5"
-      >
-        {member.initials}
-      </text>
-    </svg>
-  );
-}
-
 function Bay({ member, index }: { member: Member; index: number }) {
   return (
     <motion.article
@@ -161,7 +97,12 @@ function Bay({ member, index }: { member: Member; index: number }) {
             className="absolute -bottom-1 -right-4 w-[64px] h-[64px] rotate-[-9deg] opacity-85 transition-all duration-500 ease-out group-hover:rotate-0 group-hover:opacity-100 group-hover:scale-110"
             style={{ filter: `drop-shadow(0 2px 12px ${member.accent}45)` }}
           >
-            <Seal member={member} />
+            <Seal
+              id={member.initials}
+              top={member.sealRole}
+              center={member.initials}
+              accent={member.accent}
+            />
           </div>
         </div>
 

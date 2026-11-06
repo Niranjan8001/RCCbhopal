@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import Image from 'next/image';
 import { LISTING_URL } from '@/data/businessLocation';
+import CredentialsCard from './CredentialsCard';
 
 export default function HeroSection({
   rating = 0,
@@ -143,6 +144,10 @@ export default function HeroSection({
             );
           })}
         </div>
+
+        {/* The registrations themselves open from here, rather than
+            crowding four licence numbers into the panel. */}
+        <CredentialsCard />
       </motion.div>
 
       {/* Scroll indicator — centered at bottom */}

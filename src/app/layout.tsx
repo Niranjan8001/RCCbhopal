@@ -7,7 +7,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { BUSINESS_LOCATION } from "@/data/businessLocation";
 
 const inter = Inter({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   variable: "--font-sans",
 });
 

@@ -4,40 +4,48 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 /**
- * The team drawn as a structural elevation.
+ * The team as a front elevation: three bays side by side, standing on one
+ * foundation. (It read as stacked levels before, which put the people in a
+ * hierarchy the row does not.)
  *
- * Levels run bottom-up the way a building does: Sanjay at ±00 carries the
- * 1991 foundation, Roshan frames the floor above, Niranjan the newest level.
- * Scrolling down walks the load path into the ground, so the section closes
- * on the same date its heading opens with.
+ * Each person carries a seal — the round stamp a registered professional
+ * presses onto a drawing. The ring names the role, not a licence number:
+ * the registrations on RCC's letterhead belong to the firm, so they sit in
+ * the foundation band rather than under any one name.
  *
- * Bios are third-person throughout; each level then speaks for itself in a
- * quote, so the voice changes but the structure does not.
+ * Bios are third-person throughout; each bay then speaks for itself in a
+ * quote.
  */
 type Member = {
-  level: string;
   name: string;
+  /** Monogram in the middle of the seal, and its SVG id prefix. */
+  initials: string;
+  /** Curved along the top of the seal — about 18 characters is the limit. */
+  sealRole: string;
   role: string;
   accent: string;
   photo: string;
   bio: string;
-  quote?: string;
+  quote: string;
 };
 
+// Left to right: the 1991 foundation first, then the levels built on it.
 const TEAM: Member[] = [
   {
-    level: 'LVL +2',
-    name: 'Niranjan Saxena',
-    role: 'Digital Operations Manager',
-    accent: '#30D158',
-    photo: '/developer.png',
-    bio: "Overseeing RCC's digital operations, technology initiatives and online presence, Niranjan focuses on improving efficiency, communication and client experience through modern digital solutions. A Computer Science student specialising in Artificial Intelligence, he brings a technology-driven approach to building and strengthening RCC's digital ecosystem.",
+    name: 'Sanjay Saxena',
+    initials: 'SS',
+    sealRole: 'FOUNDER & CEO',
+    role: 'Founder & CEO',
+    accent: '#FFD60A',
+    photo: '/sanjay.png',
+    bio: 'A visionary leader whose rich experience spans from Executive Engineer (Civil) at BSNL to Central Government Consultant for NESTS — Ministry of Tribal Affairs, Government of India — across Madhya Pradesh and Chhattisgarh, bringing immense technical capacity to the company. His 35 years of rich technical experience have helped the company successfully execute projects with 100% client satisfaction.',
     quote:
-      'Thirty-five years of site knowledge is only worth as much as the hands it reaches. My work is putting that experience in front of a client clearly — so the quality is visible long before anyone sets foot on site.',
+      "We didn't just want to build structures; we wanted to engineer legacies. Every project we undertake is a testament to our commitment to pushing the boundaries of what's possible in modern architecture.",
   },
   {
-    level: 'LVL +1',
     name: 'Roshan Saxena',
+    initials: 'RS',
+    sealRole: 'MANAGING DIRECTOR',
     role: 'Founder & Managing Director',
     accent: '#0A84FF',
     photo: '/roshan.png',
@@ -46,154 +54,186 @@ const TEAM: Member[] = [
       'True luxury lies in the details. From the foundation to the final finishes, our philosophy is rooted in uncompromising quality and a relentless pursuit of perfection for our clients.',
   },
   {
-    level: 'LVL ±00',
-    name: 'Sanjay Saxena',
-    role: 'Founder & CEO',
-    accent: '#FFD60A',
-    photo: '/sanjay.png',
-    bio: 'A visionary leader whose rich experience spans from Executive Engineer (Civil) at BSNL to Central Government Consultant for NESTS — Ministry of Tribal Affairs, Government of India — across Madhya Pradesh and Chhattisgarh, bringing immense technical capacity to the company. His 35 years of rich technical experience have helped the company successfully execute projects with 100% client satisfaction.',
+    name: 'Niranjan Saxena',
+    initials: 'NS',
+    sealRole: 'DIGITAL OPERATIONS',
+    role: 'Digital Operations Manager',
+    accent: '#30D158',
+    photo: '/developer.png',
+    bio: "Overseeing RCC's digital operations, technology initiatives and online presence, Niranjan focuses on improving efficiency, communication and client experience through modern digital solutions. A Computer Science student specialising in Artificial Intelligence, he brings a technology-driven approach to building and strengthening RCC's digital ecosystem.",
     quote:
-      "We didn't just want to build structures; we wanted to engineer legacies. Every project we undertake is a testament to our commitment to pushing the boundaries of what's possible in modern architecture.",
+      'Thirty-five years of site knowledge is only worth as much as the hands it reaches. My work is putting that experience in front of a client clearly — so the quality is visible long before anyone sets foot on site.',
   },
 ];
 
-/** Column centre line, measured from the left edge of the drawing. */
-const RAIL = 'left-[26px] md:left-[150px]';
-const CARD_PAD = 'pl-[64px] md:pl-[196px]';
+/**
+ * Transcribed from RCC's letterhead. Who personally holds which licence is
+ * not recorded there, so none of these is attributed to a named person —
+ * they are the firm's, and they sit on the foundation.
+ */
+const REGISTRATIONS = [
+  { label: 'Architect', body: 'MP PWD', no: '4/CA/EDC/EMP/2024/2937' },
+  { label: 'Supervision & Quality Control', body: 'MP PWD', no: '4/CA/EDC/EMP/2021/3946' },
+  { label: 'Structural Engineer', body: 'BMC', no: 'BHO/0269/STR/2026/00018' },
+  { label: 'Contractor', body: 'MP PWD Reg.', no: '230065044' },
+];
 
-function Level({ member, index }: { member: Member; index: number }) {
+const GSTIN = '23ABEFR0366H1ZE';
+
+/**
+ * Both arcs are drawn left point to right point so the tangent runs with the
+ * reading direction at the top and at the bottom of the circle — sweep 1 goes
+ * over the top, sweep 0 under the bottom, and the glyphs stay upright on both.
+ */
+function Seal({ member }: { member: Member }) {
+  const topArc = `seal-${member.initials}-top`;
+  const bottomArc = `seal-${member.initials}-bottom`;
+
   return (
-    <motion.div
+    <svg viewBox="0 0 120 120" aria-hidden="true" className="w-full h-full">
+      <defs>
+        <path id={topArc} d="M 15.5,60 A 44.5,44.5 0 0 1 104.5,60" fill="none" />
+        <path id={bottomArc} d="M 19,60 A 41,41 0 0 0 101,60" fill="none" />
+      </defs>
+
+      <circle cx="60" cy="60" r="57" fill="rgba(7,7,7,0.82)" />
+      <circle cx="60" cy="60" r="57" fill="none" stroke={member.accent} strokeOpacity="0.6" strokeWidth="2" />
+      <circle cx="60" cy="60" r="50" fill="none" stroke={member.accent} strokeOpacity="0.3" strokeWidth="1" />
+      <circle cx="60" cy="60" r="34" fill="none" stroke={member.accent} strokeOpacity="0.35" strokeWidth="1" />
+
+      <text fill={member.accent} fillOpacity="0.9" fontSize="9" fontWeight="700" letterSpacing="1.1">
+        <textPath href={`#${topArc}`} startOffset="50%" textAnchor="middle">
+          {member.sealRole}
+        </textPath>
+      </text>
+      <text fill={member.accent} fillOpacity="0.6" fontSize="7.5" fontWeight="700" letterSpacing="1.4">
+        <textPath href={`#${bottomArc}`} startOffset="50%" textAnchor="middle">
+          RCC · BHOPAL
+        </textPath>
+      </text>
+
+      {/* Pips where the two arcs meet, as on a pressed stamp */}
+      <circle cx="12.5" cy="60" r="1.6" fill={member.accent} fillOpacity="0.55" />
+      <circle cx="107.5" cy="60" r="1.6" fill={member.accent} fillOpacity="0.55" />
+
+      <text
+        x="60"
+        y="60"
+        textAnchor="middle"
+        dominantBaseline="central"
+        fill={member.accent}
+        fontSize="23"
+        fontWeight="800"
+        letterSpacing="1.5"
+      >
+        {member.initials}
+      </text>
+    </svg>
+  );
+}
+
+function Bay({ member, index }: { member: Member; index: number }) {
+  return (
+    <motion.article
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.6, delay: index * 0.08 }}
-      className="relative group"
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="group h-full"
     >
-      {/* Level marker — the drawing convention used on RCC's own sheets */}
-      <div className="hidden md:block absolute left-0 top-9 w-[130px] text-right">
-        <span
-          className="font-mono text-[11px] font-bold tracking-[0.18em] transition-colors duration-300"
-          style={{ color: member.accent }}
-        >
-          {member.level}
-        </span>
-      </div>
-
-      {/* Slab line — runs from the column out under the card, and extends on hover */}
-      <div className={`absolute top-10 right-0 ${RAIL} h-px bg-white/10 pointer-events-none`}>
-        <div
-          className="h-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out"
-          style={{ background: `linear-gradient(to right, ${member.accent}66, transparent)` }}
-        />
-      </div>
-
-      {/* Node where this level meets the column */}
-      <div
-        className={`absolute top-10 ${RAIL} -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full border-2 bg-background z-10 transition-all duration-300 group-hover:scale-125`}
-        style={{ borderColor: member.accent, boxShadow: `0 0 0 4px rgba(10,10,10,0.9), 0 0 18px ${member.accent}55` }}
-      />
-
-      <div className={`${CARD_PAD} pb-14 md:pb-20`}>
-        <div className="glass-card-premium !rounded-2xl p-6 sm:p-8 border border-white/5 bg-black/40 backdrop-blur-3xl transition-all duration-500 group-hover:border-white/10">
-          <div className="flex flex-col sm:flex-row sm:items-start gap-5 sm:gap-7">
-            {/* Portrait */}
-            <div className="shrink-0">
-              <div
-                className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-2 transition-all duration-500"
-                style={{ borderColor: `${member.accent}40` }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
-                <Image
-                  src={member.photo}
-                  alt={member.name}
-                  fill
-                  sizes="128px"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              <p className="md:hidden mt-2 text-center font-mono text-[10px] font-bold tracking-[0.18em]" style={{ color: member.accent }}>
-                {member.level}
-              </p>
-            </div>
-
-            {/* Detail */}
-            <div className="min-w-0 flex-1">
-              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-wide">{member.name}</h3>
-              <p className="text-sm font-semibold mb-4" style={{ color: member.accent }}>
-                {member.role}
-              </p>
-              <p className="text-white/60 text-sm leading-relaxed font-light">{member.bio}</p>
-
-              {member.quote && (
-                <blockquote
-                  className="mt-5 pl-4 border-l-2 text-sm italic text-foreground/80 leading-relaxed"
-                  style={{ borderColor: `${member.accent}55` }}
-                >
-                  &ldquo;{member.quote}&rdquo;
-                </blockquote>
-              )}
-            </div>
+      <div className="h-full flex flex-col glass-card-premium !rounded-2xl p-7 sm:p-8 border border-white/5 bg-black/40 backdrop-blur-3xl transition-all duration-500 group-hover:border-white/10">
+        {/* Portrait, with the seal pressed into its corner */}
+        <div className="relative mx-auto w-32 h-32 mb-5">
+          <div
+            className="relative w-full h-full rounded-full overflow-hidden border-2 transition-all duration-500"
+            style={{ borderColor: `${member.accent}40` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
+            <Image
+              src={member.photo}
+              alt={member.name}
+              fill
+              sizes="128px"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+          <div
+            className="absolute -bottom-1 -right-4 w-[64px] h-[64px] rotate-[-9deg] opacity-85 transition-all duration-500 ease-out group-hover:rotate-0 group-hover:opacity-100 group-hover:scale-110"
+            style={{ filter: `drop-shadow(0 2px 12px ${member.accent}45)` }}
+          >
+            <Seal member={member} />
           </div>
         </div>
+
+        <h3 className="text-center text-xl font-bold text-white tracking-wide">{member.name}</h3>
+        <p className="text-center text-sm font-semibold mb-5" style={{ color: member.accent }}>
+          {member.role}
+        </p>
+
+        <p className="text-white/60 text-sm leading-relaxed font-light">{member.bio}</p>
+
+        <blockquote
+          className="mt-auto pt-6 pl-4 border-l-2 text-sm italic text-foreground/80 leading-relaxed"
+          style={{ borderColor: `${member.accent}55` }}
+        >
+          &ldquo;{member.quote}&rdquo;
+        </blockquote>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
 
 export default function TeamElevation() {
   return (
-    <div className="relative max-w-5xl mx-auto">
-      {/* Grid bubble, as on a structural drawing */}
-      <div className={`absolute top-0 ${RAIL} -translate-x-1/2 z-10`}>
-        <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center bg-background">
-          <span className="font-mono text-[11px] font-bold text-white/50">A</span>
-        </div>
-      </div>
-
-      {/* The column — a continuous load path through every level */}
-      <div className={`absolute top-9 bottom-[86px] ${RAIL} -translate-x-1/2 w-[14px] pointer-events-none`}>
-        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.07] to-white/[0.03] border-x border-white/10" />
-        {/* hatch, read as reinforcement */}
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(45deg, rgba(255,255,255,0.14) 0 1px, transparent 1px 6px)',
-          }}
-        />
-      </div>
-
-      <div className="pt-14">
-        {TEAM.map((m, i) => (
-          <Level key={m.name} member={m} index={i} />
+    <div className="relative max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        {TEAM.map((member, i) => (
+          <Bay key={member.name} member={member} index={i} />
         ))}
       </div>
 
-      {/* Foundation — the section closes on the date its heading opens with */}
+      {/* Foundation — three bays on one base, carrying the firm's registrations
+          and closing on the date the section's heading opens with. */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.6 }}
-        className="relative"
+        className="relative mt-10 md:mt-12"
       >
         <div className="h-px bg-white/15 mb-2" />
         <div
-          className="relative h-[72px] rounded-b-lg border-x border-b border-white/10 overflow-hidden flex items-center justify-center"
+          className="relative rounded-b-lg border-x border-b border-white/10 overflow-hidden px-6 py-8"
           style={{
             backgroundImage:
               'repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 7px)',
           }}
         >
-          <div className="text-center">
-            <p className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.3em] text-white/45 uppercase">
+          <div className="text-center mb-7">
+            <p className="font-mono text-[11px] font-bold tracking-[0.3em] text-white/55 uppercase">
               Foundation
             </p>
-            <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] text-accent-yellow/70 mt-1">
+            <p className="font-mono text-[11px] tracking-[0.2em] text-accent-yellow/80 mt-1">
               EST. 1991
             </p>
           </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 max-w-4xl mx-auto">
+            {REGISTRATIONS.map((reg) => (
+              <div key={reg.label} className="text-center">
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/55 leading-snug">
+                  {reg.label}
+                </p>
+                <p className="font-mono text-[11px] text-white/75 mt-1.5 break-words">
+                  {reg.body} {reg.no}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-center font-mono text-[11px] tracking-[0.18em] text-white/55 mt-7">
+            GSTIN {GSTIN}
+          </p>
         </div>
       </motion.div>
     </div>

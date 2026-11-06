@@ -111,12 +111,16 @@ function Bay({ member, index }: { member: Member; index: number }) {
 
         <p className="text-white/60 text-sm leading-relaxed font-light">{member.bio}</p>
 
-        <blockquote
-          className="mt-auto pt-6 pl-4 border-l-2 text-sm italic text-foreground/80 leading-relaxed"
-          style={{ borderColor: `${member.accent}55` }}
-        >
-          &ldquo;{member.quote}&rdquo;
-        </blockquote>
+        {/* The gap belongs to the wrapper: inside the blockquote it was padding,
+            which ran the accent rule up past the first line of the quote. */}
+        <div className="mt-auto pt-6">
+          <blockquote
+            className="pl-4 border-l-2 text-sm italic text-foreground/80 leading-relaxed"
+            style={{ borderColor: `${member.accent}55` }}
+          >
+            &ldquo;{member.quote}&rdquo;
+          </blockquote>
+        </div>
       </div>
     </motion.article>
   );

@@ -65,7 +65,8 @@ export default function HeroSection({
           fill
           className="object-cover object-center"
           sizes="100vw"
-          priority
+          preload
+          fetchPriority="high"
         />
       </div>
 

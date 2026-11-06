@@ -27,5 +27,11 @@ export const GSTIN = '23ABEFR0366H1ZE';
 
 export const TAGLINE = 'Building Planning | Construction | Supervision | Interior Works';
 
-/** The engineering legacy the firm dates itself from, not its incorporation. */
-export const ESTABLISHED = '1991';
+/**
+ * RCC the registered firm, which is what this card represents.
+ *
+ * Not to be confused with 1991, which appears in the hero, the vision heading
+ * and the team's foundation band: that is the founder's engineering legacy
+ * (the 35 years), not the company's incorporation.
+ */
+export const ESTABLISHED = '2022';

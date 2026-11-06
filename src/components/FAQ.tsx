@@ -32,7 +32,7 @@ const FAQS = [
   {
     question: "What's the difference between the Silver and Gold plans?",
     answer:
-      "Both use trusted, approved brands across the same specification categories. Gold (₹1,850/sq ft) adds a false ceiling in the drawing room and bedrooms, stainless-steel railings, a second terrace water tank plus an underground tank, granite door/window framing with designer-laminated shutters, larger flooring tiles in the drawing, dining and passage areas, and a granite kitchen top — full details are in the comparison table above Silver (₹1,550/sq ft).",
+      "Both use trusted, approved brands across the same specification categories. Silver is ₹1,550/sq ft; Gold is ₹1,850/sq ft and adds a false ceiling in the drawing room and bedrooms, stainless-steel railings, a 5,000-litre underground water tank, granite door and window framing with designer-laminated shutters, and larger flooring tiles in the drawing, dining and passage areas. The comparison table above sets out every difference, line by line.",
   },
   {
     question: 'Is the design consultation free?',

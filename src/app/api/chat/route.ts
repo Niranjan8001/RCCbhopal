@@ -15,9 +15,9 @@ WHAT GOLD ACTUALLY ADDS (these are the only upgrades — do not invent others):
 - False ceiling in the Drawing Room and all Bedrooms
 - Stainless Steel stair and front-balcony railings instead of Mild Steel
 - Granite "jambing work" door and window frames, with a granite photo-frame on front windows
-- Granite kitchen platform with a Quartz / Nirali / Carysil sink
+- A Quartz / Nirali / Carysil kitchen sink instead of a single-bowl sink
 - Granite stair treads, and larger 2' x 4' vitrified flooring in drawing, dining and passage
-- An underground water tank (5000 Ltr) and a second 1000 Ltr terrace tank
+- An underground water tank (5000 Ltr), which Silver does not include
 - A heavier main gate (up to 150 kg), WPC door frames and designer-laminated flush shutters
 - Wall tiles run to ceiling height in wet areas rather than stopping at 7 ft
 

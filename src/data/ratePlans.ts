@@ -12,6 +12,12 @@
 // is added only where the two documents describe the same line item with
 // different terminology or a different level of detail, so nothing is lost
 // in the comparison.
+//
+// Two rows deliberately DEPART from the Gold PDF, on the client's
+// instruction (2026-11-06): Gold no longer carries a second terrace water
+// tank, and its kitchen top is marble rather than granite. Both now match
+// Silver and are no longer highlighted. Do not re-transcribe them from
+// rpdf/WA GOLD PLAN.pdf. The underground tank stays Gold-only.
 
 export interface SpecItem {
   name: string;
@@ -184,8 +190,7 @@ export const RATE_SECTIONS: RateSection[] = [
       {
         name: 'Kitchen Platform / Top',
         silver: 'Marble, width up to 24"',
-        gold: 'Granite',
-        highlight: true,
+        gold: 'Marble, width up to 24"',
         note: 'Silver refers to this item as "Kitchen Platform"; Gold refers to it as "Kitchen Top."',
       },
       {
@@ -334,8 +339,7 @@ export const RATE_SECTIONS: RateSection[] = [
       {
         name: 'Terrace Water Tank',
         silver: 'Plasto / Astral / Ashirvad, three-layered, 1000 Ltr. (1 No.)',
-        gold: 'Plasto / Astral / Ashirvad, three-layered, 1000 Ltr. (2 No.)',
-        highlight: true,
+        gold: 'Plasto / Astral / Ashirvad, three-layered, 1000 Ltr. (1 No.)',
       },
       {
         name: 'Underground Tank',

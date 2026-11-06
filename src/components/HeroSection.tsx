@@ -64,6 +64,7 @@ export default function HeroSection({
           alt="RCC luxury construction — Bhopal"
           fill
           className="object-cover object-center"
+          sizes="100vw"
           priority
         />
       </div>
@@ -120,11 +121,11 @@ export default function HeroSection({
         </div>
 
         {/* Social proof stats */}
-        <div className="hero-anim flex flex-wrap items-center justify-center gap-8 sm:gap-12 mt-8 pt-6 border-t border-white/10 w-full max-w-lg mx-auto">
+        <div className="hero-anim flex items-start justify-center gap-3 sm:gap-12 mt-8 pt-6 border-t border-white/10 w-full max-w-lg mx-auto">
           {stats.map((stat) => {
             const body = (
               <>
-                <span className="text-2xl sm:text-3xl font-black text-[#FFD60A] tabular-nums">{stat.value}</span>
+                <span className="text-xl sm:text-3xl font-black text-[#FFD60A] tabular-nums">{stat.value}</span>
                 <span className="text-[10px] uppercase tracking-wider text-white/50 font-semibold text-center">{stat.label}</span>
               </>
             );
@@ -135,12 +136,12 @@ export default function HeroSection({
                 aria-label={stat.ariaLabel}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center gap-1 rounded-lg transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FFD60A]"
+                className="flex flex-1 min-w-0 flex-col items-center gap-1 rounded-lg transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FFD60A]"
               >
                 {body}
               </a>
             ) : (
-              <div key={stat.label} className="flex flex-col items-center gap-1">{body}</div>
+              <div key={stat.label} className="flex flex-1 min-w-0 flex-col items-center gap-1">{body}</div>
             );
           })}
         </div>

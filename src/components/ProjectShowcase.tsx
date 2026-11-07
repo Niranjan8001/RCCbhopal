@@ -18,7 +18,7 @@ const projects = [
   {
     title: 'Premium Duplex Construction',
     sqft: '1,750 sq ft',
-    category: 'Construction',
+    category: 'Residential',
     location: 'Aakriti Aqua City, Bhopal',
     year: '2025',
     color: '#AF52DE',
@@ -50,7 +50,7 @@ const projects = [
     sqft: '1,500 sq ft',
     category: 'Commercial',
     location: 'Bhopal',
-    year: '2023',
+    year: '2026',
     color: '#5AC8FA',
     description: 'A multi-unit commercial shop complex built to durable RCC structural standards — featuring robust load-bearing frames, polished flooring, plastered shop-front facades, and utility-ready interiors designed for long-term retail tenancy.',
     image: '/proj5.png',

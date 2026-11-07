@@ -2,26 +2,19 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Seal from './Seal';
 
 /**
  * The team as a front elevation: three bays side by side. (It read as stacked
  * levels before, which put the people in a hierarchy the row does not.)
  *
- * Each person carries a seal — the round stamp a registered professional
- * presses onto a drawing. The ring names the role, not a licence number: the
- * registrations on RCC's letterhead belong to the firm, and are shown on the
- * credentials card opened from the hero rather than under any one name.
+ * RCC's registrations belong to the firm rather than to any one person, so
+ * they are shown on the credentials card opened from the hero, not here.
  *
  * Bios are third-person throughout; each bay then speaks for itself in a
  * quote.
  */
 type Member = {
   name: string;
-  /** Monogram in the middle of the seal, and its SVG id prefix. */
-  initials: string;
-  /** Curved along the top of the seal — about 18 characters is the limit. */
-  sealRole: string;
   role: string;
   accent: string;
   photo: string;
@@ -33,8 +26,6 @@ type Member = {
 const TEAM: Member[] = [
   {
     name: 'Sanjay Saxena',
-    initials: 'SS',
-    sealRole: 'FOUNDER & CEO',
     role: 'Founder & CEO',
     accent: '#FFD60A',
     photo: '/sanjay.png',
@@ -44,8 +35,6 @@ const TEAM: Member[] = [
   },
   {
     name: 'Roshan Saxena',
-    initials: 'RS',
-    sealRole: 'MANAGING DIRECTOR',
     role: 'Founder & Managing Director',
     accent: '#0A84FF',
     photo: '/roshan.png',
@@ -55,8 +44,6 @@ const TEAM: Member[] = [
   },
   {
     name: 'Niranjan Saxena',
-    initials: 'NS',
-    sealRole: 'DIGITAL OPERATIONS',
     role: 'Digital Operations Manager',
     accent: '#30D158',
     photo: '/developer.png',
@@ -76,7 +63,7 @@ function Bay({ member, index }: { member: Member; index: number }) {
       className="group h-full"
     >
       <div className="h-full flex flex-col glass-card-premium !rounded-2xl p-7 sm:p-8 border border-white/5 bg-black/40 backdrop-blur-3xl transition-all duration-500 group-hover:border-white/10">
-        {/* Portrait, with the seal pressed into its corner */}
+        {/* Portrait */}
         <div className="relative mx-auto w-32 h-32 mb-5">
           <div
             className="relative w-full h-full rounded-full overflow-hidden border-2 transition-all duration-500"
@@ -89,17 +76,6 @@ function Bay({ member, index }: { member: Member; index: number }) {
               fill
               sizes="128px"
               className="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          </div>
-          <div
-            className="absolute -bottom-1 -right-4 w-[64px] h-[64px] rotate-[-9deg] opacity-85 transition-all duration-500 ease-out group-hover:rotate-0 group-hover:opacity-100 group-hover:scale-110"
-            style={{ filter: `drop-shadow(0 2px 12px ${member.accent}45)` }}
-          >
-            <Seal
-              id={member.initials}
-              top={member.sealRole}
-              center={member.initials}
-              accent={member.accent}
             />
           </div>
         </div>
